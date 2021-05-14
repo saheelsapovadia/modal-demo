@@ -273,7 +273,7 @@ export const Modal = ({ showModal, setShowModal }) => {
                 <p className='modal__signin'>Sign in to continue.</p>
               </div>
               <div className='ModalBottomImg'>
-                <img className='big' src={bottomImg} />
+                {/* <img className='big' src={bottomImg} /> */}
                 <img
                   className='mobile'
                   src={topImg}

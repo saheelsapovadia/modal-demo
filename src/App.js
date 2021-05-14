@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { GlobalStyle } from './globalStyles';
-import './App.css';
 import styled from 'styled-components';
 import { Modal } from './Components/Modal';
 const Container = styled.div`
