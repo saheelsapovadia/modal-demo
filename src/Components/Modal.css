@@ -30,7 +30,7 @@
   margin: 0;
   max-width: 100%;
   max-height: none;
-  position: relative;
+  /* position: relative; */
   margin-top: 2rem;
   margin-bottom: 2rem;
 }
@@ -262,6 +262,12 @@ form {
   color: #201e27;
 }
 
+.eye {
+  margin-left: -30px;
+  margin-bottom: -4px;
+  cursor: pointer;
+}
+
 .modal__contentbottom {
   margin: 0 10%;
 }
@@ -285,6 +291,7 @@ hr {
   border-width: 1px;
 }
 .modal__contentbottom > p {
+  font-size: 15px;
   color: #788699;
   margin-top: 1.25rem;
   margin-bottom: 1rem;
@@ -343,6 +350,7 @@ p {
   .ModalSection2 {
     width: 100%;
     margin: 0;
+    height: 100%;
     padding: 0px;
     color: black;
     border-radius: 0 0 0 0;
@@ -388,7 +396,6 @@ p {
     overflow-y: unset;
   }
   .ModalSection1 {
-    padding-top: 30px;
     height: 25%;
     background-color: white;
   }

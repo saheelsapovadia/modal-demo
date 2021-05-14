@@ -1,6 +1,7 @@
 import React, { useRef, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MdClose } from 'react-icons/md';
+import { BsEyeFill, BsEyeSlashFill } from 'react-icons/bs';
 import bottomImg from './modal-bottom.png';
 import topImg from './modal-mobile.png';
 import './Modal.css';
@@ -95,6 +96,7 @@ const validateForm = (errors) => {
 
 export const Modal = ({ showModal, setShowModal }) => {
   const modalRef = useRef();
+  const passwordRef = useRef();
   const closeModal = (e) => {
     if (modalRef.current === e.target) {
       setShowModal(false);
@@ -119,6 +121,7 @@ export const Modal = ({ showModal, setShowModal }) => {
   const [nameStatus, setNameStatus] = useState(false);
   const [emailStatus, setEmailStatus] = useState(false);
   const [passwordStatus, setPasswordStatus] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const [fullName, setFullName] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
@@ -253,6 +256,11 @@ export const Modal = ({ showModal, setShowModal }) => {
   useEffect(() => {
     console.log('allOk: ', allOk);
   }, [allOk]);
+
+  const passwordToggle = () => {
+    setPasswordVisible(passwordVisible ? false : true);
+  };
+
   return (
     <>
       {' '}
@@ -342,13 +350,27 @@ export const Modal = ({ showModal, setShowModal }) => {
                     )}
                     <label>Password</label>
                     <input
+                      id='password'
                       placeholder='Enter Password'
-                      type='password'
+                      type={passwordVisible ? 'text' : 'password'}
                       name='password'
+                      ref={passwordRef}
                       onBlur={handleChange}
                       onChange={handleChange}
                     ></input>
-
+                    {passwordVisible ? (
+                      <BsEyeFill
+                        className='eye'
+                        onClick={passwordToggle}
+                        size='20px'
+                      />
+                    ) : (
+                      <BsEyeSlashFill
+                        className='eye'
+                        onClick={passwordToggle}
+                        size='20px'
+                      />
+                    )}
                     {/* <svg
                       class='MuiSvgIcon-root visiblity'
                       focusable='false'
