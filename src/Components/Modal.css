@@ -331,6 +331,10 @@ p {
     /* flex-direction: column; */
     overflow-y: auto;
   }
+  .Modal__Fullscreen {
+    margin: 0;
+    padding: 0;
+  }
   .CloseModalButton {
     position: fixed !important;
     color: grey;
