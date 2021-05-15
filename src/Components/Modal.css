@@ -2,25 +2,17 @@
   font-family: '';
 }
 
-/* @media (max-width: 1549px) and (min-width: 1500px) {
-  .ModalWrapper {
-    min-height: 30rem;
-    height: 90%;
-    margin-top: 2rem;
-  }
-} */
-
 .ModalWrapper {
   position: relative;
   display: flex;
-  min-height: 94%;
+  max-height: 49rem;
+
   overflow-y: auto;
   width: 1007px;
   height: 650px;
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
   background: #fff;
   color: #000;
-  grid-template-columns: 1fr 1fr;
   z-index: 10;
   border-radius: 10px;
 }
@@ -29,24 +21,11 @@
   height: 94%;
   margin: 0;
   max-width: 100%;
-  max-height: none;
-  /* position: relative; */
+
   margin-top: 2rem;
   margin-bottom: 2rem;
+  margin: auto;
 }
-
-/* .CloseModalButton {
-  cursor: pointer;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 40px;
-  height: 42px;
-  padding: 0;
-  z-index: 10;
-  background: none;
-  border: none;
-} */
 
 .ModalSection1 {
   display: flex;
@@ -58,6 +37,9 @@
   width: 35%;
   color: #141414;
   background-color: #eff2f6;
+}
+.CloseModalButton {
+  color: grey;
 }
 .ModalBottomImg {
   width: 100%;
@@ -87,7 +69,7 @@
   padding: 2.5rem 2.5rem 0;
 }
 .modal__content2 {
-  padding: 2.5rem 0;
+  padding-top: 2.5rem;
 }
 
 .modal__welcome {
@@ -266,6 +248,7 @@ form {
   margin-left: -30px;
   margin-bottom: -4px;
   cursor: pointer;
+  color: #555;
 }
 
 .modal__contentbottom {
@@ -327,6 +310,14 @@ p {
     height: 10%;
   }
 }
+@media only screen and (max-width: 768px) {
+  p {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 22px;
+    font-family: Inter, sans-serif;
+  }
+}
 
 @media (max-width: 415px) {
   .ModalWrapper {
@@ -337,11 +328,8 @@ p {
     display: block;
     position: relative;
     min-height: 100%;
-    /* flex-direction: column; */
-    /* overflow-y: auto; */
   }
   .Modal__Fullscreen {
-    /* margin-top: -60px; */
     padding: 0;
   }
   .CloseModalButton {
@@ -397,9 +385,7 @@ p {
     padding: 0;
   }
   .ModalSection2 {
-    /* min-height: 0%; */
     height: 100%;
-    /* overflow-y: unset; */
     margin-top: 30px;
   }
   .ModalSection1 {
