@@ -6,9 +6,9 @@
   position: relative;
   display: flex;
   max-height: 49rem;
-
+  max-width: 64rem;
   overflow-y: auto;
-  width: 1007px;
+  width: 1024px;
   height: 650px;
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
   background: #fff;
@@ -18,10 +18,9 @@
 }
 
 .Modal__Fullscreen {
-  height: 94%;
+  height: 91%;
   margin: 0;
   max-width: 100%;
-
   margin-top: 2rem;
   margin-bottom: 2rem;
   margin: auto;
@@ -34,9 +33,11 @@
   justify-content: center;
   border-radius: 10px 0 0 10px;
   line-height: 1.8;
-  width: 35%;
+  /* width: 35%; */
+  width: 335px;
   color: #141414;
-  background-color: #eff2f6;
+  background: #eff2f6 url(./modal-bottom.png) no-repeat bottom;
+  background-size: contain;
 }
 .CloseModalButton {
   color: grey;
@@ -58,7 +59,7 @@
 
 .ModalSection2 {
   background-color: white;
-  width: 60%;
+  width: 63%;
   flex-grow: 1;
   padding: 1.5rem 5rem;
   position: relative;
@@ -69,7 +70,7 @@
   padding: 2.5rem 2.5rem 0;
 }
 .modal__content2 {
-  padding-top: 2.5rem;
+  padding-top: 2rem;
 }
 
 .modal__welcome {
@@ -107,6 +108,7 @@
 .google__login > p {
   padding: 0%;
   margin: 0;
+  font-size: 15px;
 }
 .modal__seperator {
   display: flex;
@@ -127,8 +129,8 @@
   overflow: hidden;
 }
 .modal__seperator > p {
-  margin-left: 16px;
-  margin-right: 16px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 hr {
   display: block;
@@ -156,7 +158,7 @@ form {
 .modal__form > input {
   border-radius: 0.3125rem;
   margin-bottom: 0.6rem;
-  width: 96%;
+  width: 100%;
   font-size: 0.875rem;
   font-family: Inter;
   padding: 10px;
@@ -199,8 +201,8 @@ form {
   cursor: pointer;
 }
 
-.modal .home__login {
-  margin-top: 1rem;
+.modal__form .home__login {
+  margin-top: 1.55rem;
   min-width: 9rem;
   min-height: auto;
   font-size: 0.875rem;
@@ -220,6 +222,7 @@ form {
   display: block;
   text-align: center;
   transition: all 0.2s ease-in;
+  font-size: 0.875rem;
 }
 .modal__form > button:disabled {
   opacity: 0.5 !important;
@@ -390,6 +393,9 @@ p {
   }
   .ModalSection1 {
     height: 25%;
-    background-color: white;
+    padding-top: 30px;
+    /* background-color: white; */
+    background: url(./modal-mobile.png) no-repeat;
+    background-size: contain;
   }
 }
