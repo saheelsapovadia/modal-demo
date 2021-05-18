@@ -51,7 +51,7 @@
   border-radius: 10px 0 0 10px;
   background-image: url(./modal-bottom.png);
   background-position: bottom;
-  background-size: cover;
+  background-size: 100%;
 }
 .mobile {
   display: none;
@@ -301,7 +301,8 @@ p {
 }
 @media (max-width: 770px) {
   .ModalSection2 {
-    width: 90%;
+    width: 100%;
+
     margin: 20px auto;
     padding: 20px;
   }
@@ -396,6 +397,6 @@ p {
     padding-top: 30px;
     /* background-color: white; */
     background: url(./modal-mobile.png) no-repeat;
-    background-size: contain;
+    background-size: 100%;
   }
 }
