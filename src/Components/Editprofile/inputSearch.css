@@ -58,6 +58,9 @@
 
 .inputSearch > ul > li > img {
   margin-right: 10px;
+
+  width: 25px;
+  border-radius: 10px;
 }
 
 /* Pref Search */

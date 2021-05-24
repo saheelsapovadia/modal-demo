@@ -86,7 +86,7 @@ const Roles = ({ closePreferenceModal, save, rolesArr, allRoles }) => {
     const usrInput = e.target.value;
     const newFilteredSuggestions = suggestions.filter(
       (suggestion) =>
-        suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
+        suggestion.toLowerCase().indexOf(usrInput.toLowerCase()) > -1
     );
 
     setFilteredSuggestions(newFilteredSuggestions);

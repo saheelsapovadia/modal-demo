@@ -3,12 +3,15 @@ import { Background, CloseModalButton } from '../Modal/Modal';
 import styled from 'styled-components';
 import { MdClose } from 'react-icons/md';
 import { BsEyeFill, BsEyeSlashFill } from 'react-icons/bs';
+import { Editor, EditorState, RichUtils } from 'draft-js';
+import 'draft-js/dist/Draft.css';
 import '../Modal/Modal.css';
 import './EditModal.css';
 import './ProfileModal.css';
 import './ExperienceModal.css';
 import './inputSearch.css';
 import './Events.css';
+import './TextEditor.css';
 export const AddExperience = ({ showModal, setShowModal }) => {
   const modalRef = useRef();
   const passwordRef = useRef();
@@ -36,6 +39,114 @@ export const AddExperience = ({ showModal, setShowModal }) => {
   const closeEditProfileModal = () => {
     setShowModal((prev) => !prev);
   };
+  const [editorState, setEditorState] = React.useState(() =>
+    EditorState.createEmpty()
+  );
+  const [lenExceeded, setLenExceeded] = useState(false);
+  const [contentLength, setContentLength] = useState(0);
+  const [activeSuggestion, setActiveSuggestion] = useState(0);
+  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [userInput, setUserInput] = useState('');
+
+  const [nRole, setNRole] = useState('');
+  const suggestions = [
+    { img: 'fb', name: 'Facebook' },
+    { img: 'ggl', name: 'Google' },
+    { img: 'alphbt', name: 'Alphabet' },
+    { img: 'wym', name: 'Waymo' },
+    { img: 'ntflx', name: 'Netflix' },
+    { img: 'pytm', name: 'Paytm' },
+    { img: 'https://i.ibb.co/T1W3Ctq/amwalcom.png', name: 'Amwalcom' },
+    { img: 'https://i.ibb.co/fv0XS7D/ARVORE.png', name: 'ARVORE' },
+    {
+      img: 'https://i.ibb.co/5TSTY4C/Administrate.jpg',
+      name: 'Administrate',
+    },
+    { img: 'https://i.ibb.co/Njp0GMr/Antwork.png', name: 'Antwork' },
+    { img: 'https://i.ibb.co/XZJstjB/Andovar.png', name: 'Andovar' },
+    { img: 'https://i.ibb.co/9nBjbwz/Arthur-AI.png', name: 'ArthurAI' },
+  ];
+  const OnChange = (e) => {
+    const usrInput = e.target.value;
+    const newFilteredSuggestions = suggestions.filter(
+      (suggestion) =>
+        suggestion.name.toLowerCase().indexOf(usrInput.toLowerCase()) == 0
+    );
+
+    setFilteredSuggestions(newFilteredSuggestions);
+    setShowSuggestions(true);
+    setUserInput(e.target.value);
+  };
+  const OnClick = (e) => {
+    console.log('onclick....');
+    setFilteredSuggestions([]);
+    setShowSuggestions(false);
+    setUserInput(e.target.innerText);
+  };
+  let suggestionsList;
+
+  if (showSuggestions && userInput) {
+    if (filteredSuggestions.length) {
+      suggestionsList = (
+        <ul>
+          {filteredSuggestions.map((suggestion, index) => {
+            let className;
+            return (
+              <li onClick={OnClick}>
+                <img src={suggestion.img}></img>
+                {suggestion.name}
+              </li>
+            );
+          })}
+        </ul>
+      );
+    } else {
+      // suggestionsList = (
+      //   <div className='preference__modal__suggestions'>
+      //     <span className='' key={userInput} onClick={newRoleFunc}>
+      //       {userInput}
+      //     </span>
+      //   </div>
+      // );
+    }
+  }
+  const close = () => {
+    setShowSuggestions(false);
+  };
+  // const onEditorChange = (e) => {
+  //   setEditorState(e.target.value);
+  // };
+  useEffect(() => {
+    console.log(editorState.getCurrentContent().getPlainText().length);
+    let len = editorState.getCurrentContent().getPlainText().length;
+    setContentLength(len);
+    if (len > 500) setLenExceeded(true);
+    else setLenExceeded(false);
+  }, [editorState]);
+  const onEditorChange = (editorchange) => {
+    setEditorState(editorchange);
+    setContentLength(editorState.length);
+  };
+  const _onBoldClick = () => {
+    onEditorChange(RichUtils.toggleInlineStyle(editorState, 'BOLD'));
+  };
+  const _onItalicClick = () => {
+    onEditorChange(RichUtils.toggleInlineStyle(editorState, 'ITALIC'));
+  };
+  const _onUnderlineClick = () => {
+    onEditorChange(RichUtils.toggleInlineStyle(editorState, 'UNDERLINE'));
+  };
+  const _onUnorderedClick = () => {
+    onEditorChange(
+      RichUtils.toggleBlockType(editorState, 'unordered-list-item')
+    );
+  };
+
+  const _onOrderedClick = () => {
+    onEditorChange(RichUtils.toggleBlockType(editorState, 'ordered-list-item'));
+  };
+
   return (
     <>
       {showModal ? (
@@ -63,8 +174,10 @@ export const AddExperience = ({ showModal, setShowModal }) => {
                   <input
                     type='text'
                     placeholder='Example: Google, Facebook...'
-                    value=''
+                    onChange={OnChange}
+                    value={userInput}
                   />
+                  {suggestionsList}
                 </div>
                 <label>Website</label>
                 <input
@@ -236,56 +349,18 @@ export const AddExperience = ({ showModal, setShowModal }) => {
                 <label>
                   Description <span>(optional)</span>
                 </label>
-                {/* <div>
-                  <div className='editor' style={{ backgroundColor: 'red' }}>
-                    <div className='DraftEditor-root'>
-                      <div className='public-DraftEditorPlaceholder-root'>
-                        <div
-                          className='public-DraftEditorPlaceholder-inner'
-                          id='placeholder-78eqj'
-                          style='white-space: pre-wrap;'
-                        >
-                          Give a brief description
-                        </div>
-                      </div>
-                      <div className='DraftEditor-editorContainer'>
-                        <div
-                          aria-describedby='placeholder-78eqj'
-                          className='notranslate public-DraftEditor-content'
-                          contenteditable='true'
-                          role='textbox'
-                          spellcheck='false'
-                          style={{
-                            outline: 'none',
-                            userSelect: 'text',
-                            whiteSpace: 'pre-wrap',
-                            overflowWrap: 'break-word',
-                          }}
-                        >
-                          <div dataContents='true'>
-                            <div
-                              className=''
-                              data-block='true'
-                              data-editor='78eqj'
-                              dataOffsetKey='aqq07-0-0'
-                            >
-                              <div
-                                data-offset-key='aqq07-0-0'
-                                className='public-DraftStyleDefault-block public-DraftStyleDefault-ltr'
-                              >
-                                <span data-offset-key='aqq07-0-0'>
-                                  <br data-text='true' />
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className='editor__buttons'>
-                      <div>
+
+                <div>
+                  <div className='editor'>
+                    <Editor
+                      editorState={editorState}
+                      onChange={setEditorState}
+                      placeholder='Give a brief description'
+                    />
+                    <div class='editor__buttons'>
+                      <div onClick={_onBoldClick}>
                         <svg
-                          className='MuiSvgIcon-root'
+                          class='MuiSvgIcon-root'
                           focusable='false'
                           viewBox='0 0 24 24'
                           aria-hidden='true'
@@ -293,9 +368,9 @@ export const AddExperience = ({ showModal, setShowModal }) => {
                           <path d='M15.6 10.79c.97-.67 1.65-1.77 1.65-2.79 0-2.26-1.75-4-4-4H8c-.55 0-1 .45-1 1v12c0 .55.45 1 1 1h5.78c2.07 0 3.96-1.69 3.97-3.77.01-1.53-.85-2.84-2.15-3.44zM10 6.5h3c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-3v-3zm3.5 9H10v-3h3.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5z'></path>
                         </svg>
                       </div>
-                      <div>
+                      <div onClick={_onItalicClick}>
                         <svg
-                          className='MuiSvgIcon-root'
+                          class='MuiSvgIcon-root'
                           focusable='false'
                           viewBox='0 0 24 24'
                           aria-hidden='true'
@@ -303,9 +378,9 @@ export const AddExperience = ({ showModal, setShowModal }) => {
                           <path d='M10 5.5c0 .83.67 1.5 1.5 1.5h.71l-3.42 8H7.5c-.83 0-1.5.67-1.5 1.5S6.67 18 7.5 18h5c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5h-.71l3.42-8h1.29c.83 0 1.5-.67 1.5-1.5S17.33 4 16.5 4h-5c-.83 0-1.5.67-1.5 1.5z'></path>
                         </svg>
                       </div>
-                      <div>
+                      <div onClick={_onUnderlineClick}>
                         <svg
-                          className='MuiSvgIcon-root'
+                          class='MuiSvgIcon-root'
                           focusable='false'
                           viewBox='0 0 24 24'
                           aria-hidden='true'
@@ -313,13 +388,13 @@ export const AddExperience = ({ showModal, setShowModal }) => {
                           <path d='M12 17c3.31 0 6-2.69 6-6V3h-2.5v8c0 1.93-1.57 3.5-3.5 3.5S8.5 12.93 8.5 11V3H6v8c0 3.31 2.69 6 6 6zm-7 2v2h14v-2H5z'></path>
                         </svg>
                       </div>
-                      <div className='icons'>
+                      <div class='icons' onClick={_onUnorderedClick}>
                         <svg
                           aria-hidden='true'
                           focusable='false'
                           data-prefix='fas'
                           data-icon='list'
-                          className='svg-inline--fa fa-list fa-w-16 fa-1x '
+                          class='svg-inline--fa fa-list fa-w-16 fa-1x '
                           role='img'
                           xmlns='http://www.w3.org/2000/svg'
                           viewBox='0 0 512 512'
@@ -330,13 +405,13 @@ export const AddExperience = ({ showModal, setShowModal }) => {
                           ></path>
                         </svg>
                       </div>
-                      <div className='icons'>
+                      <div class='icons' onClick={_onOrderedClick}>
                         <svg
                           aria-hidden='true'
                           focusable='false'
                           data-prefix='fas'
                           data-icon='list-ol'
-                          className='svg-inline--fa fa-list-ol fa-w-16 fa-1x '
+                          class='svg-inline--fa fa-list-ol fa-w-16 fa-1x '
                           role='img'
                           xmlns='http://www.w3.org/2000/svg'
                           viewBox='0 0 512 512'
@@ -348,13 +423,13 @@ export const AddExperience = ({ showModal, setShowModal }) => {
                         </svg>
                       </div>
                     </div>
-                    <div style='color: grey;'>0/500</div>
-                  </div>
-                </div> */}
-                <div>
-                  <div className='editor' style={{ backgroundColor: 'red' }}>
-                    {' '}
-                    sssss
+                    {lenExceeded ? (
+                      <p style={{ color: 'red' }}>
+                        <b>Exceeded maximum limit {contentLength}/500</b>
+                      </p>
+                    ) : (
+                      <div style={{ color: 'grey' }}>{contentLength}/500</div>
+                    )}
                   </div>
                 </div>
                 <div className='experience__button'>

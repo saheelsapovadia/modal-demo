@@ -272,7 +272,7 @@
   border-radius: inherit;
   pointer-events: none;
 }
-.editor > .DraftEditor-root {
+/* .editor > .DraftEditor-root {
   margin-top: 2px !important;
   height: 253px !important;
   width: 94.5% !important;
@@ -343,7 +343,7 @@
   cursor: pointer;
   padding: 5px;
   transition: all 0.3s ease-in;
-}
+} */
 
 @media (max-width: 768px) {
   .profile__modal,
