@@ -2,18 +2,16 @@ import React, { useRef, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MdClose } from 'react-icons/md';
 import { BsEyeFill, BsEyeSlashFill } from 'react-icons/bs';
-import bottomImg from './modal-bottom.png';
-import topImg from './modal-mobile.png';
 import './Modal.css';
 import './Page2.css';
 import './Page3.css';
-const Background = styled.div`
+export const Background = styled.div`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   position: fixed;
   top: 0;
-  z-index: 1;
+  z-index: 1300;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,7 +21,7 @@ const ModalContent1 = styled.div`
   padding: 40px 40px 40px;
 `;
 
-const CloseModalButton = styled(MdClose)`
+export const CloseModalButton = styled(MdClose)`
   cursor: pointer;
   position: absolute;
   top: 20px;

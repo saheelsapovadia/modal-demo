@@ -1,0 +1,609 @@
+.main {
+  width: 100%;
+}
+h2 {
+  line-height: 1.25rem !important;
+}
+.left__sidebar {
+  background-color: #fff;
+  transition: background-color 0.2s ease-in-out;
+  min-height: 100vh;
+  box-shadow: 1px 3px 3px rgb(202 195 195 / 50%);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 260px;
+}
+.dash-container {
+  width: calc(100% - 260px);
+  min-height: auto;
+  max-height: 100vh;
+  float: right;
+}
+.newProfile {
+  background-color: #f8f8f8;
+  min-height: 100vh;
+  padding-top: 64px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+}
+button,
+input,
+option,
+select,
+textarea {
+  font-family: 'Inter', sans-serif !important;
+}
+.newProfile__container {
+  color: #033443;
+  display: flex;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.newProfile__left {
+  /* min-width: 656px; */
+  width: 656px;
+}
+.newProfile__right {
+  margin-left: 15px;
+  max-width: 309px;
+  width: 309px;
+}
+
+.newProfile__left,
+.newProfile__right {
+  border-radius: 3px;
+  height: -webkit-fit-content !important;
+  height: -moz-fit-content !important;
+  height: fit-content !important;
+}
+.newProfile__education,
+.newProfile__experience,
+.newProfile__resume,
+.newProfile__userBio {
+  background-color: #fff;
+  padding: 1.5rem 2rem;
+  margin-left: 0;
+  border: 1.5px solid #d9d9d9;
+  border-radius: 9px;
+  margin-bottom: 15px;
+  width: 100%;
+}
+.newProfile__userBio .MuiAvatar-root {
+  background-color: #c0f2ef;
+  color: #25b2aa;
+  height: 4.6875rem;
+  width: 4.6875rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-right: 20px;
+  cursor: pointer;
+}
+.MuiAvatar-root {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  font-size: 1.25rem;
+  align-items: center;
+  flex-shrink: 0;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  line-height: 1;
+  user-select: none;
+  border-radius: 50%;
+  justify-content: center;
+}
+.MuiBadge-anchorOriginTopRightCircle {
+  top: 14%;
+  right: 14%;
+  transform: scale(1) translate(50%, -50%);
+  transform-origin: 100% 0%;
+}
+.MuiBadge-badge {
+  height: 20px;
+  display: flex;
+  padding: 0 6px;
+  z-index: 1;
+  position: absolute;
+  flex-wrap: wrap;
+  font-size: 0.75rem;
+  min-width: 20px;
+  box-sizing: border-box;
+  transition: transform 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  align-items: center;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 500;
+  line-height: 1;
+  align-content: center;
+  border-radius: 10px;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.newProfile__userBio > div {
+  display: flex;
+  align-items: flex-start;
+}
+.MuiBadge-root {
+  display: inline-flex;
+  position: relative;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+.newProfile__userBio__info > h4 {
+  color: #555;
+  margin-top: 3px;
+  margin-bottom: 1px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 150%;
+}
+.newProfile__userBio__info > h5 {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #3e5963;
+  line-height: 1.25rem;
+}
+.newProfile__userBio__info > p {
+  color: #aaa;
+  font-size: 0.8rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  margin-top: 2px;
+  margin-bottom: 3px;
+}
+
+element.style {
+  margin-top: 7px;
+}
+.btn {
+  outline: none;
+  border: none;
+  padding: 10px 15px;
+  font-weight: 600;
+  background-color: #01a3a4;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.newProfile__education > h1,
+.newProfile__experience > h1,
+.newProfile__resume > h1 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.375rem;
+  font-weight: 500;
+}
+.newProfile__experience {
+  position: relative;
+  background: #fff url(exp-bg.db889dfc.svg) no-repeat 50%;
+  background-size: cover;
+  min-height: -webkit-max-content;
+  min-height: -moz-max-content;
+  min-height: max-content;
+}
+.newProfile__experience__bg > h3,
+.newProfile__resume > div > h3 {
+  margin: 8.5rem 0 0;
+  font-weight: 500;
+}
+.newProfile__resume {
+  position: relative;
+  background: #fff url(resume.389fba8a.svg) no-repeat center 20px;
+  background-size: 25%;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+}
+.newProfile__experience__bg,
+.newProfile__resume > div {
+  text-align: center;
+}
+.newProfile__experience__bg > h3,
+.newProfile__resume > div > h3 {
+  margin: 8.5rem 0 0;
+  font-weight: 500;
+}
+.newProfile__experience__bg > p,
+.newProfile__resume > div > p {
+  font-size: 0.875rem;
+  margin: 0.5rem 0 1rem;
+  opacity: 0.95;
+}
+
+h3 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin: 0;
+  color: #201e27 !important;
+}
+.newProfile__resume > div > h3 {
+  margin-top: 6.4rem;
+}
+
+#file {
+  display: none;
+}
+
+/* Right Section */
+
+.newProfile__preference {
+  padding: 1.5rem;
+  border: 1.5px solid #d9d9d9;
+  border-radius: 9px;
+  background-color: #fff;
+}
+.newProfile__right__elsewhere {
+  padding: 1.5rem;
+  margin-top: 15px;
+  border: 1.5px solid #d9d9d9;
+  border-radius: 9px;
+  background-color: #fff;
+}
+.newProfile__right__elsewhere-new {
+  padding: 1.5rem;
+  margin-top: 15px;
+  border: 1.5px solid #d9d9d9;
+  border-radius: 9px;
+  background-color: #fff;
+}
+.newProfile__right__elsewhere-new > p {
+  display: flex;
+  align-items: center;
+  color: #788699;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+}
+.btn-badge {
+  margin: auto;
+  display: flex;
+}
+.badge-txt-p {
+  /* margin-top: -30px; */
+  text-align: center;
+}
+.newProfile__exp > h2,
+.newProfile__loc > h2,
+.newProfile__right__elsewhere > h1,
+.newProfile__role > h2,
+.newProfile__skill > h2 {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 1rem;
+}
+.newProfile__role:hover .hide,
+.newProfile__exp:hover .hide,
+.newProfile__skill:hover .hide,
+.newProfile__loc:hover .hide,
+.newProfile__right__elsewhere:hover .hide {
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0s linear 0s, opacity 300ms;
+}
+.newProfile__exp > h2,
+.newProfile__loc > h2,
+.newProfile__right__elsewhere > h1,
+.newProfile__role > h2,
+.newProfile__skill > h2 {
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+.newProfile__exp > div,
+.newProfile__loc > div,
+.newProfile__role > div,
+.newProfile__skill > div {
+  display: flex;
+  flex-wrap: wrap;
+}
+.newProfile__exp > div > p,
+.newProfile__loc > div > p,
+.newProfile__role > div > p,
+.newProfile__skill > div > p {
+  padding: 0.25rem 0.5rem;
+  background-color: #eff2f6;
+  margin: 0.5rem 0.5rem 0 0;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 400;
+}
+.newProfile__exp > p,
+.newProfile__loc > p,
+.newProfile__role > p,
+.newProfile__skill > p {
+  color: #788699;
+  margin: 0 0 15px;
+  font-size: 0.85rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+}
+.newProfile__loc > p {
+  margin-bottom: 0;
+}
+.newProfile__exp > h2 > .MuiSvgIcon-root,
+.newProfile__loc > h2 > .MuiSvgIcon-root,
+.newProfile__right__elsewhere > h1 > .MuiSvgIcon-root,
+.newProfile__role > h2 > .MuiSvgIcon-root,
+.newProfile__skill > h2 > .MuiSvgIcon-root {
+  color: #aaa !important;
+  cursor: pointer;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 0.3s, opacity 0.3s;
+}
+.MuiSvgIcon-root {
+  color: #555 !important;
+  font-size: 20px !important;
+  margin-right: 5px;
+}
+.MuiSvgIcon-root {
+  fill: currentColor;
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  font-size: 1.5rem;
+  transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  flex-shrink: 0;
+  user-select: none;
+}
+.newProfile__right__elsewhere > p > img {
+  height: 1.875rem;
+  width: 1.875rem;
+  margin-right: 10px;
+}
+.newProfile__right__elsewhere > p {
+  display: flex;
+  align-items: center;
+  color: #788699;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+}
+.newProfile__right__elsewhere > p:last-child {
+  margin-bottom: 0;
+}
+p {
+  -webkit-margin-before: 1em;
+  margin-block-start: 1em;
+  -webkit-margin-after: 1em;
+  margin-block-end: 1em;
+  -webkit-margin-start: 0;
+  margin-inline-start: 0;
+  -webkit-margin-end: 0;
+  margin-inline-end: 0;
+}
+
+.badge {
+  display: flex;
+  margin: auto;
+  width: 137.09px;
+  height: 86.5px;
+}
+.badge-txt {
+  margin-top: 20px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18.72px;
+  line-height: 23px;
+  text-align: center;
+}
+
+@media (max-width: 1024px) {
+  .newProfile {
+    padding-top: 15px;
+  }
+
+  .newProfile__container {
+    margin: auto;
+    max-width: max-content;
+  }
+
+  .newProfile__role > h2 > .MuiSvgIcon-root,
+  .newProfile__exp > h2 > .MuiSvgIcon-root,
+  .newProfile__skill > h2 > .MuiSvgIcon-root,
+  .newProfile__loc > h2 > .MuiSvgIcon-root,
+  .newProfile__right__elsewhere > h1 > .MuiSvgIcon-root,
+  .experiences__card > div > .MuiSvgIcon-root,
+  .newProfile__resume__selected__icons {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s linear 0s, opacity 300ms;
+  }
+}
+
+@media (max-width: 1024px) {
+  .newProfile__container {
+    margin: auto;
+    max-width: -webkit-max-content;
+    max-width: -moz-max-content;
+    max-width: max-content;
+  }
+}
+@media (max-width: 768px) {
+  .newProfile__container {
+    display: block;
+  }
+  .newProfile__container {
+    display: block;
+  }
+
+  .newProfile__right {
+    margin: 0px;
+    max-width: none;
+  }
+
+  .newProfile__right__elsewhere,
+  .newProfile__preference {
+    width: 606px;
+    margin-top: 15px;
+  }
+
+  .newProfile__userBio__info > h4 {
+    font-size: 1.2rem;
+    margin-top: 0;
+  }
+
+  .newProfile__userBio__info > h5 {
+    font-size: 1.1rem;
+    margin: 5px 0;
+  }
+
+  .newProfile__userBio__info > p {
+    font-size: 0.95rem;
+    color: gray;
+    margin-top: 3px;
+    margin-bottom: 5px;
+  }
+
+  .newProfile__userBio_description {
+    font-size: 0.95rem;
+    line-height: 140%;
+  }
+
+  .newProfile__experience__bg > h3,
+  .newProfile__resume > div > h3 {
+    font-size: 1.3rem;
+  }
+
+  .newProfile__experience__bg > p,
+  .newProfile__resume > div > p {
+    font-size: 1rem;
+  }
+
+  .experiences__card > div > div > h2 {
+    font-size: 1.1rem;
+  }
+
+  .experiences__card > div > div > h3,
+  .experiences__card > div > div > h4,
+  .experiences__card > div > div > p {
+    font-size: 1rem;
+  }
+
+  .experiences__card > div > div > h4 {
+    opacity: 0.9;
+  }
+
+  .newProfile__role > h2,
+  .newProfile__exp > h2,
+  .newProfile__skill > h2,
+  .newProfile__loc > h2,
+  .newProfile__right__elsewhere > h1 {
+    font-size: 1rem;
+  }
+
+  .newProfile__role > p,
+  .newProfile__exp > p,
+  .newProfile__skill > p,
+  .newProfile__loc > p {
+    font-size: 0.95rem;
+  }
+
+  .newProfile__role > div > p,
+  .newProfile__exp > div > p,
+  .newProfile__skill > div > p,
+  .newProfile__loc > div > p {
+    font-size: 0.9rem;
+  }
+
+  .newProfile__right__elsewhere > p {
+    font-size: 0.95rem;
+  }
+}
+@media (max-width: 768px) {
+  .newProfile__right {
+    margin: 0;
+    max-width: none;
+    width: 100%;
+  }
+}
+@media (max-width: 540px) {
+  .newProfile__container .newProfile__userBio {
+    padding: 0 1.5rem 1.5rem;
+  }
+  .newProfile__container .newProfile__userBio > div {
+    display: block;
+    width: 100%;
+  }
+  .newProfile {
+    padding: 0;
+  }
+  .newProfile__userBio,
+  .newProfile__experience,
+  .newProfile__resume,
+  .newProfile__education,
+  .newProfile__right__elsewhere,
+  .newProfile__preference {
+    border-radius: 0;
+    border-right: 0;
+    border-left: 0;
+    width: auto;
+  }
+
+  .dash__component .newProfile {
+    padding-top: 0;
+  }
+
+  .newProfile {
+    overflow-y: hidden;
+  }
+
+  .newProfile__left {
+    min-width: auto;
+    width: 100%;
+  }
+
+  .newProfile__experience {
+    background-size: contain;
+  }
+
+  .newProfile__resume {
+    background-size: 30%;
+  }
+
+  .newProfile__experience__bg > p,
+  .newProfile__resume > div > p {
+    font-size: 0.89rem;
+  }
+  .newProfile__userBio__image__bg {
+    display: block !important;
+    position: absolute;
+    background: linear-gradient(90deg, #13547a, #80d0c4);
+    height: 75px;
+    width: 100%;
+    left: 0;
+  }
+  .newProfile__userBio .MuiBadge-root {
+    margin-top: 2.2rem;
+    margin-bottom: 10px;
+  }
+  .newProfile__userBio__info > h4 {
+    font-size: 1rem;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 414px) {
+  .newProfile__experience__bg > h3 {
+    margin-top: 3.5rem;
+  }
+
+  .newProfile__resume > div > h3 {
+    margin-top: 5rem;
+  }
+
+  .newProfile__experience__bg > p,
+  .newProfile__resume > div > p {
+    font-size: 0.895rem;
+  }
+}
