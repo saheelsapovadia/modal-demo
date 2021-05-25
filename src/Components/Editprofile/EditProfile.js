@@ -8,7 +8,7 @@ import './EditModal.css';
 import './ProfileModal.css';
 import './ExperienceModal.css';
 
-export const EditProfile = ({ showModal, setShowModal }) => {
+export const EditProfile = ({ showModal, setShowModal, scrollRemove }) => {
   const modalRef = useRef();
   const passwordRef = useRef();
   const formRef = useRef();
@@ -16,13 +16,14 @@ export const EditProfile = ({ showModal, setShowModal }) => {
   const closeModal = (e) => {
     if (modalRef.current === e.target) {
       setShowModal(false);
+      scrollRemove();
     }
   };
   const keyPress = useCallback(
     (e) => {
       if (e.key === 'Escape' && showModal) {
         setShowModal(false);
-
+        scrollRemove();
         console.log('I pressed');
       }
     },
@@ -34,6 +35,7 @@ export const EditProfile = ({ showModal, setShowModal }) => {
   }, [keyPress]);
   const closeEditProfileModal = () => {
     setShowModal((prev) => !prev);
+    scrollRemove();
   };
   return (
     <>

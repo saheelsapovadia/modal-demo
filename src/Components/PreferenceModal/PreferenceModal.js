@@ -13,7 +13,7 @@ import '../NewProfile/NewProfile.css';
 // import './Events.css';
 
 const Roles = ({ closePreferenceModal, save, rolesArr, allRoles }) => {
-  const [noOfSelected, setNoOfSelected] = useState(0);
+  const [noOfSelected, setNoOfSelected] = useState(rolesArr.length);
   const [selectedArr, setSelectedArr] = useState(rolesArr);
   const [roles, setRoles] = useState(allRoles);
   const [savedRoles, setSavedRoles] = useState(rolesArr);
@@ -926,6 +926,7 @@ export const PreferenceModal = ({
   save,
   rolesArr,
   allRoles,
+  scrollRemove,
 }) => {
   const modalRef = useRef();
   const passwordRef = useRef();
@@ -934,13 +935,14 @@ export const PreferenceModal = ({
   const closeModal = (e) => {
     if (modalRef.current === e.target) {
       setShowModal(false);
+      scrollRemove();
     }
   };
   const keyPress = useCallback(
     (e) => {
       if (e.key === 'Escape' && showModal) {
         setShowModal(false);
-
+        scrollRemove();
         console.log('I pressed');
       }
     },

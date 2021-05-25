@@ -360,6 +360,19 @@ h3 {
   width: 1.875rem;
   margin-right: 10px;
 }
+.newProfile__right__elsewhere > p > a {
+  transition: all 0.2s ease-in;
+  max-width: 90%;
+  overflow: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+a:hover {
+  color: #25b2aa;
+}
 .newProfile__right__elsewhere > p {
   display: flex;
   align-items: center;
@@ -396,6 +409,90 @@ p {
   font-size: 18.72px;
   line-height: 23px;
   text-align: center;
+}
+/* EXPERIENCE CARD */
+
+.experiences__card > div {
+  position: relative;
+  display: flex;
+  margin-bottom: 22px;
+}
+
+.experiences__card > div:last-of-type {
+  margin-bottom: 0px;
+}
+
+.experiences__card > div > img {
+  height: 60px;
+  width: 60px;
+  object-fit: contain;
+  border-radius: 3px;
+  margin-right: 1.25rem;
+}
+
+.experiences__card > div > div > h2 {
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 150%;
+  margin: 0;
+  color: #355761;
+}
+
+.experiences__card > div > div > h3,
+.experiences__card > div > div > h4,
+.experiences__card > div > div > p {
+  font-size: 0.875rem;
+  line-height: 150%;
+  margin: 0;
+  font-weight: normal;
+  color: #597780;
+}
+
+.experiences__card > div > div > h4 {
+  opacity: 0.7;
+}
+
+.experiences__card > div > div > p {
+  margin-top: 0.5rem;
+}
+.experiences__card > div > div > h2 > a {
+  display: inline-block;
+}
+
+.experiences__card > div > div > h2 > a {
+  color: inherit;
+}
+.experiences__card > div > div > h2 > a:hover {
+  color: #355761;
+}
+.experiences__card > div:hover .hide {
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0s linear 0s, opacity 300ms;
+}
+
+.experiences__card > div > .MuiSvgIcon-root {
+  position: absolute;
+  right: 0;
+  color: #aaa !important;
+  cursor: pointer;
+  font-size: 25px !important;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 300ms, opacity 300ms;
+}
+
+.experiences__card > button {
+  position: absolute;
+  top: 26px;
+  right: 20px;
+  color: #62d5bc;
+  font-size: 0.85rem;
+  font-weight: 600;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 }
 
 @media (max-width: 1024px) {

@@ -43,7 +43,7 @@
 .DraftEditor-editorContainer,
 .DraftEditor-root,
 .public-DraftEditor-content {
-  height: 226px !important;
+  /* height: 226px; */
   text-align: left;
   text-align: initial;
 }
