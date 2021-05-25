@@ -12,12 +12,18 @@ import '../NewProfile/NewProfile.css';
 // import './inputSearch.css';
 // import './Events.css';
 
-const Roles = ({ closePreferenceModal, save, rolesArr, allRoles }) => {
+const Roles = ({
+  closePreferenceModal,
+  save,
+  rolesArr,
+  allRoles,
+  scrollRemove,
+}) => {
   const [noOfSelected, setNoOfSelected] = useState(rolesArr.length);
   const [selectedArr, setSelectedArr] = useState(rolesArr);
   const [roles, setRoles] = useState(allRoles);
   const [savedRoles, setSavedRoles] = useState(rolesArr);
-  // [
+  // [ heleo
   //   'IT System Administrator',
   //   'Sales',
   //   'Data Scientist',
@@ -153,12 +159,12 @@ const Roles = ({ closePreferenceModal, save, rolesArr, allRoles }) => {
       if (!ans) {
         let n = [e.target.innerText, ...roles];
         setRoles(n);
-        console.log(Roles);
+        //console.log(Roles);
         setNoOfSelected(noOfSelected + 1);
         let newArr = [...selectedArr, e.target.innerText];
         setSelectedArr(newArr);
-        let nr = [e.target.innerText, ...roles];
-        setRoles(nr);
+        // let nr = [e.target.innerText, ...roles];
+        // setRoles(nr);
       }
     }
     setFilteredSuggestions([]);
@@ -243,13 +249,17 @@ const Roles = ({ closePreferenceModal, save, rolesArr, allRoles }) => {
           focusable='false'
           viewBox='0 0 24 24'
           aria-hidden='true'
-          onClick={() => closePreferenceModal()}
+          onClick={() => {
+            scrollRemove();
+            closePreferenceModal();
+          }}
         >
           <path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'></path>
         </svg>
         <button
           onClick={() => {
             save(selectedArr, roles);
+            scrollRemove();
             closePreferenceModal();
           }}
         >
@@ -506,21 +516,171 @@ const Roles = ({ closePreferenceModal, save, rolesArr, allRoles }) => {
   );
 };
 
-const Experience = ({ closePreferenceModal }) => {
-  const [noOfSelected, setNoOfSelected] = useState(0);
-  const [selectedArr, setSelectedArr] = useState([]);
-
+const Experience = ({
+  expiArr,
+  save,
+  closePreferenceModal,
+  allExpis,
+  scrollRemove,
+}) => {
+  const [noOfSelected, setNoOfSelected] = useState(expiArr.length);
+  const [selectedArr, setSelectedArr] = useState(expiArr);
+  const [expis, setExpis] = useState(allExpis);
   const toggleSelected = (event) => {
     let currClass = event.target.className;
-
+    function arrayRemove(arr, value) {
+      return arr.filter(function (ele) {
+        return ele != value;
+      });
+    }
+    //
     if (currClass == 'preference__modal__roles__role' && noOfSelected < 7) {
       event.target.className = 'preference__modal__roles__role__selected';
       setNoOfSelected(noOfSelected + 1);
+      let newArr = [...selectedArr, event.target.innerText];
+      setSelectedArr(newArr);
     } else if (currClass == 'preference__modal__roles__role__selected') {
       event.target.className = 'preference__modal__roles__role';
+      const expiSelected = [...selectedArr];
+      let newArr = arrayRemove(expiSelected, event.target.innerText);
       setNoOfSelected(noOfSelected - 1);
+      setSelectedArr(newArr);
     }
   };
+
+  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [userInput, setUserInput] = useState('');
+  const [nRole, setNRole] = useState('');
+  const OnChange = (e) => {
+    const suggestions = [...expis];
+    const usrInput = e.target.value;
+    const newFilteredSuggestions = suggestions.filter(
+      (suggestion) =>
+        suggestion.toLowerCase().indexOf(usrInput.toLowerCase()) > -1
+    );
+
+    setFilteredSuggestions(newFilteredSuggestions);
+    setShowSuggestions(true);
+    setUserInput(e.target.value);
+  };
+  const OnClick = (e) => {
+    console.log('onclick....');
+    setFilteredSuggestions([]);
+    setShowSuggestions(false);
+    setUserInput(e.target.innerText);
+    if (noOfSelected < 7) {
+      const elementID = e.target.innerText;
+
+      const ele = document.getElementById(elementID);
+      //ele.ch;
+      ele.className = 'preference__modal__roles__role__selected';
+      setNoOfSelected(noOfSelected + 1);
+      let newArr = [...selectedArr, ele.innerText];
+      setSelectedArr(newArr);
+      //console.log(ele.innerHTML);
+    }
+  };
+  const close = () => {
+    setShowSuggestions(false);
+  };
+
+  let newRole;
+  const newRoleFunc = (e) => {
+    console.log('newRoleFunc....');
+    console.log(e.target.innerText);
+
+    if (noOfSelected < 7) {
+      let cr = [...expis];
+      let ans = cr.find((expi) => {
+        return expi == e.target.innerText;
+      });
+      console.log(ans);
+      if (!ans) {
+        let n = [e.target.innerText, ...expis];
+        setExpis(n);
+        //console.log(Roles);
+        setNoOfSelected(noOfSelected + 1);
+        let newArr = [...selectedArr, e.target.innerText];
+        setSelectedArr(newArr);
+        // let nr = [e.target.innerText, ...roles];
+        // setExpis(nr);
+      }
+    }
+    setFilteredSuggestions([]);
+    setShowSuggestions(false);
+    setUserInput(e.target.innerText);
+  };
+
+  let suggestionsList;
+
+  if (showSuggestions && userInput) {
+    if (filteredSuggestions.length) {
+      suggestionsList = (
+        <div className='preference__modal__suggestions' onBlur={close}>
+          {/* <ul className='suggestions'> */}
+          <span className='' key={userInput} onClick={newRoleFunc}>
+            {userInput}
+          </span>
+          {filteredSuggestions.map((suggestion, index) => {
+            let className;
+            return (
+              <span className='' key={suggestion} onClick={OnClick}>
+                {suggestion}
+              </span>
+            );
+          })}
+          {/* </ul> */}
+        </div>
+      );
+    } else {
+      suggestionsList = (
+        <div className='preference__modal__suggestions'>
+          <span className='' key={userInput} onClick={newRoleFunc}>
+            {userInput}
+          </span>
+        </div>
+      );
+    }
+  }
+  let Expis;
+
+  Expis = expis.map((role) => {
+    let flag = false;
+
+    selectedArr.map((savedRole) => {
+      if (savedRole == role) {
+        flag = true;
+      }
+    });
+
+    if (flag) {
+      return (
+        <p
+          class='preference__modal__roles__role__selected'
+          style={{ cursor: 'pointer' }}
+          onClick={(e) => toggleSelected(e)}
+          id={role}
+          key={role}
+        >
+          {role}
+        </p>
+      );
+    } else {
+      return (
+        <p
+          class='preference__modal__roles__role'
+          style={{ cursor: 'pointer' }}
+          onClick={(e) => toggleSelected(e)}
+          id={role}
+          key={role}
+        >
+          {role}
+        </p>
+      );
+    }
+  });
+
   return (
     <>
       <div class='preference__modal__header'>
@@ -529,11 +689,22 @@ const Experience = ({ closePreferenceModal }) => {
           focusable='false'
           viewBox='0 0 24 24'
           aria-hidden='true'
-          onClick={() => closePreferenceModal()}
+          onClick={() => {
+            scrollRemove();
+            closePreferenceModal();
+          }}
         >
           <path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'></path>
         </svg>
-        <button>Save</button>
+        <button
+          onClick={() => {
+            save(selectedArr, expis);
+            scrollRemove();
+            closePreferenceModal();
+          }}
+        >
+          Save
+        </button>
       </div>
       <div className='preference__modal__roles'>
         <h2>Edit My Experience</h2>
@@ -545,178 +716,181 @@ const Experience = ({ closePreferenceModal }) => {
           <input
             type='text'
             placeholder='Example: Data Science, Data Analyst...'
-            value=''
+            value={userInput}
+            onChange={OnChange}
           />
+          {suggestionsList}
         </div>
-        <div>
-          <p
-            class='preference__modal__roles__role'
-            style={{ cursor: 'pointer' }}
-            onClick={(e) => toggleSelected(e)}
-          >
-            Business
-          </p>
-          <p
-            class='preference__modal__roles__role'
-            style={{ cursor: 'pointer' }}
-            onClick={(e) => toggleSelected(e)}
-          >
-            Sales
-          </p>
-          <p
-            class='preference__modal__roles__role'
-            style={{ cursor: 'pointer' }}
-            onClick={(e) => toggleSelected(e)}
-          >
-            Marketing
-          </p>
-          <p
-            class='preference__modal__roles__role'
-            style={{ cursor: 'pointer' }}
-            onClick={(e) => toggleSelected(e)}
-          >
-            Networking
-          </p>
-          <p
-            class='preference__modal__roles__role'
-            style={{ cursor: 'pointer' }}
-            onClick={(e) => toggleSelected(e)}
-          >
-            Systems
-          </p>
-          <p
-            class='preference__modal__roles__role'
-            style={{ cursor: 'pointer' }}
-            onClick={(e) => toggleSelected(e)}
-          >
-            Backend
-          </p>
-          <p
-            class='preference__modal__roles__role'
-            style={{ cursor: 'pointer' }}
-            onClick={(e) => toggleSelected(e)}
-          >
-            Security
-          </p>
-          <p
-            class='preference__modal__roles__role'
-            style={{ cursor: 'pointer' }}
-            onClick={(e) => toggleSelected(e)}
-          >
-            Frontend
-          </p>
-          <p
-            class='preference__modal__roles__role'
-            style={{ cursor: 'pointer' }}
-            onClick={(e) => toggleSelected(e)}
-          >
-            Data Science
-          </p>
-          <p
-            class='preference__modal__roles__role'
-            style={{ cursor: 'pointer' }}
-            onClick={(e) => toggleSelected(e)}
-          >
-            Testing
-          </p>
-          <p
-            class='preference__modal__roles__role'
-            style={{ cursor: 'pointer' }}
-            onClick={(e) => toggleSelected(e)}
-          >
-            Product Management
-          </p>
-          <p
-            class='preference__modal__roles__role'
-            style={{ cursor: 'pointer' }}
-            onClick={(e) => toggleSelected(e)}
-          >
-            Finance
-          </p>
-          <p
-            class='preference__modal__roles__role'
-            style={{ cursor: 'pointer' }}
-            onClick={(e) => toggleSelected(e)}
-          >
-            Hardware
-          </p>
-          <p
-            class='preference__modal__roles__role'
-            style={{ cursor: 'pointer' }}
-            onClick={(e) => toggleSelected(e)}
-          >
-            UI/UX Design
-          </p>
-          <p
-            class='preference__modal__roles__role'
-            style={{ cursor: 'pointer' }}
-            onClick={(e) => toggleSelected(e)}
-          >
-            Full Stack
-          </p>
-          <p
-            class='preference__modal__roles__role'
-            style={{ cursor: 'pointer' }}
-            onClick={(e) => toggleSelected(e)}
-          >
-            Mobile
-          </p>
-          <p
-            class='preference__modal__roles__role'
-            style={{ cursor: 'pointer' }}
-            onClick={(e) => toggleSelected(e)}
-          >
-            Product Design
-          </p>
-          <p
-            class='preference__modal__roles__role'
-            style={{ cursor: 'pointer' }}
-            onClick={(e) => toggleSelected(e)}
-          >
-            Machine Learning
-          </p>
-          <p
-            class='preference__modal__roles__role'
-            style={{ cursor: 'pointer' }}
-            onClick={(e) => toggleSelected(e)}
-          >
-            Accounting
-          </p>
-          <p
-            class='preference__modal__roles__role'
-            style={{ cursor: 'pointer' }}
-            onClick={(e) => toggleSelected(e)}
-          >
-            Trading
-          </p>
-          <p
-            class='preference__modal__roles__role'
-            style={{ cursor: 'pointer' }}
-            onClick={(e) => toggleSelected(e)}
-          >
-            Art
-          </p>
-          <p
-            class='preference__modal__roles__role'
-            style={{ cursor: 'pointer' }}
-            onClick={(e) => toggleSelected(e)}
-          >
-            Legal
-          </p>
-          <p
-            class='preference__modal__roles__role'
-            style={{ cursor: 'pointer' }}
-            onClick={(e) => toggleSelected(e)}
-          >
-            Biotech
-          </p>
-        </div>
+        <div id='Roles'>{Expis}</div>
       </div>
     </>
   );
 };
 
-const Skills = ({ closePreferenceModal }) => {
+const Skills = ({
+  closePreferenceModal,
+  save,
+  skillsArr,
+  allSkills,
+  scrollRemove,
+}) => {
+  const [noOfSelected, setNoOfSelected] = useState(skillsArr.length);
+  const [selectedArr, setSelectedArr] = useState(skillsArr);
+  const [skills, setSkills] = useState(allSkills);
+  const toggleSelected = (event) => {
+    let currClass = event.target.className;
+    function arrayRemove(arr, value) {
+      return arr.filter(function (ele) {
+        return ele != value;
+      });
+    }
+    //
+    if (currClass == 'preference__modal__roles__role' && noOfSelected < 7) {
+      event.target.className = 'preference__modal__roles__role__selected';
+      setNoOfSelected(noOfSelected + 1);
+      let newArr = [...selectedArr, event.target.innerText];
+      setSelectedArr(newArr);
+    } else if (currClass == 'preference__modal__roles__role__selected') {
+      event.target.className = 'preference__modal__roles__role';
+      const expiSelected = [...selectedArr];
+      let newArr = arrayRemove(skillsArr, event.target.innerText);
+      setNoOfSelected(noOfSelected - 1);
+      setSelectedArr(newArr);
+    }
+  };
+  const close = () => {
+    setShowSuggestions(false);
+  };
+  let newRole;
+  const newRoleFunc = (e) => {
+    console.log('newRoleFunc....');
+    console.log(e.target.innerText);
+
+    if (noOfSelected < 7) {
+      let cr = [...skills];
+      let ans = cr.find((skill) => {
+        return skill == e.target.innerText;
+      });
+      console.log(ans);
+      if (!ans) {
+        let n = [e.target.innerText, ...skills];
+        setSkills(n);
+        //console.log(Roles);
+        setNoOfSelected(noOfSelected + 1);
+        let newArr = [...selectedArr, e.target.innerText];
+        setSelectedArr(newArr);
+        // let nr = [e.target.innerText, ...roles];
+        // setExpis(nr);
+      }
+    }
+    setFilteredSuggestions([]);
+    setShowSuggestions(false);
+    setUserInput(e.target.innerText);
+  };
+
+  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [userInput, setUserInput] = useState('');
+  const [nRole, setNRole] = useState('');
+  const OnChange = (e) => {
+    const suggestions = [...skills];
+    const usrInput = e.target.value;
+    const newFilteredSuggestions = suggestions.filter(
+      (suggestion) =>
+        suggestion.toLowerCase().indexOf(usrInput.toLowerCase()) > -1
+    );
+
+    setFilteredSuggestions(newFilteredSuggestions);
+    setShowSuggestions(true);
+    setUserInput(e.target.value);
+  };
+
+  const OnClick = (e) => {
+    console.log('onclick....');
+    setFilteredSuggestions([]);
+    setShowSuggestions(false);
+    setUserInput(e.target.innerText);
+    if (noOfSelected < 7) {
+      const elementID = e.target.innerText;
+
+      const ele = document.getElementById(elementID);
+      //ele.ch;
+      ele.className = 'preference__modal__roles__role__selected';
+      setNoOfSelected(noOfSelected + 1);
+      let newArr = [...selectedArr, ele.innerText];
+      setSelectedArr(newArr);
+      //console.log(ele.innerHTML);
+    }
+  };
+  let suggestionsList;
+
+  if (showSuggestions && userInput) {
+    if (filteredSuggestions.length) {
+      suggestionsList = (
+        <div className='preference__modal__suggestions' onBlur={close}>
+          {/* <ul className='suggestions'> */}
+          <span className='' key={userInput} onClick={newRoleFunc}>
+            {userInput}
+          </span>
+          {filteredSuggestions.map((suggestion, index) => {
+            let className;
+            return (
+              <span className='' key={suggestion} onClick={OnClick}>
+                {suggestion}
+              </span>
+            );
+          })}
+          {/* </ul> */}
+        </div>
+      );
+    } else {
+      suggestionsList = (
+        <div className='preference__modal__suggestions'>
+          <span className='' key={userInput} onClick={newRoleFunc}>
+            {userInput}
+          </span>
+        </div>
+      );
+    }
+  }
+
+  let Skills;
+
+  Skills = skills.map((role) => {
+    let flag = false;
+
+    selectedArr.map((savedRole) => {
+      if (savedRole == role) {
+        flag = true;
+      }
+    });
+
+    if (flag) {
+      return (
+        <p
+          class='preference__modal__roles__role__selected'
+          style={{ cursor: 'pointer' }}
+          onClick={(e) => toggleSelected(e)}
+          id={role}
+          key={role}
+        >
+          {role}
+        </p>
+      );
+    } else {
+      return (
+        <p
+          class='preference__modal__roles__role'
+          style={{ cursor: 'pointer' }}
+          onClick={(e) => toggleSelected(e)}
+          id={role}
+          key={role}
+        >
+          {role}
+        </p>
+      );
+    }
+  });
   return (
     <>
       <div class='preference__modal__header'>
@@ -725,11 +899,22 @@ const Skills = ({ closePreferenceModal }) => {
           focusable='false'
           viewBox='0 0 24 24'
           aria-hidden='true'
-          onClick={() => closePreferenceModal()}
+          onClick={() => {
+            scrollRemove();
+            closePreferenceModal();
+          }}
         >
           <path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'></path>
         </svg>
-        <button>Save</button>
+        <button
+          onClick={() => {
+            save(selectedArr, skills);
+            scrollRemove();
+            closePreferenceModal();
+          }}
+        >
+          Save
+        </button>
       </div>
       <div className='preference__modal__roles'>
         <h2>Edit My Background</h2>
@@ -738,10 +923,17 @@ const Skills = ({ closePreferenceModal }) => {
           <p>Choose up to 7</p>
         </div>
         <div class='prefSearch'>
-          <input type='text' placeholder='Example: Java, C++' value='' />
+          <input
+            type='text'
+            placeholder='Example: Java, C++'
+            value={userInput}
+            onChange={OnChange}
+          />
+          {suggestionsList}
         </div>
         <div>
-          <p class='preference__modal__roles__role'>Angular.js</p>
+          {Skills}
+          {/* <p class='preference__modal__roles__role'>Angular.js</p>
           <p class='preference__modal__roles__role'>Apache Spark</p>
           <p class='preference__modal__roles__role'>C</p>
           <p class='preference__modal__roles__role'>C++</p>
@@ -863,14 +1055,20 @@ const Skills = ({ closePreferenceModal }) => {
           <p class='preference__modal__roles__role'>Biology</p>
           <p class='preference__modal__roles__role'>Biomedical Engineering</p>
           <p class='preference__modal__roles__role'>Business</p>
-          <p class='preference__modal__roles__role'>Chemical Engineering</p>
+          <p class='preference__modal__roles__role'>Chemical Engineering</p> */}
         </div>
       </div>
     </>
   );
 };
 
-const Location = ({ closePreferenceModal }) => {
+const Location = ({
+  closePreferenceModal,
+  saveLocations,
+  locationsArr,
+  allLocations,
+  scrollRemove,
+}) => {
   return (
     <>
       <div class='preference__modal__header'>
@@ -879,7 +1077,10 @@ const Location = ({ closePreferenceModal }) => {
           focusable='false'
           viewBox='0 0 24 24'
           aria-hidden='true'
-          onClick={() => closePreferenceModal()}
+          onClick={() => {
+            scrollRemove();
+            closePreferenceModal();
+          }}
         >
           <path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'></path>
         </svg>
@@ -924,8 +1125,17 @@ export const PreferenceModal = ({
   setShowModal,
   query,
   save,
+  savePrefExpi,
+  saveSkills,
+  saveLocations,
   rolesArr,
+  expiArr,
+  skillsArr,
+  locationsArr,
   allRoles,
+  allExpis,
+  allSkills,
+  allLocations,
   scrollRemove,
 }) => {
   const modalRef = useRef();
@@ -964,14 +1174,39 @@ export const PreferenceModal = ({
         save={save}
         rolesArr={rolesArr}
         allRoles={allRoles}
+        scrollRemove={scrollRemove}
       />
     );
   } else if (query == 'experience') {
-    Q = <Experience closePreferenceModal={closePreferenceModal} />;
+    Q = (
+      <Experience
+        closePreferenceModal={closePreferenceModal}
+        save={savePrefExpi}
+        expiArr={expiArr}
+        allExpis={allExpis}
+        scrollRemove={scrollRemove}
+      />
+    );
   } else if (query == 'skills') {
-    Q = <Skills closePreferenceModal={closePreferenceModal} />;
+    Q = (
+      <Skills
+        closePreferenceModal={closePreferenceModal}
+        skillsArr={skillsArr}
+        allSkills={allSkills}
+        save={saveSkills}
+        scrollRemove={scrollRemove}
+      />
+    );
   } else if (query == 'location') {
-    Q = <Location closePreferenceModal={closePreferenceModal} save={save} />;
+    Q = (
+      <Location
+        closePreferenceModal={closePreferenceModal}
+        scrollRemove={scrollRemove}
+        locationsArr={locationsArr}
+        allLocations={allLocations}
+        save={saveLocations}
+      />
+    );
   }
   return (
     <>

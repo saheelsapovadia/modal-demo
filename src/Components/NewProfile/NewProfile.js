@@ -32,6 +32,9 @@ export const NewProfile = () => {
   const [left, setLeft] = useState();
   const [top, setTop] = useState();
   const [rolesArr, setRolesArr] = useState([]);
+  const [expisArr, setExpiArr] = useState([]);
+  const [skillsArr, setSkillsArr] = useState([]);
+  const [locationsArr, setLocationsArr] = useState([]);
   const [experiences, setExperiences] = useState([]);
   const [editExpi, setEditExpi] = useState([
     0,
@@ -107,6 +110,47 @@ export const NewProfile = () => {
     'Copywriting',
     'Not Sure Yet',
   ]);
+  const [allExpis, setAllExpis] = useState([
+    'Business',
+    'Sales',
+    'Marketing',
+    'Networking',
+    'Systems',
+    'Backend',
+    'Security',
+    'Frontend',
+    'Data Science',
+    'Testing',
+    'Product Management',
+    'Finance',
+    'Hardware',
+    'UI/UX Design',
+    'Full Stack',
+    'Mobile',
+    'Product Design',
+    'Machine Learning',
+    'Accounting',
+    'Trading',
+    'Art',
+    'Legal',
+    'Biotech',
+  ]);
+  const [allSkills, setAllSkills] = useState([
+    'Angular js',
+    'Apache spark',
+    'C',
+    'C++',
+    'Kotlin',
+    'Java',
+    'Python',
+    'Node js',
+    'React js',
+    'Linux',
+    'Github',
+    'SQL',
+    'MongoDB',
+  ]);
+  const [allLocations, setAllLocations] = useState([]);
 
   const openEditProfileModal = () => {
     setShowEditProfileModal((prev) => !prev);
@@ -129,6 +173,19 @@ export const NewProfile = () => {
   const save = (result, all) => {
     setRolesArr(result);
     setAllRoles(all);
+  };
+  const savePrefExpi = (result, all) => {
+    setExpiArr(result);
+    setAllExpis(all);
+    //console.log(result, all);
+  };
+  const saveSkills = (result, all) => {
+    setAllSkills(all);
+    setSkillsArr(result);
+  };
+  const saveLocations = (result, all) => {
+    setLocationsArr(result);
+    setAllLocations(all);
   };
   const saveExpi = (result) => {
     console.log(result);
@@ -156,6 +213,15 @@ export const NewProfile = () => {
   //console.log(socials);
   const rolesUI = rolesArr.map((role) => {
     return <p>{role}</p>;
+  });
+  const expiUI = expisArr.map((expi) => {
+    return <p>{expi}</p>;
+  });
+  const skillsUi = skillsArr.map((skill) => {
+    return <p>{skill}</p>;
+  });
+  const locationUI = locationsArr.map((location) => {
+    return <p>{location}</p>;
   });
 
   const editModal = (exp, index) => {
@@ -325,8 +391,17 @@ export const NewProfile = () => {
         setShowModal={setShowPreferenceModal}
         query={query}
         rolesArr={rolesArr}
+        expiArr={expisArr}
+        skillsArr={skillsArr}
+        locationsArr={locationsArr}
         allRoles={allRoles}
+        allExpis={allExpis}
+        allSkills={allSkills}
+        allLocations={allLocations}
         save={save}
+        savePrefExpi={savePrefExpi}
+        saveSkills={saveSkills}
+        saveLocations={saveLocations}
         scrollRemove={scrollRemove}
       />
       <SocialMediaModal
@@ -542,7 +617,11 @@ export const NewProfile = () => {
                           </svg>
                         </h2>
                         <div></div>
-                        <p>What areas of experience do you have?</p>
+                        {expisArr.length > 0 ? (
+                          <div>{expiUI}</div>
+                        ) : (
+                          <p>What areas of experience do you have?</p>
+                        )}
                       </div>
                       <div class='newProfile__skill'>
                         <h2>
@@ -558,7 +637,11 @@ export const NewProfile = () => {
                           </svg>
                         </h2>
                         <div></div>
-                        <p>Rank your skills</p>
+                        {skillsArr.length > 0 ? (
+                          <div>{skillsUi}</div>
+                        ) : (
+                          <p>Rank your skills</p>
+                        )}
                       </div>
                       <div class='newProfile__loc'>
                         <h2>
