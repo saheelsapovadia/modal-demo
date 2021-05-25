@@ -14,7 +14,16 @@ import './Events.css';
 import './TextEditor.css';
 import { stateToHTML } from 'draft-js-export-html';
 
-export const AddExperience = ({ showModal, setShowModal, save }) => {
+export const AddExperience = ({
+  showModal,
+  setShowModal,
+  save,
+  currSave,
+  scrollRemove,
+  edit,
+  editExpi,
+  deleteExpi,
+}) => {
   const modalRef = useRef();
   const passwordRef = useRef();
   const formRef = useRef();
@@ -22,13 +31,14 @@ export const AddExperience = ({ showModal, setShowModal, save }) => {
   const closeModal = (e) => {
     if (modalRef.current === e.target) {
       setShowModal(false);
+      scrollRemove();
     }
   };
   const keyPress = useCallback(
     (e) => {
       if (e.key === 'Escape' && showModal) {
         setShowModal(false);
-
+        scrollRemove();
         console.log('I pressed');
       }
     },
@@ -38,8 +48,9 @@ export const AddExperience = ({ showModal, setShowModal, save }) => {
     document.addEventListener('keydown', keyPress);
     return () => document.removeEventListener('keydown', keyPress);
   }, [keyPress]);
-  const closeEditProfileModal = () => {
+  const closeAddExpiModal = () => {
     setShowModal((prev) => !prev);
+    scrollRemove();
   };
   const [editorState, setEditorState] = React.useState(() =>
     EditorState.createEmpty()
@@ -57,6 +68,14 @@ export const AddExperience = ({ showModal, setShowModal, save }) => {
   const [to, setTo] = useState({ month: '', year: '' });
   const [remote, setRemote] = useState(false);
   const [present, setPresent] = useState(false);
+
+  useEffect(() => {
+    setWebsite(editExpi[1].website);
+    setUserInput(editExpi[1].company);
+    setEditorState(editExpi[1].editorState);
+    setFrom(editExpi[1].from);
+    setLocation(editExpi[1].location);
+  }, editExpi);
 
   const handleInput = (e) => {
     //e.preventDefault();
@@ -169,6 +188,7 @@ export const AddExperience = ({ showModal, setShowModal, save }) => {
   // const onEditorChange = (e) => {
   //   setEditorState(e.target.value);
   // };
+
   useEffect(() => {
     //console.log(editorState.getCurrentContent().loadWithEntities);
     let len = editorState.getCurrentContent().getPlainText().length;
@@ -176,6 +196,7 @@ export const AddExperience = ({ showModal, setShowModal, save }) => {
     if (len > 500) setLenExceeded(true);
     else setLenExceeded(false);
   }, [editorState]);
+
   const onEditorChange = (editorchange) => {
     setEditorState(editorchange);
     setContentLength(editorState.length);
@@ -199,6 +220,24 @@ export const AddExperience = ({ showModal, setShowModal, save }) => {
     onEditorChange(RichUtils.toggleBlockType(editorState, 'ordered-list-item'));
   };
 
+  const Delete = (e) => {
+    e.preventDefault();
+    console.log('deleting.....');
+    deleteExpi(editExpi[0]);
+    setUserInput('');
+    setWebsite(null);
+    setTitle(null);
+    setLocation(null);
+    setContentLength(0);
+    setFrom({ month: '', year: '' });
+    setTo({ month: '', year: '' });
+    setLenExceeded(false);
+    setEditorState(() => EditorState.createEmpty());
+    setRemote(false);
+    setPresent(false);
+    setShowModal(false);
+    scrollRemove();
+  };
   const send = (e) => {
     e.preventDefault();
     let des = stateToHTML(editorState.getCurrentContent());
@@ -215,7 +254,9 @@ export const AddExperience = ({ showModal, setShowModal, save }) => {
       editorState: editorState,
     };
     console.log(result);
-    save(result);
+    if (!edit) {
+      save(result);
+    } else currSave(result, editExpi[0]);
     setUserInput('');
     setWebsite(null);
     setTitle(null);
@@ -228,6 +269,7 @@ export const AddExperience = ({ showModal, setShowModal, save }) => {
     setRemote(false);
     setPresent(false);
     setShowModal(false);
+    scrollRemove();
   };
 
   return (
@@ -245,7 +287,7 @@ export const AddExperience = ({ showModal, setShowModal, save }) => {
             <CloseModalButton
               className='CloseModalButton'
               aria-label='Close modal'
-              onClick={() => closeEditProfileModal()}
+              onClick={() => closeAddExpiModal()}
             />
             <div className='experience__modal__header'>
               <h3>Add Experience</h3>
@@ -553,6 +595,14 @@ export const AddExperience = ({ showModal, setShowModal, save }) => {
                   </div>
                 </div>
                 <div className='experience__button'>
+                  {edit ? (
+                    <button
+                      style={{ background: 'red', color: 'white' }}
+                      onClick={Delete}
+                    >
+                      Delete
+                    </button>
+                  ) : null}
                   <button
                     className='savebtn'
                     disabled={lenExceeded}

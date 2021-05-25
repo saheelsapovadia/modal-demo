@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './NewProfile.css';
 import '../Modal/Modal.css';
 import './dashboard.css';
 import './toggle.css';
 import './sidedrawer.css';
 import './StudentSidebar.css';
+import './importantStyle.css';
 import avatar from './avatar-edit.png';
 import personal from './personal-website.0111f690.svg';
 import linkedin from './linkedin.2932a798.svg';
 import github from './github.09c9500e.svg';
 import heart from './heart.079db34b.svg';
 import badges from './badges.fbd62946.svg';
+import uploadResume from './resume-selected.178e0255.svg';
 import { EditProfile } from '../Editprofile/EditProfile';
 import { AddExperience } from '../Editprofile/AddExperience';
 import PreferenceModal from '../PreferenceModal/PreferenceModal';
@@ -31,6 +33,27 @@ export const NewProfile = () => {
   const [top, setTop] = useState();
   const [rolesArr, setRolesArr] = useState([]);
   const [experiences, setExperiences] = useState([]);
+  const [editExpi, setEditExpi] = useState([
+    0,
+    {
+      company: '',
+      website: '',
+      location: '',
+      remote: '',
+      title: '',
+      from: {
+        month: '',
+        year: '',
+      },
+      present: '',
+      to: {
+        month: '',
+        year: '',
+      },
+      desc: 'des',
+      editorState: () => EditorState.createEmpty(),
+    },
+  ]);
   const [socials, setSocials] = useState({
     linkedin: '',
     github: '',
@@ -39,6 +62,7 @@ export const NewProfile = () => {
     personal: '',
     projects: '',
   });
+  const [edit, setEdit] = useState(false);
   const [suggestions, setSuggestions] = useState([
     { img: 'https://i.ibb.co/T1W3Ctq/amwalcom.png', name: 'Amwalcom' },
     { img: 'https://i.ibb.co/fv0XS7D/ARVORE.png', name: 'ARVORE' },
@@ -90,6 +114,7 @@ export const NewProfile = () => {
   };
   const openAddExpiModal = () => {
     setShowAddExpiModal((prev) => !prev);
+
     scrollRecord();
   };
   const openPreferenceModal = (q) => {
@@ -110,6 +135,21 @@ export const NewProfile = () => {
     setEditorState(result.editorState);
     setExperiences([...experiences, result]);
   };
+  const editCurrExp = (result, index) => {
+    let currExp = [...experiences];
+    currExp[index] = result;
+    setExperiences(currExp);
+    setEditorState(result.editorState);
+  };
+  const deleteExpi = (index) => {
+    let newState = [...experiences];
+
+    let deletedState = newState.filter((ele, i) => {
+      return index != i;
+    });
+
+    setExperiences(deletedState);
+  };
   const saveSocials = (result) => {
     setSocials(result);
   };
@@ -117,9 +157,16 @@ export const NewProfile = () => {
   const rolesUI = rolesArr.map((role) => {
     return <p>{role}</p>;
   });
+
+  const editModal = (exp, index) => {
+    console.log(exp, index);
+    setEdit(true);
+    setEditExpi([index, exp]);
+    openAddExpiModal();
+  };
   //console.log(rolesArr);
   //console.log(experiences);
-  const expUI = experiences.map((exp) => {
+  const expUI = experiences.map((exp, index) => {
     let img = [];
     img = suggestions.filter((sugg) => {
       return sugg.name == exp.company;
@@ -154,7 +201,8 @@ export const NewProfile = () => {
                 <a href='ss.eee.com'>{exp.company}</a>
               </h2> */}
               <h3>
-                {exp.from.month} {exp.from.year} - present
+                {exp.from.month} {exp.from.year} -{' '}
+                {!exp.present ? exp.to.month + ' ' + exp.to.year : ' present'}
               </h3>
               <h4>{exp.location}</h4>
               <div>
@@ -204,11 +252,19 @@ export const NewProfile = () => {
               focusable='false'
               viewBox='0 0 24 24'
               aria-hidden='true'
+              onClick={() => editModal(exp, index)}
             >
               <path d='M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM5.92 19H5v-.92l9.06-9.06.92.92L5.92 19zM20.71 5.63l-2.34-2.34c-.2-.2-.45-.29-.71-.29s-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41z'></path>
             </svg>
           </div>
-          <button onClick={openAddExpiModal}>+ Add Experience</button>
+          <button
+            onClick={() => {
+              openAddExpiModal();
+              setEdit(false);
+            }}
+          >
+            + Add Experience
+          </button>
         </div>
       </>
     );
@@ -234,6 +290,19 @@ export const NewProfile = () => {
     window.scrollTo(left, top);
   };
   //console.log(left, top);
+
+  // File Upload
+  const fileInput = useRef(null);
+  const [file, setFile] = useState(null);
+  const onFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+  const deleteFile = () => {
+    setFile(null);
+  };
+  const onFileUpload = (e) => {};
+  console.log(file);
+
   return (
     <>
       <EditProfile
@@ -246,6 +315,10 @@ export const NewProfile = () => {
         setShowModal={setShowAddExpiModal}
         save={saveExpi}
         scrollRemove={scrollRemove}
+        edit={edit}
+        editExpi={editExpi}
+        currSave={editCurrExp}
+        deleteExpi={deleteExpi}
       />
       <PreferenceModal
         showModal={showPreferenceModal}
@@ -356,18 +429,80 @@ export const NewProfile = () => {
                     </div>
                   )}
 
-                  <div class='newProfile__resume'>
+                  <div
+                    className={
+                      file
+                        ? 'newProfile__resume newProfile__resume_noback'
+                        : 'newProfile__resume'
+                    }
+                  >
                     <h1>RESUME</h1>
-                    <div>
-                      <h3>Add your resume</h3>
-                      <p>
-                        Your resume is essential for recruiters to learn more
-                        about you! Upload one as soon as possible to boost your
-                        chances of being discovered
-                      </p>
-                      <button class='btn'>Add Resume</button>
-                      <input type='file' id='file' name='file' />
-                    </div>
+                    {file ? (
+                      <div class='newProfile__resume__selected'>
+                        <img src={uploadResume} alt='resume' />
+                        <div>
+                          <h3>s4vvy.jpg</h3>
+                          <p>Last updated: May 25, 2021</p>
+                        </div>
+                        <div class='newProfile__resume__selected__icons'>
+                          <svg
+                            class='MuiSvgIcon-root'
+                            focusable='false'
+                            viewBox='0 0 24 24'
+                            aria-hidden='true'
+                            onClick={deleteFile}
+                          >
+                            <path d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z'></path>
+                          </svg>
+                          <input
+                            type='file'
+                            id='file'
+                            name='file'
+                            ref={fileInput}
+                            onChange={onFileChange}
+                          />
+                          <svg
+                            class='MuiSvgIcon-root'
+                            focusable='false'
+                            viewBox='0 0 24 24'
+                            aria-hidden='true'
+                            id='file-selected'
+                            onClick={(e) => {
+                              fileInput.current && fileInput.current.click();
+                              onFileUpload();
+                            }}
+                          >
+                            <path d='M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM5.92 19H5v-.92l9.06-9.06.92.92L5.92 19zM20.71 5.63l-2.34-2.34c-.2-.2-.45-.29-.71-.29s-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41z'></path>
+                          </svg>
+                          <input type='file' id='file' name='file' />
+                        </div>
+                      </div>
+                    ) : (
+                      <div>
+                        <h3>Add your resume</h3>
+                        <p>
+                          Your resume is essential for recruiters to learn more
+                          about you! Upload one as soon as possible to boost
+                          your chances of being discovered
+                        </p>
+                        <input
+                          type='file'
+                          id='file'
+                          name='file'
+                          ref={fileInput}
+                          onChange={onFileChange}
+                        />
+                        <button
+                          class='btn'
+                          onClick={(e) => {
+                            fileInput.current && fileInput.current.click();
+                            onFileUpload();
+                          }}
+                        >
+                          Add Resume
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </section>
                 <section class='newProfile__right'>
