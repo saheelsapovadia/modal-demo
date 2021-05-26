@@ -18,6 +18,7 @@ import { AddExperience } from '../Editprofile/AddExperience';
 import PreferenceModal from '../PreferenceModal/PreferenceModal';
 import { SocialMediaModal } from '../SocialMedia/SocialMediaModal';
 import { Editor, EditorState, RichUtils } from 'draft-js';
+import { ExperienceId } from '../ExperienceId/ExperienceId';
 
 export const NewProfile = () => {
   const [editorState, setEditorState] = React.useState(() =>
@@ -28,6 +29,7 @@ export const NewProfile = () => {
   const [showAddExpiModal, setShowAddExpiModal] = useState(false);
   const [showPreferenceModal, setShowPreferenceModal] = useState(false);
   const [showSocialModal, setShowSocialModal] = useState(false);
+  const [showExpiIdModal, setShowExpiIdModal] = useState(false);
   const [query, setQuery] = useState(null);
   const [left, setLeft] = useState();
   const [top, setTop] = useState();
@@ -150,7 +152,26 @@ export const NewProfile = () => {
     'SQL',
     'MongoDB',
   ]);
-  const [allLocations, setAllLocations] = useState([]);
+  const [allLocations, setAllLocations] = useState([
+    'Totally Open',
+    'Remote',
+    'Atlanta, GA',
+    'Austin, TX',
+    'Boston, MA',
+    'Chicago, IL',
+    'Denver, CO',
+    'Los Angeles, CA',
+    'Nashville, TN',
+    'New York, NY',
+    'Raleigh, NC',
+    'San Diego, CA',
+    'San Francisco, CA',
+    'Seattle, WA',
+    'Wilmington, DE',
+    'Houston, TX',
+    'Dallas, TX',
+    'Detroit MI',
+  ]);
 
   const openEditProfileModal = () => {
     setShowEditProfileModal((prev) => !prev);
@@ -168,6 +189,10 @@ export const NewProfile = () => {
   };
   const openSocialModal = () => {
     setShowSocialModal((prev) => !prev);
+    scrollRecord();
+  };
+  const openExpiIdModal = () => {
+    setShowExpiIdModal((prev) => !prev);
     scrollRecord();
   };
   const save = (result, all) => {
@@ -368,7 +393,7 @@ export const NewProfile = () => {
   };
   const onFileUpload = (e) => {};
   console.log(file);
-
+  console.log(locationsArr);
   return (
     <>
       <EditProfile
@@ -407,6 +432,12 @@ export const NewProfile = () => {
       <SocialMediaModal
         showModal={showSocialModal}
         setShowModal={setShowSocialModal}
+        save={saveSocials}
+        scrollRemove={scrollRemove}
+      />
+      <ExperienceId
+        showModal={showExpiIdModal}
+        setShowModal={setShowExpiIdModal}
         save={saveSocials}
         scrollRemove={scrollRemove}
       />
@@ -657,7 +688,11 @@ export const NewProfile = () => {
                           </svg>
                         </h2>
                         <div></div>
-                        <p>Where do you want to work?</p>
+                        {locationsArr.length > 0 ? (
+                          <div>{locationUI}</div>
+                        ) : (
+                          <p>Where do you want to work?</p>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -714,7 +749,9 @@ export const NewProfile = () => {
                       Get noticed by recruitments. Add things like hackathons
                       and classes you’ve TA’d.
                     </p>
-                    <button class='btn btn-badge'>Add ID Card</button>
+                    <button class='btn btn-badge' onClick={openExpiIdModal}>
+                      Add ID Card
+                    </button>
                   </div>
                 </section>
               </div>

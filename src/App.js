@@ -29,9 +29,9 @@ function App() {
   };
   return (
     <Container>
-      {/* <Button onClick={openModal}>Sign up</Button>
-      <Modal showModal={showModal} setShowModal={setShowModal}></Modal> */}
-      <NewProfile />
+      <Button onClick={openModal}>Sign up</Button>
+      <Modal showModal={showModal} setShowModal={setShowModal}></Modal>
+      {/* <NewProfile /> */}
       <GlobalStyle />
     </Container>
   );

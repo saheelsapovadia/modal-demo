@@ -1,0 +1,160 @@
+.expiId {
+  position: absolute;
+  inset: 80px 0px;
+  border: 1px solid rgb(204, 204, 204);
+  background: white;
+  overflow: auto;
+  border-radius: 10px;
+  outline: none;
+  padding: 0px;
+  z-index: 9999;
+  margin: auto;
+  color: rgb(148, 158, 196);
+  max-width: 750px;
+  width: 100%;
+}
+.container {
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+}
+.modal-heading-user {
+  height: 75px;
+  background: #fff;
+  box-shadow: 2px 2px 8px rgb(0 0 0 / 8%);
+  display: flex;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 18;
+  padding: 0.75rem 0.75rem 0.75rem 1.5rem;
+  justify-content: space-between;
+}
+.cross {
+  background: none;
+  outline: none;
+}
+
+.cross,
+.modal-btn {
+  cursor: pointer;
+  border: none;
+}
+.modal-btn {
+  width: 100px;
+  height: 40px;
+  color: #fff;
+  background: #201e27;
+  border-radius: 3px;
+  margin-right: 10px;
+}
+.exp {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 24px;
+  text-align: center;
+  color: #000;
+}
+h5 {
+  display: block;
+  font-size: 0.83em;
+  margin-block-start: 1.67em;
+  margin-block-end: 1.67em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+.inp-co-1 {
+  padding: 20px 60px;
+  display: flex;
+  flex-direction: column;
+}
+.my-label {
+  margin-bottom: 10px;
+}
+
+.my-label {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000;
+}
+.inp-co-user {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  flex-wrap: wrap;
+}
+.res {
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.modal-select-btn,
+.modal-select-normal {
+  padding: 0.625rem 2rem;
+  min-width: 100px;
+  height: 44px;
+  font-size: 0.875rem;
+}
+.modal-select-btn {
+  border: none;
+  color: #fff;
+  background: #1a73e8;
+  border-radius: 50px;
+  outline: none;
+  font-weight: 600;
+}
+.modal-select-normal {
+  color: #afb7c2;
+  background: none;
+  border: 1px solid #afb7c2;
+  border-radius: 50px;
+  font-weight: 500;
+}
+.two {
+  display: flex;
+}
+.two > .inp-co:first-child {
+  padding-right: 10px;
+  padding-left: 60px;
+  width: 50%;
+}
+.two > .inp-co:nth-child(2) {
+  padding-right: 60px;
+  padding-left: 10px;
+  width: 50%;
+}
+
+.inp-co {
+  padding: 20px 60px;
+  display: flex;
+  flex-direction: column;
+}
+.inp-co > input {
+  color: #000;
+  font-size: 0.875rem;
+  font-family: Inter;
+}
+.inp-co > input,
+.inp-co > textarea {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  color: #a0a5af;
+  outline: none;
+  transition: 0.3s;
+}
+.inp-type {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  color: #a0a5af;
+  outline: none;
+  transition: 0.3s;
+}

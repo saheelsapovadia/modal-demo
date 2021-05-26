@@ -1064,11 +1064,167 @@ const Skills = ({
 
 const Location = ({
   closePreferenceModal,
-  saveLocations,
+  save,
   locationsArr,
   allLocations,
   scrollRemove,
 }) => {
+  const [noOfSelected, setNoOfSelected] = useState(locationsArr.length);
+  const [selectedArr, setSelectedArr] = useState(locationsArr);
+  const [locations, setLocations] = useState(allLocations);
+  const toggleSelected = (event) => {
+    let currClass = event.target.className;
+    function arrayRemove(arr, value) {
+      return arr.filter(function (ele) {
+        return ele != value;
+      });
+    }
+    //&& noOfSelected < 7
+    if (currClass == 'preference__modal__roles__role') {
+      event.target.className = 'preference__modal__roles__role__selected';
+      setNoOfSelected(noOfSelected + 1);
+      let newArr = [...selectedArr, event.target.innerText];
+      setSelectedArr(newArr);
+    } else if (currClass == 'preference__modal__roles__role__selected') {
+      event.target.className = 'preference__modal__roles__role';
+      const locationSelected = [...selectedArr];
+      let newArr = arrayRemove(locationsArr, event.target.innerText);
+      setNoOfSelected(noOfSelected - 1);
+      setSelectedArr(newArr);
+    }
+  };
+  // console.log(selectedArr);
+  const close = () => {
+    setShowSuggestions(false);
+  };
+  const newRoleFunc = (e) => {
+    console.log('newRoleFunc....');
+    console.log(e.target.innerText);
+
+    if (noOfSelected < 7) {
+      let cr = [...locations];
+      let ans = cr.find((location) => {
+        return location == e.target.innerText;
+      });
+      console.log(ans);
+      if (!ans) {
+        let n = [e.target.innerText, ...locations];
+        setLocations(n);
+        //console.log(Roles);
+        setNoOfSelected(noOfSelected + 1);
+        let newArr = [...selectedArr, e.target.innerText];
+        setSelectedArr(newArr);
+        // let nr = [e.target.innerText, ...roles];
+        // setExpis(nr);
+      }
+    }
+    setFilteredSuggestions([]);
+    setShowSuggestions(false);
+    setUserInput(e.target.innerText);
+  };
+
+  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [userInput, setUserInput] = useState('');
+
+  const OnChange = (e) => {
+    const suggestions = [...locations];
+    const usrInput = e.target.value;
+    const newFilteredSuggestions = suggestions.filter(
+      (suggestion) =>
+        suggestion.toLowerCase().indexOf(usrInput.toLowerCase()) > -1
+    );
+
+    setFilteredSuggestions(newFilteredSuggestions);
+    setShowSuggestions(true);
+    setUserInput(e.target.value);
+  };
+
+  const OnClick = (e) => {
+    console.log('onclick....');
+    setFilteredSuggestions([]);
+    setShowSuggestions(false);
+    setUserInput(e.target.innerText);
+    if (noOfSelected < 7) {
+      const elementID = e.target.innerText;
+
+      const ele = document.getElementById(elementID);
+      //ele.ch;
+      ele.className = 'preference__modal__roles__role__selected';
+      setNoOfSelected(noOfSelected + 1);
+      let newArr = [...selectedArr, ele.innerText];
+      setSelectedArr(newArr);
+      //console.log(ele.innerHTML);
+    }
+  };
+  let suggestionsList;
+
+  if (showSuggestions && userInput) {
+    if (filteredSuggestions.length) {
+      suggestionsList = (
+        <div className='preference__modal__suggestions' onBlur={close}>
+          {/* <ul className='suggestions'> */}
+          <span className='' key={userInput} onClick={newRoleFunc}>
+            {userInput}
+          </span>
+          {filteredSuggestions.map((suggestion, index) => {
+            let className;
+            return (
+              <span className='' key={suggestion} onClick={OnClick}>
+                {suggestion}
+              </span>
+            );
+          })}
+          {/* </ul> */}
+        </div>
+      );
+    } else {
+      suggestionsList = (
+        <div className='preference__modal__suggestions'>
+          <span className='' key={userInput} onClick={newRoleFunc}>
+            {userInput}
+          </span>
+        </div>
+      );
+    }
+  }
+  let Locations;
+
+  Locations = locations.map((role) => {
+    let flag = false;
+
+    selectedArr.map((savedRole) => {
+      if (savedRole == role) {
+        flag = true;
+      }
+    });
+
+    if (flag) {
+      return (
+        <p
+          class='preference__modal__roles__role__selected'
+          style={{ cursor: 'pointer' }}
+          onClick={(e) => toggleSelected(e)}
+          id={role}
+          key={role}
+        >
+          {role}
+        </p>
+      );
+    } else {
+      return (
+        <p
+          class='preference__modal__roles__role'
+          style={{ cursor: 'pointer' }}
+          onClick={(e) => toggleSelected(e)}
+          id={role}
+          key={role}
+        >
+          {role}
+        </p>
+      );
+    }
+  });
   return (
     <>
       <div class='preference__modal__header'>
@@ -1084,7 +1240,15 @@ const Location = ({
         >
           <path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'></path>
         </svg>
-        <button>Save</button>
+        <button
+          onClick={() => {
+            save(selectedArr, locations);
+            scrollRemove();
+            closePreferenceModal();
+          }}
+        >
+          Save
+        </button>
       </div>
       <div className='preference__modal__roles'>
         <h2>Edit My Interests</h2>
@@ -1093,27 +1257,142 @@ const Location = ({
           <p>Choose up to 7</p>
         </div>
         <div class='prefSearch'>
-          <input type='text' placeholder='Example: London, Spain...' value='' />
+          <input
+            type='text'
+            placeholder='Example: London, Spain...'
+            value={userInput}
+            onChange={OnChange}
+          />
+          {suggestionsList}
         </div>
         <div>
-          <p class='preference__modal__roles__role'>Totally Open</p>
-          <p class='preference__modal__roles__role'>Remote</p>
-          <p class='preference__modal__roles__role'>Atlanta, GA</p>
-          <p class='preference__modal__roles__role'>Austin, TX</p>
-          <p class='preference__modal__roles__role'>Boston, MA</p>
-          <p class='preference__modal__roles__role'>Chicago, IL</p>
-          <p class='preference__modal__roles__role'>Denver, CO</p>
-          <p class='preference__modal__roles__role'>Los Angeles, CA</p>
-          <p class='preference__modal__roles__role'>Nashville, TN</p>
-          <p class='preference__modal__roles__role'>New York, NY</p>
-          <p class='preference__modal__roles__role'>Raleigh, NC</p>
-          <p class='preference__modal__roles__role'>San Diego, CA</p>
-          <p class='preference__modal__roles__role'>San Francisco, CA</p>
-          <p class='preference__modal__roles__role'>Seattle, WA</p>
-          <p class='preference__modal__roles__role'>Wilmington, DE</p>
-          <p class='preference__modal__roles__role'>Houston, TX</p>
-          <p class='preference__modal__roles__role'>Dallas, TX</p>
-          <p class='preference__modal__roles__role'>Detroit MI</p>
+          {Locations}
+          {/* <p
+            class='preference__modal__roles__role'
+            style={{ cursor: 'pointer' }}
+            onClick={(e) => toggleSelected(e)}
+          >
+            Totally Open
+          </p>
+          <p
+            class='preference__modal__roles__role'
+            style={{ cursor: 'pointer' }}
+            onClick={(e) => toggleSelected(e)}
+          >
+            Remote
+          </p>
+          <p
+            class='preference__modal__roles__role'
+            style={{ cursor: 'pointer' }}
+            onClick={(e) => toggleSelected(e)}
+          >
+            Atlanta, GA
+          </p>
+          <p
+            class='preference__modal__roles__role'
+            style={{ cursor: 'pointer' }}
+            onClick={(e) => toggleSelected(e)}
+          >
+            Austin, TX
+          </p>
+          <p
+            class='preference__modal__roles__role'
+            style={{ cursor: 'pointer' }}
+            onClick={(e) => toggleSelected(e)}
+          >
+            Boston, MA
+          </p>
+          <p
+            class='preference__modal__roles__role'
+            style={{ cursor: 'pointer' }}
+            onClick={(e) => toggleSelected(e)}
+          >
+            Chicago, IL
+          </p>
+          <p
+            class='preference__modal__roles__role'
+            style={{ cursor: 'pointer' }}
+            onClick={(e) => toggleSelected(e)}
+          >
+            Denver, CO
+          </p>
+          <p
+            class='preference__modal__roles__role'
+            style={{ cursor: 'pointer' }}
+            onClick={(e) => toggleSelected(e)}
+          >
+            Los Angeles, CA
+          </p>
+          <p
+            class='preference__modal__roles__role'
+            style={{ cursor: 'pointer' }}
+            onClick={(e) => toggleSelected(e)}
+          >
+            Nashville, TN
+          </p>
+          <p
+            class='preference__modal__roles__role'
+            style={{ cursor: 'pointer' }}
+            onClick={(e) => toggleSelected(e)}
+          >
+            New York, NY
+          </p>
+          <p
+            class='preference__modal__roles__role'
+            style={{ cursor: 'pointer' }}
+            onClick={(e) => toggleSelected(e)}
+          >
+            Raleigh, NC
+          </p>
+          <p
+            class='preference__modal__roles__role'
+            style={{ cursor: 'pointer' }}
+            onClick={(e) => toggleSelected(e)}
+          >
+            San Diego, CA
+          </p>
+          <p
+            class='preference__modal__roles__role'
+            style={{ cursor: 'pointer' }}
+            onClick={(e) => toggleSelected(e)}
+          >
+            San Francisco, CA
+          </p>
+          <p
+            class='preference__modal__roles__role'
+            style={{ cursor: 'pointer' }}
+            onClick={(e) => toggleSelected(e)}
+          >
+            Seattle, WA
+          </p>
+          <p
+            class='preference__modal__roles__role'
+            style={{ cursor: 'pointer' }}
+            onClick={(e) => toggleSelected(e)}
+          >
+            Wilmington, DE
+          </p>
+          <p
+            class='preference__modal__roles__role'
+            style={{ cursor: 'pointer' }}
+            onClick={(e) => toggleSelected(e)}
+          >
+            Houston, TX
+          </p>
+          <p
+            class='preference__modal__roles__role'
+            style={{ cursor: 'pointer' }}
+            onClick={(e) => toggleSelected(e)}
+          >
+            Dallas, TX
+          </p>
+          <p
+            class='preference__modal__roles__role'
+            style={{ cursor: 'pointer' }}
+            onClick={(e) => toggleSelected(e)}
+          >
+            Detroit MI
+          </p> */}
         </div>
       </div>
     </>

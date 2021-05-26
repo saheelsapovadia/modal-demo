@@ -156,3 +156,32 @@ h5 {
 .preference__modal__suggestions > ul > li:hover {
   background-color: #c6c9cc;
 }
+
+@media (max-width: 540px) {
+  .preference__modal {
+    width: auto;
+    margin: auto;
+  }
+
+  .preference__modal__container {
+    padding: 0.5rem;
+  }
+
+  .preference__modal__roles {
+    width: 100%;
+  }
+
+  .preference__modal__header {
+    padding: 0;
+  }
+
+  .preference__modal > div.MuiDialog-container.MuiDialog-scrollPaper > div {
+    border-radius: 0px;
+  }
+
+  .preference__modal__roles .prefSearch > input {
+    margin-left: 0;
+    margin-top: 0;
+    width: 100%;
+  }
+}
