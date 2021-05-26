@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { GlobalStyle } from './globalStyles';
 import styled from 'styled-components';
-import { Modal } from './Components/Modal';
+import { Modal } from './Components/Modal/Modal';
+import { NewProfile } from './Components/NewProfile/NewProfile';
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -30,6 +31,7 @@ function App() {
     <Container>
       <Button onClick={openModal}>Sign up</Button>
       <Modal showModal={showModal} setShowModal={setShowModal}></Modal>
+      {/* <NewProfile /> */}
       <GlobalStyle />
     </Container>
   );

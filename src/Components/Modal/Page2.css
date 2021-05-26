@@ -1,0 +1,139 @@
+button,
+input,
+option,
+select,
+textarea {
+  font-family: 'Inter', sans-serif !important;
+}
+
+.modal__content3 {
+  margin: 0;
+}
+.college_field {
+  margin-bottom: 3.6% !important;
+}
+.yearDegree {
+  display: flex;
+  flex-direction: row;
+}
+.newLabel {
+  font-size: 0.875rem;
+  color: #201e27;
+  margin-bottom: 1.5% !important;
+  font-weight: 600;
+  line-height: 1.6;
+  max-width: 42em;
+}
+.signupDropdown2 {
+  margin-top: 2.5%;
+  margin-right: 1px;
+  border-radius: 0.3125rem;
+  margin-bottom: 0.6rem;
+  width: 100%;
+  font-size: 0.875rem;
+  padding: 10px;
+  outline: none;
+  caret-color: #2dc5a1;
+  border: 1px solid #ddd;
+  transition: all 0.3s ease-in;
+}
+
+.degreeContainer {
+  margin-left: 12%;
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+.Degree {
+  border-radius: 0.3125rem;
+  margin-bottom: 0.625rem;
+  width: 99%;
+  font-size: 0.875rem;
+  padding: 10px;
+  outline: none;
+  caret-color: #2dc5a1;
+  border: 1px solid #ddd;
+  transition: all 0.3s ease-in;
+}
+@media (max-width: 1549px) and (min-width: 1500px) {
+  .signupButton2 {
+    margin-left: 6vw;
+  }
+}
+@media (max-width: 770px) {
+  .signupButton,
+  .signupButton2 {
+    width: 150px;
+  }
+}
+.buttons {
+  display: flex;
+  padding: 20px !important;
+}
+.signupButton2 {
+  margin: auto 5% auto 15%;
+  width: 30%;
+  color: #000;
+  background: #d3d3d3;
+  padding: 0.625rem 0.75rem;
+  cursor: pointer;
+  border-radius: 5px;
+  max-width: 160px;
+  outline: none;
+  border: none;
+  text-align: center;
+  transition: all 0.2s ease-in;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+.signupButton {
+  margin: auto 15% auto 5%;
+  width: 30%;
+  color: #fff;
+  background: #1a73e8;
+  padding: 0.625rem 0.75rem;
+  cursor: pointer;
+  border-radius: 5px;
+  max-width: 160px;
+  outline: none;
+  border: none;
+  text-align: center;
+  transition: all 0.2s ease-in;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+.signupButton:disabled {
+  opacity: 0.5 !important;
+  cursor: default;
+}
+
+@media (max-width: 770px) {
+  .buttons {
+    padding: 0;
+  }
+  .signupButton,
+  .signupButton2 {
+    max-width: none;
+    width: 80%;
+  }
+  .signupButton {
+    margin-right: 10%;
+  }
+  .signupButton2 {
+    margin-left: 10%;
+  }
+}
+
+@media (max-width: 415px) {
+  .display-none {
+    display: none;
+  }
+  .modal .signupButton2 {
+    margin: 20px;
+  }
+  .signupButton,
+  .signupButton2 {
+    width: 150px;
+    margin: 20px;
+  }
+}

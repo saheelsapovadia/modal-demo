@@ -1,0 +1,411 @@
+.experience__modal,
+.elsewhere__modal,
+.profile__modal {
+  width: 37.5rem;
+  margin: 24px auto;
+}
+
+.experience__modal
+  > div.MuiDialog-container.MuiDialog-scrollPaper
+  > .MuiDialog-paperFullScreen,
+.elsewhere__modal
+  > div.MuiDialog-container.MuiDialog-scrollPaper
+  > .MuiDialog-paperFullScreen,
+.profile__modal
+  > div.MuiDialog-container.MuiDialog-scrollPaper
+  > .MuiDialog-paperFullScreen {
+  border-radius: 8px;
+}
+
+.experience__modal__header,
+.elsewhere__modal__header,
+.profile__modal__header {
+  display: flex;
+  justify-content: space-between;
+  position: sticky !important;
+  align-items: center;
+  /* height: 3.75rem; */
+  height: 200px;
+  max-height: 60px;
+  padding: 9px;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  background: #eff2f6;
+}
+
+/* .elsewhere__modal__header,
+.profile__modal__header {
+  height: auto;
+} */
+
+.experience__modal__header > h3,
+.elsewhere__modal__header > h3,
+.profile__modal__header > h3 {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  color: #201e27;
+  margin: 0;
+}
+
+.experience__modal__header > .MuiSvgIcon-root,
+.elsewhere__modal__header > .MuiSvgIcon-root,
+.profile__modal__header > .MuiSvgIcon-root {
+  font-size: 2rem !important;
+  margin: 0;
+  color: #aaa !important;
+  cursor: pointer;
+  padding: 5px;
+  margin-right: -5px;
+  border-radius: 50px;
+  transition: all 0.2s ease-in;
+}
+
+.experience__modal__header > .MuiSvgIcon-root:hover,
+.elsewhere__modal__header > .MuiSvgIcon-root:hover,
+.profile__modal__header > .MuiSvgIcon-root:hover {
+  background-color: #ddd;
+  transform: scale(0.9);
+}
+
+/* FORM */
+.experience__modal__form,
+.elsewhere__modal__form,
+.profile__modal__form {
+  padding: 1.5rem 1.5rem;
+  padding-top: 2rem;
+  overflow-y: scroll;
+}
+
+.experience__modal__form > form,
+.elsewhere__modal__form > form,
+.profile__modal__form > form {
+  width: 100%;
+}
+
+.experience__modal__form > form > label,
+.elsewhere__modal__form > form > label,
+.profile__modal__form > form > label {
+  font-weight: 600;
+  color: #201e27;
+  display: block;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  margin-bottom: 5px;
+}
+
+.experience__modal__form > form > label > span,
+.elsewhere__modal__form > form > label > span,
+.profile__modal__form > form > label > span {
+  opacity: 0.6;
+}
+
+.experience__modal__form > form > input,
+.elsewhere__modal__form > form > input,
+.profile__modal__form > form > input {
+  font-size: 0.875rem;
+  margin: 0;
+  margin-bottom: 13px;
+  background: transparent;
+  color: #030303;
+  caret-color: #2dc5a1;
+  display: block;
+  height: 2.5rem;
+  line-height: 1.375rem;
+  outline: none;
+  padding: 0 0.875rem 0.1em;
+  width: 100%;
+  border-radius: 0.3125rem;
+  border: 1px solid #ddd;
+  transition: all 0.2s ease-in;
+}
+
+.experience__modal__form > form > input:disabled {
+  opacity: 0;
+  display: none;
+}
+
+.experience__modal__form > form > input:focus,
+.elsewhere__modal__form > form > input:focus,
+.profile__modal__form > form > input:focus {
+  border: 1px solid #000;
+}
+
+.experience__modal__form__checkbox {
+  display: flex;
+  align-items: center;
+  margin-top: -5px;
+}
+
+.experience__modal__form__checkbox > p {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.mr {
+  margin-right: 5%;
+}
+
+.select__month {
+  outline: none;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid #d6e0e1;
+  border-radius: 0.3125rem;
+  margin-bottom: 0.625rem;
+  position: relative;
+  width: 47.5%;
+  font-size: 0.875rem;
+  padding: 10px;
+  color: #788699;
+  transition: all 0.2s ease-in;
+}
+
+.select__month:disabled {
+  display: none;
+}
+
+.experience__button,
+.elsewhere__button,
+.profile__btn {
+  float: right;
+  margin-left: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.experience__button > button,
+.elsewhere__button > button,
+.profile__btn > button {
+  margin-left: 0.9375rem;
+  outline: none;
+  min-width: 9.0625rem;
+  padding: 0.625rem 0.75rem;
+  border-radius: 0.3125rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  height: 2.5rem;
+  cursor: pointer;
+}
+
+.experience__button > button:first-child,
+.elsewhere__button > button:first-child,
+.profile__btn > button:first-child {
+  border: 1px solid #d6dae0;
+  color: #201e27;
+}
+
+.experience__button > button:last-child,
+.elsewhere__button > button:last-child,
+.profile__btn > button:last-child {
+  color: #fff;
+  background: #1a73e8;
+  border: none;
+  margin-bottom: 20px;
+}
+.savebtn:disabled {
+  opacity: 0.5 !important;
+  cursor: default;
+}
+.MuiCheckbox-root {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.MuiIconButton-label {
+  width: 100%;
+  display: flex;
+  align-items: inherit;
+  justify-content: inherit;
+}
+.jss8 {
+  margin: 9px;
+  width: 20px;
+}
+.jss9 {
+  padding: 9px;
+}
+.jss12 {
+  top: 0;
+  left: 0;
+  width: 100%;
+  cursor: inherit;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  padding: 0;
+  z-index: 1;
+  position: absolute;
+}
+.MuiIconButton-colorPrimary {
+  color: #3f51b5;
+}
+
+.MuiIconButton-root {
+  flex: 0 0 auto;
+  color: rgba(0, 0, 0, 0.54);
+  padding: 12px;
+  overflow: visible;
+  font-size: 1.5rem;
+  text-align: center;
+  transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  border-radius: 50%;
+}
+
+.MuiButtonBase-root {
+  color: inherit;
+  border: 0;
+  /* cursor: pointer; */
+  margin: 0;
+  display: inline-flex;
+  outline: 0;
+  padding: 0;
+  position: relative;
+  align-items: center;
+  user-select: none;
+  border-radius: 0;
+  vertical-align: middle;
+  -moz-appearance: none;
+  justify-content: center;
+  text-decoration: none;
+  background-color: transparent;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.MuiTouchRipple-root {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  overflow: hidden;
+  position: absolute;
+  border-radius: inherit;
+  pointer-events: none;
+}
+/* .editor > .DraftEditor-root {
+  margin-top: 2px !important;
+  height: 253px !important;
+  width: 94.5% !important;
+  font-size: 0.9rem !important;
+  resize: none !important;
+  caret-color: #2dc5a1;
+  border: 1px solid #ddd;
+  outline: none !important;
+  border-radius: 5px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  padding: 10px 0.875rem 0.1em;
+  transition: border 0.2s ease-in;
+}
+.editor > .DraftEditor-root {
+  overflow-y: auto;
+}
+.editor > .DraftEditor-root {
+  padding-top: 10px;
+}
+
+.DraftEditor-root {
+  position: relative;
+}
+.DraftEditor-editorContainer,
+.DraftEditor-root,
+.public-DraftEditor-content {
+  height: inherit;
+  text-align: left;
+  text-align: initial;
+}
+
+.public-DraftEditorPlaceholder-root {
+  max-width: 60%;
+}
+
+.public-DraftEditorPlaceholder-root {
+  color: #9197a3;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+}
+.DraftEditor-editorContainer {
+  background-color: hsla(0, 0%, 100%, 0);
+  border-left: 0.1px solid transparent;
+  position: relative;
+  z-index: 1;
+}
+.public-DraftEditor-content[contenteditable='true'] {
+  -webkit-user-modify: read-write-plaintext-only;
+}
+
+.editor__buttons {
+  width: 95.5%;
+  background: #f6f9fc;
+  border: 1px solid #d6e0e1;
+  border-radius: 0 0 0.3125rem 0.3125rem;
+  padding: 0.25rem 0.725rem 0;
+  border-top: 0;
+  display: flex;
+  align-items: center;
+}
+.editor__buttons > div > .MuiSvgIcon-root {
+  width: 1.4rem;
+  height: 1.4rem;
+  margin-right: 0.5rem;
+  color: #5a8a99 !important;
+  cursor: pointer;
+  padding: 5px;
+  transition: all 0.3s ease-in;
+} */
+
+@media (max-width: 768px) {
+  .profile__modal,
+  .elsewhere__modal {
+    /* height: max-content; */
+    margin: auto;
+  }
+
+  .experience__modal__form > form > label,
+  .elsewhere__modal__form > form > label,
+  .profile__modal__form > form > label {
+    font-size: 0.95rem;
+  }
+
+  .experience__modal__form::-webkit-scrollbar,
+  .elsewhere__modal__form::-webkit-scrollbar,
+  .profile__modal__form::-webkit-scrollbar {
+    display: none;
+  }
+
+  .experience__modal__form,
+  .elsewhere__modal__form,
+  .profile__modal__form {
+    -ms-overflow-style: none;
+  }
+}
+
+@media (max-width: 540px) {
+  .experience__modal,
+  .elsewhere__modal,
+  .profile__modal {
+    width: 100%;
+    margin: auto;
+    /* height: auto; */
+    height: 100%;
+  }
+
+  .experience__modal
+    > div.MuiDialog-container.MuiDialog-scrollPaper
+    > .MuiDialog-paperFullScreen,
+  .elsewhere__modal
+    > div.MuiDialog-container.MuiDialog-scrollPaper
+    > .MuiDialog-paperFullScreen,
+  .profile__modal
+    > div.MuiDialog-container.MuiDialog-scrollPaper
+    > .MuiDialog-paperFullScreen {
+    border-radius: 0px;
+  }
+}
+
+@media (max-width: 414px) {
+  .experience__modal__form > form > input,
+  .elsewhere__modal__form > form > input,
+  .profile__modal__form > form > input {
+    width: 100%;
+  }
+}

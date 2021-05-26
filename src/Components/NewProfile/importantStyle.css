@@ -1,0 +1,6 @@
+.experiences__card > .DraftEditor-editorContainer,
+.DraftEditor-root {
+  height: fit-content !important;
+  text-align: left;
+  text-align: initial;
+}
