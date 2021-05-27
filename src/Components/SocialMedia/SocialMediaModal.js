@@ -6,6 +6,19 @@ export const SocialMediaModal = ({
   save,
   scrollRemove,
 }) => {
+  const github = RegExp(/github/);
+  const website = RegExp(/.com/);
+  const linkedin = RegExp(/linkedin/);
+  const line = RegExp(/line/);
+  const wechat = RegExp(/wechat/);
+  const [errors, setErrors] = useState({
+    github: '',
+    linkedin: '',
+    website: '',
+    line: '',
+    wechat: '',
+  });
+
   const modalRef = useRef();
   const passwordRef = useRef();
   const formRef = useRef();
@@ -47,27 +60,82 @@ export const SocialMediaModal = ({
   const handleChange = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
+
+    let newError = { ...errors };
+
     let soc = { ...socials };
     switch (name) {
       case 'linkedin':
         soc.linkedin = value;
         setSocials(soc);
+        if (linkedin.test(value) && website.test(value)) {
+          newError.linkedin = '';
+          setErrors(newError);
+        } else if (value.length > 0) {
+          newError.linkedin = 'Invalid Linkedin url';
+
+          setErrors(newError);
+        } else {
+          newError.linkedin = '';
+          setErrors(newError);
+        }
         break;
       case 'github':
         soc.github = value;
-        setSocials(soc);
+        if (github.test(value) && website.test(value)) {
+          newError.github = '';
+          setSocials(soc);
+          setErrors(newError);
+        } else if (value.length > 0) {
+          newError.github = 'Invalid Github url';
+          setSocials(soc);
+          setErrors(newError);
+        } else {
+          newError.github = '';
+          setErrors(newError);
+        }
         break;
       case 'lineid':
         soc.line = value;
         setSocials(soc);
+        if (line.test(value) && website.test(value)) {
+          newError.line = '';
+          setErrors(newError);
+        } else if (value.length > 0) {
+          newError.line = 'Invalid line Url';
+          setErrors(newError);
+        } else {
+          newError.line = '';
+          setErrors(newError);
+        }
         break;
       case 'wechatid':
         soc.wechat = value;
         setSocials(soc);
+        if (website.test(value) && website.test(value)) {
+          newError.wechat = '';
+          setErrors(newError);
+        } else if (value.length > 0) {
+          newError.wechat = 'Invalid wechat Url';
+          setErrors(newError);
+        } else {
+          newError.wechat = '';
+          setErrors(newError);
+        }
         break;
       case 'personal':
         soc.personal = value;
         setSocials(soc);
+        if (website.test(value)) {
+          newError.website = '';
+          setErrors(newError);
+        } else if (value.length > 0) {
+          newError.website = 'Invalid Url';
+          setErrors(newError);
+        } else {
+          newError.website = '';
+          setErrors(newError);
+        }
         break;
       case 'project':
         soc.projects = value;
@@ -79,6 +147,15 @@ export const SocialMediaModal = ({
     setShowModal(false);
     save(socials);
   };
+  console.log(
+    !(
+      errors.github == 0 &&
+      errors.line == 0 &&
+      errors.website == 0 &&
+      errors.wechat == 0 &&
+      errors.linkedin == 0
+    )
+  );
   return (
     <>
       {showModal ? (
@@ -121,6 +198,19 @@ export const SocialMediaModal = ({
                   placeholder='https://www.scholarly-science.com'
                   value={socials.linkedin}
                 />
+                {errors.linkedin.length > 0 && (
+                  <p className='modal__errors'>
+                    <svg
+                      className='MuiSvgIcon-root'
+                      focusable='false'
+                      viewBox='0 0 24 24'
+                      aria-hidden='true'
+                    >
+                      <path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'></path>
+                    </svg>{' '}
+                    {errors.linkedin}
+                  </p>
+                )}
                 <label>
                   Github URL <span>(optional)</span>
                 </label>
@@ -132,6 +222,19 @@ export const SocialMediaModal = ({
                   value={socials.github}
                   placeholder='https://www.scholarly-science.git'
                 />
+                {errors.github.length > 0 && (
+                  <p className='modal__errors'>
+                    <svg
+                      className='MuiSvgIcon-root'
+                      focusable='false'
+                      viewBox='0 0 24 24'
+                      aria-hidden='true'
+                    >
+                      <path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'></path>
+                    </svg>{' '}
+                    {errors.github}
+                  </p>
+                )}
                 <label>
                   Line ID <span>(optional)</span>
                 </label>
@@ -143,6 +246,19 @@ export const SocialMediaModal = ({
                   value={socials.line}
                   placeholder='Worked on something you loved add a link'
                 />
+                {errors.line.length > 0 && (
+                  <p className='modal__errors'>
+                    <svg
+                      className='MuiSvgIcon-root'
+                      focusable='false'
+                      viewBox='0 0 24 24'
+                      aria-hidden='true'
+                    >
+                      <path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'></path>
+                    </svg>{' '}
+                    {errors.line}
+                  </p>
+                )}
                 <label>
                   WeChat ID <span>(optional)</span>
                 </label>
@@ -154,6 +270,19 @@ export const SocialMediaModal = ({
                   value={socials.wechat}
                   placeholder='https://www.scholarly-science.com'
                 />
+                {errors.wechat.length > 0 && (
+                  <p className='modal__errors'>
+                    <svg
+                      className='MuiSvgIcon-root'
+                      focusable='false'
+                      viewBox='0 0 24 24'
+                      aria-hidden='true'
+                    >
+                      <path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'></path>
+                    </svg>{' '}
+                    {errors.wechat}
+                  </p>
+                )}
                 <label>
                   Personal Website <span>(optional)</span>
                 </label>
@@ -165,6 +294,19 @@ export const SocialMediaModal = ({
                   value={socials.personal}
                   placeholder='https://www.scholarly-science.com'
                 />
+                {errors.website.length > 0 && (
+                  <p className='modal__errors'>
+                    <svg
+                      className='MuiSvgIcon-root'
+                      focusable='false'
+                      viewBox='0 0 24 24'
+                      aria-hidden='true'
+                    >
+                      <path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'></path>
+                    </svg>{' '}
+                    {errors.website}
+                  </p>
+                )}
                 <label>
                   Passion Projects <span>(optional)</span>
                 </label>
@@ -177,7 +319,20 @@ export const SocialMediaModal = ({
                   placeholder='Worked on something you loved add a link'
                 />
                 <div class='elsewhere__button'>
-                  <button onClick={send}>Save</button>
+                  <button
+                    onClick={send}
+                    disabled={
+                      !(
+                        errors.github == 0 &&
+                        errors.line == 0 &&
+                        errors.website == 0 &&
+                        errors.wechat == 0 &&
+                        errors.linkedin == 0
+                      )
+                    }
+                  >
+                    Save
+                  </button>
                 </div>
               </form>
             </div>

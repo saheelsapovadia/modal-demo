@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './NewProfile.css';
 import '../Modal/Modal.css';
 import './dashboard.css';
@@ -385,15 +385,33 @@ export const NewProfile = () => {
   // File Upload
   const fileInput = useRef(null);
   const [file, setFile] = useState(null);
-  const onFileChange = (e) => {
-    setFile(e.target.files[0]);
+  const [resumeDate, setResumeDate] = useState('null');
+  Date.prototype.yyyymmdd = function () {
+    var mm = this.getMonth() + 1; // getMonth() is zero-based
+    var dd = this.getDate();
+
+    return [
+      (dd > 9 ? '' : '0') + dd,
+      '/',
+      (mm > 9 ? '' : '0') + mm,
+      '/',
+      this.getFullYear(),
+    ].join('');
   };
+
+  var date = new Date();
+  const onFileChange = async (e) => {
+    setFile(e.target.files[0]);
+    let date = new Date(e.target.files[0].lastModified);
+
+    setResumeDate(date.yyyymmdd());
+  };
+
   const deleteFile = () => {
     setFile(null);
   };
   const onFileUpload = (e) => {};
-  console.log(file);
-  console.log(locationsArr);
+
   return (
     <>
       <EditProfile
@@ -547,8 +565,8 @@ export const NewProfile = () => {
                       <div class='newProfile__resume__selected'>
                         <img src={uploadResume} alt='resume' />
                         <div>
-                          <h3>s4vvy.jpg</h3>
-                          <p>Last updated: May 25, 2021</p>
+                          <h3>{file.name}</h3>
+                          <p>{resumeDate}</p>
                         </div>
                         <div class='newProfile__resume__selected__icons'>
                           <svg
