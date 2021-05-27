@@ -33,9 +33,8 @@ const App = () => {
     <Container>
       <BrowserRouter>
         <Switch>
-          {/* dashboard/profile */}
-          {/* <Route path='/' exact component={SignUp}></Route> */}
-          <Route path='/' exact component={NewProfile}></Route>
+          <Route path='/' exact component={SignUp}></Route>
+          <Route path='/dashboard/profile' exact component={NewProfile}></Route>
         </Switch>
       </BrowserRouter>
       <GlobalStyle />
