@@ -27,6 +27,7 @@ export const SocialMediaModal = ({
     if (modalRef.current === e.target) {
       setShowModal(false);
       scrollRemove();
+      resetModal();
     }
   };
   const keyPress = useCallback(
@@ -34,7 +35,8 @@ export const SocialMediaModal = ({
       if (e.key === 'Escape' && showModal) {
         setShowModal(false);
         scrollRemove();
-        console.log('I pressed');
+        resetModal();
+        // console.log('I pressed');
       }
     },
     [setShowModal, showModal]
@@ -46,6 +48,7 @@ export const SocialMediaModal = ({
   const closeSocialModal = () => {
     setShowModal((prev) => !prev);
     scrollRemove();
+    resetModal();
   };
 
   const [socials, setSocials] = useState({
@@ -56,9 +59,19 @@ export const SocialMediaModal = ({
     personal: '',
     projects: '',
   });
+  const resetModal = () => {
+    setErrors({
+      github: '',
+      linkedin: '',
+      website: '',
+      line: '',
+      wechat: '',
+    });
+  };
 
   const handleChange = (e) => {
     e.preventDefault();
+    //console.log('handle.');
     const { name, value } = e.target;
 
     let newError = { ...errors };
@@ -148,15 +161,16 @@ export const SocialMediaModal = ({
     save(socials);
     scrollRemove();
   };
-  console.log(
-    !(
-      errors.github == 0 &&
-      errors.line == 0 &&
-      errors.website == 0 &&
-      errors.wechat == 0 &&
-      errors.linkedin == 0
-    )
-  );
+  // console.log(
+  //   !(
+  //     errors.github == 0 &&
+  //     errors.line == 0 &&
+  //     errors.website == 0 &&
+  //     errors.wechat == 0 &&
+  //     errors.linkedin == 0
+  //   )
+  // );
+
   return (
     <>
       {showModal ? (

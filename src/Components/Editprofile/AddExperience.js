@@ -39,7 +39,7 @@ export const AddExperience = ({
       if (e.key === 'Escape' && showModal) {
         setShowModal(false);
         scrollRemove();
-        console.log('I pressed');
+        // console.log('I pressed');
       }
     },
     [setShowModal, showModal]
@@ -80,10 +80,10 @@ export const AddExperience = ({
   const handleInput = (e) => {
     //e.preventDefault();
     const { name, value } = e.target;
-    console.log(name, value);
+    // console.log(name, value);
     switch (name) {
       case 'remote':
-        console.log(value);
+        // console.log(value);
         setRemote(!remote);
         break;
       case 'present':
@@ -150,7 +150,7 @@ export const AddExperience = ({
     setUserInput(e.target.value);
   };
   const OnClick = (e) => {
-    console.log('onclick....');
+    // console.log('onclick....');
     setFilteredSuggestions([]);
     setShowSuggestions(false);
     setUserInput(e.target.innerText);
@@ -222,7 +222,7 @@ export const AddExperience = ({
 
   const Delete = (e) => {
     e.preventDefault();
-    console.log('deleting.....');
+    // console.log('deleting.....');
     deleteExpi(editExpi[0]);
     setUserInput('');
     setWebsite(null);
@@ -253,7 +253,7 @@ export const AddExperience = ({
       desc: des,
       editorState: editorState,
     };
-    console.log(result);
+    // console.log(result);
     if (!edit) {
       save(result);
     } else currSave(result, editExpi[0]);

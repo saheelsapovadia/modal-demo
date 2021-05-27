@@ -312,7 +312,7 @@ export const Modal = ({ showModal, setShowModal }) => {
       if (e.key === 'Escape' && showModal) {
         setShowModal(false);
         resetModal();
-        console.log('I pressed');
+        // console.log('I pressed');
       }
     },
     [setShowModal, showModal]
@@ -375,8 +375,8 @@ export const Modal = ({ showModal, setShowModal }) => {
   };
   const Next = (name, email, password) => {
     const formv = formRef.current;
-    console.log(fullName);
-    console.log('nexting....');
+    // console.log(fullName);
+    // console.log('nexting....');
     setCurrPage(currPage + 1);
   };
   const Back = () => {
@@ -391,7 +391,7 @@ export const Modal = ({ showModal, setShowModal }) => {
     if (nameStatus && emailStatus && passwordStatus) {
       setAllOk(true);
     } else setAllOk(false);
-    console.log('allOk2', allOk2);
+    // console.log('allOk2', allOk2);
   };
   const enableSignUp = () => {
     if (collegeStatus && gradYearStatus && degreeStatus && majorStatus) {
@@ -471,7 +471,7 @@ export const Modal = ({ showModal, setShowModal }) => {
         }
         break;
       case 'date':
-        console.log(value);
+        // console.log(value);
         if (value.length > 0) {
           setGradYearStatus(true);
           setGradYear(value);
@@ -492,7 +492,7 @@ export const Modal = ({ showModal, setShowModal }) => {
         }
         break;
       case 'degree':
-        console.log(value);
+        // console.log(value);
         if (value.length > 0) {
           setDegreeStatus(true);
           setDegree(value);
@@ -511,9 +511,9 @@ export const Modal = ({ showModal, setShowModal }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (validateForm(errors)) {
-      console.info('Valid Form');
+      // console.info('Valid Form');
     } else {
-      console.error('Invalid Form');
+      // console.error('Invalid Form');
     }
   };
   useEffect(() => {
@@ -526,7 +526,7 @@ export const Modal = ({ showModal, setShowModal }) => {
   const passwordToggle = () => {
     setPasswordVisible(passwordVisible ? false : true);
   };
-  console.log(currPage);
+  // console.log(currPage);
   return (
     <>
       {' '}

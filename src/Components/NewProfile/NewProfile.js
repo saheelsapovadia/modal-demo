@@ -213,7 +213,7 @@ export const NewProfile = () => {
     setAllLocations(all);
   };
   const saveExpi = (result) => {
-    console.log(result);
+    //console.log(result);
     setEditorState(result.editorState);
     setExperiences([...experiences, result]);
   };
@@ -250,7 +250,7 @@ export const NewProfile = () => {
   });
 
   const editModal = (exp, index) => {
-    console.log(exp, index);
+    // console.log(exp, index);
     setEdit(true);
     setEditExpi([index, exp]);
     openAddExpiModal();
