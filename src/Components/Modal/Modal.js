@@ -1,7 +1,6 @@
 import React, { useRef, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MdClose } from 'react-icons/md';
-import { useHistory } from 'react-router-dom';
 import { BsEyeFill, BsEyeSlashFill } from 'react-icons/bs';
 import './Modal.css';
 import './Page2.css';
@@ -270,10 +269,6 @@ const Page2 = ({
   );
 };
 const Page3 = ({ email }) => {
-  const history = useHistory();
-  useEffect(() => {
-    setTimeout(() => history.push('/dashboard/profile'), 5000);
-  }, []);
   return (
     <div className='modal__content4'>
       <div className='title'>

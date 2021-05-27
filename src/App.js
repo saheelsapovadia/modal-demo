@@ -3,8 +3,6 @@ import { GlobalStyle } from './globalStyles';
 import styled from 'styled-components';
 import { Modal } from './Components/Modal/Modal';
 import { NewProfile } from './Components/NewProfile/NewProfile';
-import { SignUp } from './Components/SignUp/SignUp';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -23,7 +21,7 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const App = () => {
+function App() {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
@@ -31,16 +29,12 @@ const App = () => {
   };
   return (
     <Container>
-      <BrowserRouter>
-        <Switch>
-          {/* dashboard/profile */}
-          {/* <Route path='/' exact component={SignUp}></Route> */}
-          <Route path='/' exact component={NewProfile}></Route>
-        </Switch>
-      </BrowserRouter>
+      <Button onClick={openModal}>Sign up</Button>
+      <Modal showModal={showModal} setShowModal={setShowModal}></Modal>
+      {/* <NewProfile /> */}
       <GlobalStyle />
     </Container>
   );
-};
+}
 
 export default App;
