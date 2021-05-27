@@ -146,6 +146,7 @@ export const SocialMediaModal = ({
   const send = (e) => {
     setShowModal(false);
     save(socials);
+    scrollRemove();
   };
   console.log(
     !(
