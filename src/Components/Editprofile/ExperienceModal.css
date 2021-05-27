@@ -171,6 +171,10 @@
   margin-left: 0.75rem;
   margin-top: 1.5rem;
 }
+.elsewhere__button > button:disabled {
+  opacity: 0.5 !important;
+  cursor: default;
+}
 
 .experience__button > button,
 .elsewhere__button > button,
