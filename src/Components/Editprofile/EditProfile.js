@@ -43,6 +43,11 @@ export const EditProfile = ({
     setShowModal((prev) => !prev);
     scrollRemove();
   };
+  const saveProfile = (e) => {
+    e.preventDefault();
+    setShowModal((prev) => !prev);
+    scrollRemove();
+  };
   return (
     <>
       {showModal ? (
@@ -72,7 +77,7 @@ export const EditProfile = ({
                       type='text'
                       placeholder='John'
                       name='firstname'
-                      value={user.fullName.split(' ')[0]}
+                      value={user.fullName ? user.fullName.split(' ')[0] : ''}
                     />
                   </div>
                   <div>
@@ -81,7 +86,7 @@ export const EditProfile = ({
                       type='text'
                       placeholder='Smith'
                       name='lastname'
-                      value={user.fullName.split(' ')[1]}
+                      value={user.fullName ? user.fullName.split(' ')[1] : ''}
                     />
                   </div>
                 </div>
@@ -90,7 +95,7 @@ export const EditProfile = ({
                   type='text'
                   placeholder='Enter Your desired username'
                   name='username'
-                  value={user.fullName.split(' ')[0]}
+                  value={user.fullName ? user.fullName.split(' ')[0] : ''}
                 />
                 <label>College/University</label>
                 <input
@@ -204,7 +209,13 @@ export const EditProfile = ({
                 </label>
                 <textarea name='about'></textarea>
                 <div class='profile__btn'>
-                  <button type='submit'>Save</button>
+                  <button
+                    onClick={(e) => {
+                      saveProfile(e);
+                    }}
+                  >
+                    Save
+                  </button>
                 </div>
               </form>
             </div>
