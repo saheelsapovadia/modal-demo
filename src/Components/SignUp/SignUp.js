@@ -20,7 +20,7 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-export const SignUp = () => {
+export const SignUp = ({ setUserData }) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
@@ -29,7 +29,11 @@ export const SignUp = () => {
   return (
     <>
       <Button onClick={openModal}>Sign up</Button>
-      <Modal showModal={showModal} setShowModal={setShowModal}></Modal>
+      <Modal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        setUserData={setUserData}
+      ></Modal>
     </>
   );
 };

@@ -5,22 +5,12 @@ import { Modal } from './Components/Modal/Modal';
 import { NewProfile } from './Components/NewProfile/NewProfile';
 import { SignUp } from './Components/SignUp/SignUp';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Layout } from './Container/Layout';
 const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-`;
-
-const Button = styled.button`
-  min-width: 100px;
-  padding: 16px 32px;
-  border-radius: 4px;
-  border: none;
-  background: #141414;
-  color: #fff;
-  font-size: 24px;
-  cursor: pointer;
 `;
 
 const App = () => {
@@ -31,12 +21,7 @@ const App = () => {
   };
   return (
     <Container>
-      <BrowserRouter>
-        <Switch>
-          <Route path='/' exact component={SignUp}></Route>
-          <Route path='/dashboard/profile' exact component={NewProfile}></Route>
-        </Switch>
-      </BrowserRouter>
+      <Layout />
       <GlobalStyle />
     </Container>
   );

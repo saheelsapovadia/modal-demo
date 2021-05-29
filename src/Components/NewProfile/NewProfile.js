@@ -20,7 +20,7 @@ import { SocialMediaModal } from '../SocialMedia/SocialMediaModal';
 import { Editor, EditorState, RichUtils } from 'draft-js';
 import { ExperienceId } from '../ExperienceId/ExperienceId';
 
-export const NewProfile = () => {
+export const NewProfile = ({ user, setUserData }) => {
   const [editorState, setEditorState] = React.useState(() =>
     EditorState.createEmpty()
   );
@@ -418,6 +418,8 @@ export const NewProfile = () => {
         showModal={showEditProfileModal}
         setShowModal={setShowEditProfileModal}
         scrollRemove={scrollRemove}
+        user={user}
+        setUserData={setUserData}
       ></EditProfile>
       <AddExperience
         showModal={showAddExpiModal}
@@ -513,9 +515,13 @@ export const NewProfile = () => {
                         </span>
                       </span>
                       <div class='newProfile__userBio__info'>
-                        <h4>fffffv f</h4>
-                        <h5>ss ss, Spring 2023</h5>
-                        <p>BBA, Computer Science</p>
+                        <h4>{user.fullName}</h4>
+                        <h5>
+                          {user.college}, {user.gradYear}
+                        </h5>
+                        <p>
+                          {user.major}, {user.degree}
+                        </p>
                         <button
                           class='btn'
                           onClick={openEditProfileModal}

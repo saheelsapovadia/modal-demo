@@ -8,7 +8,13 @@ import './EditModal.css';
 import './ProfileModal.css';
 import './ExperienceModal.css';
 
-export const EditProfile = ({ showModal, setShowModal, scrollRemove }) => {
+export const EditProfile = ({
+  showModal,
+  setShowModal,
+  scrollRemove,
+  user,
+  setUserData,
+}) => {
   const modalRef = useRef();
   const passwordRef = useRef();
   const formRef = useRef();
@@ -66,7 +72,7 @@ export const EditProfile = ({ showModal, setShowModal, scrollRemove }) => {
                       type='text'
                       placeholder='John'
                       name='firstname'
-                      value='fffffv'
+                      value={user.fullName.split(' ')[0]}
                     />
                   </div>
                   <div>
@@ -75,7 +81,7 @@ export const EditProfile = ({ showModal, setShowModal, scrollRemove }) => {
                       type='text'
                       placeholder='Smith'
                       name='lastname'
-                      value='f'
+                      value={user.fullName.split(' ')[1]}
                     />
                   </div>
                 </div>
@@ -84,35 +90,35 @@ export const EditProfile = ({ showModal, setShowModal, scrollRemove }) => {
                   type='text'
                   placeholder='Enter Your desired username'
                   name='username'
-                  value='hb'
+                  value={user.fullName.split(' ')[0]}
                 />
                 <label>College/University</label>
                 <input
                   type='text'
                   placeholder='Enter Your College/University Name'
                   name='school'
-                  value='sdd'
+                  value={user.college}
                 />
                 <label>Graduation Year</label>
                 <input
                   type='text'
                   placeholder='Enter graduation year of expected graduation year'
                   name='gradyear'
-                  value='Fall 2023'
+                  value={user.gradYear}
                 />
                 <label>Degree</label>
                 <input
                   type='text'
                   placeholder='Enter Degree Name like B.E, B.Tech, MA, etc'
                   name='degree'
-                  value='Bcom'
+                  value={user.degree}
                 />
                 <label>Stream</label>
                 <input
                   type='text'
                   placeholder='Enter Field of study'
                   name='stream'
-                  value='Computer Science'
+                  value={user.major}
                 />
                 <label>Current location</label>
                 <input
@@ -127,7 +133,7 @@ export const EditProfile = ({ showModal, setShowModal, scrollRemove }) => {
                   disabled=''
                   placeholder='johnsmith@gmail.com'
                   name='email'
-                  value='hb@s.s'
+                  value={user.email}
                 />
                 <label>
                   Alternate Email Address <span>(optional)</span>

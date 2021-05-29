@@ -68,6 +68,7 @@ const Page2 = ({
   gradYear,
   Next,
   allOk2,
+  save,
 }) => {
   return (
     <>
@@ -260,7 +261,14 @@ const Page2 = ({
             <button class='signupButton2 ' onClick={Back}>
               Back
             </button>
-            <button class=' signupButton ' disabled={!allOk2} onClick={Next}>
+            <button
+              class=' signupButton '
+              disabled={!allOk2}
+              onClick={() => {
+                Next();
+                save();
+              }}
+            >
               Signup
             </button>
           </div>
@@ -296,7 +304,7 @@ const Page3 = ({ email }) => {
     </div>
   );
 };
-export const Modal = ({ showModal, setShowModal }) => {
+export const Modal = ({ showModal, setShowModal, setUserData }) => {
   const modalRef = useRef();
   const passwordRef = useRef();
   const formRef = useRef();
@@ -352,6 +360,18 @@ export const Modal = ({ showModal, setShowModal }) => {
     degree: '',
     major: '',
   });
+  const save = () => {
+    let user = {
+      fullName: fullName,
+      email: email,
+      password: password,
+      college: college,
+      gradYear: gradYear,
+      degree: degree,
+      major: major,
+    };
+    setUserData(user);
+  };
 
   const resetModal = () => {
     setErrors({
@@ -695,6 +715,7 @@ export const Modal = ({ showModal, setShowModal }) => {
                     gradYear={gradYear}
                     Next={Next}
                     allOk2={allOk2}
+                    save={save}
                   ></Page2>
                 ) : currPage == 3 ? (
                   <Page3 email={email}></Page3>
