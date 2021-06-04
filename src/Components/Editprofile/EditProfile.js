@@ -8,6 +8,7 @@ import './EditModal.css';
 import './ProfileModal.css';
 import './ExperienceModal.css';
 
+const validPhoneRegex = RegExp(/^[0-9]*$/);
 export const EditProfile = ({
   showModal,
   setShowModal,
@@ -18,6 +19,16 @@ export const EditProfile = ({
   const modalRef = useRef();
   const passwordRef = useRef();
   const formRef = useRef();
+  const [newData, setNewData] = useState({
+    ...user,
+    currentLocation: '',
+    altEmail: '',
+    phone: '+91',
+    altPhone: '+91',
+    about: '',
+    firstname: user.fullName ? user.fullName.split(' ')[0] : '',
+    lastname: user.fullName ? user.fullName.split(' ')[1] : '',
+  });
 
   const closeModal = (e) => {
     if (modalRef.current === e.target) {
@@ -45,9 +56,112 @@ export const EditProfile = ({
   };
   const saveProfile = (e) => {
     e.preventDefault();
+    let fullname = newData.firstname + ' ' + newData.lastname;
+    let n = { ...newData };
+    n.fullName = fullname;
+    setNewData(n);
+    setUserData(newData);
     setShowModal((prev) => !prev);
     scrollRemove();
   };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    switch (name) {
+      case 'firstname':
+        {
+          let n = { ...newData };
+          n.firstname = value;
+          setNewData(n);
+        }
+        break;
+      case 'lastname':
+        {
+          let n = { ...newData };
+          n.lastname = value;
+          setNewData(n);
+        }
+        break;
+      case 'school':
+        {
+          let n = { ...newData };
+          n.college = value;
+          setNewData(n);
+        }
+        break;
+      case 'gradyear':
+        {
+          let n = { ...newData };
+          n.gradYear = value;
+          setNewData(n);
+        }
+        break;
+      case 'degree':
+        {
+          let n = { ...newData };
+          n.degree = value;
+          setNewData(n);
+        }
+        break;
+      case 'stream':
+        {
+          let n = { ...newData };
+          n.major = value;
+          setNewData(n);
+        }
+        break;
+      case 'current_location':
+        {
+          let n = { ...newData };
+          n.currentLocation = value;
+          setNewData(n);
+        }
+        break;
+      case 'email':
+        {
+          let n = { ...newData };
+          n.email = value;
+          setNewData(n);
+        }
+        break;
+      case 'altemail':
+        {
+          let n = { ...newData };
+          n.altEmail = value;
+          setNewData(n);
+        }
+        break;
+      case 'phone':
+        {
+          let n = { ...newData };
+
+          // if(value.length>3)
+          if (validPhoneRegex.test(value.slice(3)) && value.length <= 13) {
+            n.phone = '+91' + value.slice(3);
+            setNewData(n);
+          }
+        }
+        break;
+      case 'altphone':
+        {
+          let n = { ...newData };
+
+          // if(value.length>3)
+          if (validPhoneRegex.test(value.slice(3)) && value.length <= 13) {
+            n.altPhone = '+91' + value.slice(3);
+            setNewData(n);
+          }
+        }
+        break;
+      case 'about':
+        {
+          let n = { ...newData };
+          n.about = value;
+          setNewData(n);
+        }
+        break;
+    }
+  };
+
   return (
     <>
       {showModal ? (
@@ -77,7 +191,8 @@ export const EditProfile = ({
                       type='text'
                       placeholder='John'
                       name='firstname'
-                      value={user.fullName ? user.fullName.split(' ')[0] : ''}
+                      onChange={handleChange}
+                      value={newData.firstname}
                     />
                   </div>
                   <div>
@@ -86,7 +201,9 @@ export const EditProfile = ({
                       type='text'
                       placeholder='Smith'
                       name='lastname'
-                      value={user.fullName ? user.fullName.split(' ')[1] : ''}
+                      onChange={handleChange}
+                      //
+                      value={newData.lastname}
                     />
                   </div>
                 </div>
@@ -95,13 +212,15 @@ export const EditProfile = ({
                   type='text'
                   placeholder='Enter Your desired username'
                   name='username'
-                  value={user.fullName ? user.fullName.split(' ')[0] : ''}
+                  onChange={handleChange}
+                  value={newData.firstname}
                 />
                 <label>College/University</label>
                 <input
                   type='text'
                   placeholder='Enter Your College/University Name'
                   name='school'
+                  onChange={handleChange}
                   value={user.college}
                 />
                 <label>Graduation Year</label>
@@ -109,6 +228,7 @@ export const EditProfile = ({
                   type='text'
                   placeholder='Enter graduation year of expected graduation year'
                   name='gradyear'
+                  onChange={handleChange}
                   value={user.gradYear}
                 />
                 <label>Degree</label>
@@ -116,6 +236,7 @@ export const EditProfile = ({
                   type='text'
                   placeholder='Enter Degree Name like B.E, B.Tech, MA, etc'
                   name='degree'
+                  onChange={handleChange}
                   value={user.degree}
                 />
                 <label>Stream</label>
@@ -123,6 +244,7 @@ export const EditProfile = ({
                   type='text'
                   placeholder='Enter Field of study'
                   name='stream'
+                  onChange={handleChange}
                   value={user.major}
                 />
                 <label>Current location</label>
@@ -130,7 +252,8 @@ export const EditProfile = ({
                   type='text'
                   placeholder='Enter your current residence'
                   name='current_location'
-                  value=''
+                  onChange={handleChange}
+                  value={newData.currentLocation}
                 />
                 <label>Email Address</label>
                 <input
@@ -138,6 +261,7 @@ export const EditProfile = ({
                   disabled=''
                   placeholder='johnsmith@gmail.com'
                   name='email'
+                  onChange={handleChange}
                   value={user.email}
                 />
                 <label>
@@ -147,7 +271,8 @@ export const EditProfile = ({
                   type='email'
                   placeholder='johnsmith@gmail.com'
                   name='altemail'
-                  value=''
+                  onChange={handleChange}
+                  value={newData.altEmail}
                 />
                 <div class='profile__modal__form__mobile'>
                   <div>
@@ -158,7 +283,15 @@ export const EditProfile = ({
                         class='profile__modal__phoneInput form-control'
                         placeholder='99999 99999'
                         type='tel'
-                        value='+91'
+                        name='phone'
+                        onChange={handleChange}
+                        value={
+                          newData.phone
+                          // ' ' +
+                          // newData.phone.slice(3, 8) +
+                          // '-' +
+                          // newData.phone.slice(8, 13)
+                        }
                       />
                       <div class=' flag-dropdown'>
                         <div
@@ -186,7 +319,9 @@ export const EditProfile = ({
                         class='profile__modal__phoneInput form-control'
                         placeholder='99999 99999'
                         type='tel'
-                        value='+91'
+                        name='altphone'
+                        onChange={handleChange}
+                        value={newData.altPhone}
                       />
                       <div class=' flag-dropdown'>
                         <div
@@ -207,7 +342,11 @@ export const EditProfile = ({
                 <label>
                   About Me <span>(optional)</span>
                 </label>
-                <textarea name='about'></textarea>
+                <textarea
+                  name='about'
+                  value={newData.about}
+                  onChange={handleChange}
+                ></textarea>
                 <div class='profile__btn'>
                   <button
                     onClick={(e) => {
