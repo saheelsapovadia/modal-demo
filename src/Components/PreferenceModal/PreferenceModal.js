@@ -753,7 +753,7 @@ const Skills = ({
     } else if (currClass == 'preference__modal__roles__role__selected') {
       event.target.className = 'preference__modal__roles__role';
       const expiSelected = [...selectedArr];
-      let newArr = arrayRemove(skillsArr, event.target.innerText);
+      let newArr = arrayRemove(expiSelected, event.target.innerText);
       setNoOfSelected(noOfSelected - 1);
       setSelectedArr(newArr);
     }
@@ -1088,7 +1088,7 @@ const Location = ({
     } else if (currClass == 'preference__modal__roles__role__selected') {
       event.target.className = 'preference__modal__roles__role';
       const locationSelected = [...selectedArr];
-      let newArr = arrayRemove(locationsArr, event.target.innerText);
+      let newArr = arrayRemove(locationSelected, event.target.innerText);
       setNoOfSelected(noOfSelected - 1);
       setSelectedArr(newArr);
     }

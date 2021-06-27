@@ -255,17 +255,24 @@ export const NewProfile = ({ user, setUserData }) => {
     setEditExpi([index, exp]);
     openAddExpiModal();
   };
+  const expandText = (exp, index) => {};
   //console.log(rolesArr);
-  //console.log(experiences);
+  console.log(experiences);
+  // let box = document.querySelector('#expi0');
+  // let width = box.offsetWidth;
+  // let height = box.offsetHeight;
+  // console.log(height);
+
   const expUI = experiences.map((exp, index) => {
     let img = [];
     img = suggestions.filter((sugg) => {
       return sugg.name == exp.company;
     });
     //console.log(img[0].img);
+    console.log(exp.editorState.getCurrentContent());
     return (
       <>
-        <div className='experiences__card'>
+        <div className={'experiences__card'} id={'expi' + index}>
           <div>
             <img
               src={
@@ -296,11 +303,12 @@ export const NewProfile = ({ user, setUserData }) => {
                 {!exp.present ? exp.to.month + ' ' + exp.to.year : ' present'}
               </h3>
               <h4>{exp.location}</h4>
-              <div>
+              <div className='see-more'>
                 {/* <div dangerouslySetInnerHTML={{ __html: exp.desc }} /> */}
                 <Editor
                   editorState={exp.editorState}
                   onChange={setEditorState}
+                  className='seemore'
                   style={{
                     outline: 'none',
                     height: 'fit-content',
@@ -308,6 +316,16 @@ export const NewProfile = ({ user, setUserData }) => {
                   }}
                   readOnly={true}
                 />
+                {/* { ? (
+                  <p
+                    className='see-more'
+                    onClick={() => expandText(exp, index)}
+                  >
+                    See more...
+                  </p>
+                ) : (
+                  <></>
+                )} */}
                 {/* <div class='DraftEditor-root'>
                                 <div class='DraftEditor-editorContainer'>
                                   <div
@@ -360,6 +378,7 @@ export const NewProfile = ({ user, setUserData }) => {
       </>
     );
   });
+  // console.log(expUI[0].props.children.props.className);
 
   const scrollRecord = () => {
     var doc = document.documentElement;

@@ -93,7 +93,9 @@
   background-color: #ddd;
   border-radius: 50px;
 }
-
+.public-DraftEditorPlaceholder-root {
+  width: auto !important;
+}
 @media (max-width: 414px) {
   .editor > .DraftEditor-root {
     width: 92.5% !important;

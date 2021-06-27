@@ -39,7 +39,10 @@ export const AddExperience = ({
       if (e.key === 'Escape' && showModal) {
         setShowModal(false);
         scrollRemove();
-        // console.log('I pressed');
+        // console.log('I pressed')
+      }
+      if (e.key === 'Enter' && showModal) {
+        e.preventDefault();
       }
     },
     [setShowModal, showModal]
@@ -70,13 +73,36 @@ export const AddExperience = ({
   const [present, setPresent] = useState(false);
 
   useEffect(() => {
+    // console.log(editExpi);
     setWebsite(editExpi[1].website);
     setUserInput(editExpi[1].company);
     setEditorState(editExpi[1].editorState);
     setFrom(editExpi[1].from);
     setLocation(editExpi[1].location);
   }, editExpi);
-
+  useEffect(() => {
+    if (!edit) {
+      setUserInput('');
+      setWebsite(null);
+      setTitle(null);
+      setLocation(null);
+      setContentLength(0);
+      setFrom({ month: '', year: '' });
+      setTo({ month: '', year: '' });
+      setLenExceeded(false);
+      setEditorState(() => EditorState.createEmpty());
+      setRemote(false);
+      setPresent(false);
+      // // setShowModal(false);
+    } else {
+      // console.log(editExpi);
+      setWebsite(editExpi[1].website);
+      setUserInput(editExpi[1].company);
+      setEditorState(editExpi[1].editorState);
+      setFrom(editExpi[1].from);
+      setLocation(editExpi[1].location);
+    }
+  }, [edit]);
   const handleInput = (e) => {
     //e.preventDefault();
     const { name, value } = e.target;
@@ -241,6 +267,7 @@ export const AddExperience = ({
   const send = (e) => {
     e.preventDefault();
     let des = stateToHTML(editorState.getCurrentContent());
+    // let shortEditorState = editorState.getCurrentContent().;
     let result = {
       company: userInput,
       website: website,

@@ -355,19 +355,41 @@ const Others = ({}) => {
       return ele != value;
     });
   }
-
+  const [selectedType, setSelectedType] = useState(null);
   const toggle = (e) => {
     e.preventDefault();
     console.log(e.target.className);
-    if (e.target.className == 'modal-select-normal res') {
-      setType([...type, e.target.name]);
-      e.target.className = 'modal-select-btn res';
+    if (selectedType) {
+      let ele = document.getElementById(selectedType);
+      console.log(ele.classList[0]);
+      ele.classList.add('modal-select-normal');
+      ele.classList.remove('modal-select-btn');
+      console.log(ele.classList);
+      if (e.target.id !== selectedType) {
+        e.target.classList.add('modal-select-btn');
+        e.target.classList.remove('modal-select-normal');
+        setSelectedType(e.target.id);
+      } else {
+        e.target.classList.add('modal-select-normal');
+        e.target.classList.remove('modal-select-btn');
+        setSelectedType(null);
+      }
     } else {
-      e.target.className = 'modal-select-normal res';
-      let t = [...type];
-      let newType = arrayRemove(t, e.target.name);
-      setType(newType);
+      e.target.classList.add('modal-select-btn');
+      e.target.classList.remove('modal-select-normal');
+      setSelectedType(e.target.id);
     }
+    // if (e.target.className == 'modal-select-normal res') {
+    //   setType([...type, e.target.name]);
+
+    //   e.target.className = 'modal-select-btn res';
+    // } else {
+    //   e.target.className = 'modal-select-normal res';
+    //   let t = [...type];
+
+    //   let newType = arrayRemove(t, e.target.name);
+    //   setType(newType);
+    // }
   };
   console.log(type);
   return (
@@ -375,20 +397,32 @@ const Others = ({}) => {
       <div class='inp-co-1'>
         <label class='my-label'>Experience type</label>
         <div class='inp-co-user'>
-          <button name='club' onClick={toggle} class='modal-select-normal res'>
+          <button
+            id='club'
+            name='club'
+            onClick={toggle}
+            class='modal-select-normal res'
+          >
             Club
           </button>
           <button
+            id='affiliation'
             name='affiliation'
             onClick={toggle}
             class='modal-select-normal res'
           >
             Affiliation
           </button>
-          <button name='sport' onClick={toggle} class='modal-select-normal res'>
+          <button
+            id='sport'
+            name='sport'
+            onClick={toggle}
+            class='modal-select-normal res'
+          >
             Sport Team
           </button>
           <button
+            id='hackathone'
             name='hackathon'
             onClick={toggle}
             class='modal-select-normal res'
@@ -396,9 +430,10 @@ const Others = ({}) => {
             Hackathon
           </button>
           <button
+            id='competition'
             name='competition'
             onClick={toggle}
-            class='modal-select-btn res'
+            class='modal-select-normal res'
             id='com'
           >
             Competition

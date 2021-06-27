@@ -507,7 +507,10 @@ p {
   opacity: 0;
   transition: visibility 0s linear 300ms, opacity 300ms;
 }
-
+.see-more,
+.seemore {
+  /* max-height: 200px; */
+}
 .experiences__card > button {
   position: absolute;
   top: 26px;
