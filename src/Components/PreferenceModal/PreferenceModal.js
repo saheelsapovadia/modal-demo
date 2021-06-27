@@ -3,6 +3,7 @@ import { Background, CloseModalButton } from '../Modal/Modal';
 import styled from 'styled-components';
 import { MdClose } from 'react-icons/md';
 import { BsEyeFill, BsEyeSlashFill } from 'react-icons/bs';
+import { useDetectClickOutside } from 'react-detect-click-outside';
 import '../Modal/Modal.css';
 import './PreferenceModal.css';
 import '../NewProfile/NewProfile.css';
@@ -117,9 +118,6 @@ const Roles = ({
       //console.log(ele.innerHTML);
     }
   };
-  const close = () => {
-    setShowSuggestions(false);
-  };
 
   let newRole;
   const newRoleFunc = (e) => {
@@ -171,13 +169,21 @@ const Roles = ({
     setShowSuggestions(false);
     setUserInput(e.target.innerText);
   };
-
+  const close = () => {
+    setShowSuggestions(false);
+    console.log('closing...');
+  };
   let suggestionsList;
-
+  const ref = useDetectClickOutside({ onTriggered: close });
+  const ref1 = useDetectClickOutside({ onTriggered: close });
   if (showSuggestions && userInput) {
     if (filteredSuggestions.length) {
       suggestionsList = (
-        <div className='preference__modal__suggestions' onBlur={close}>
+        <div
+          className='preference__modal__suggestions'
+          ref={ref}
+          onBlur={close}
+        >
           {/* <ul className='suggestions'> */}
           <span className='' key={userInput} onClick={newRoleFunc}>
             {userInput}
@@ -195,7 +201,7 @@ const Roles = ({
       );
     } else {
       suggestionsList = (
-        <div className='preference__modal__suggestions'>
+        <div className='preference__modal__suggestions' ref={ref1}>
           <span className='' key={userInput} onClick={newRoleFunc}>
             {userInput}
           </span>
@@ -613,11 +619,16 @@ const Experience = ({
   };
 
   let suggestionsList;
-
+  const ref = useDetectClickOutside({ onTriggered: close });
+  const ref1 = useDetectClickOutside({ onTriggered: close });
   if (showSuggestions && userInput) {
     if (filteredSuggestions.length) {
       suggestionsList = (
-        <div className='preference__modal__suggestions' onBlur={close}>
+        <div
+          className='preference__modal__suggestions'
+          ref={ref}
+          onBlur={close}
+        >
           {/* <ul className='suggestions'> */}
           <span className='' key={userInput} onClick={newRoleFunc}>
             {userInput}
@@ -635,7 +646,7 @@ const Experience = ({
       );
     } else {
       suggestionsList = (
-        <div className='preference__modal__suggestions'>
+        <div className='preference__modal__suggestions' ref={ref1}>
           <span className='' key={userInput} onClick={newRoleFunc}>
             {userInput}
           </span>
@@ -823,11 +834,16 @@ const Skills = ({
     }
   };
   let suggestionsList;
-
+  const ref = useDetectClickOutside({ onTriggered: close });
+  const ref1 = useDetectClickOutside({ onTriggered: close });
   if (showSuggestions && userInput) {
     if (filteredSuggestions.length) {
       suggestionsList = (
-        <div className='preference__modal__suggestions' onBlur={close}>
+        <div
+          className='preference__modal__suggestions'
+          ref={ref}
+          onBlur={close}
+        >
           {/* <ul className='suggestions'> */}
           <span className='' key={userInput} onClick={newRoleFunc}>
             {userInput}
@@ -845,7 +861,7 @@ const Skills = ({
       );
     } else {
       suggestionsList = (
-        <div className='preference__modal__suggestions'>
+        <div className='preference__modal__suggestions' ref={ref1}>
           <span className='' key={userInput} onClick={newRoleFunc}>
             {userInput}
           </span>
@@ -1158,11 +1174,17 @@ const Location = ({
     }
   };
   let suggestionsList;
+  const ref = useDetectClickOutside({ onTriggered: close });
+  const ref1 = useDetectClickOutside({ onTriggered: close });
 
   if (showSuggestions && userInput) {
     if (filteredSuggestions.length) {
       suggestionsList = (
-        <div className='preference__modal__suggestions' onBlur={close}>
+        <div
+          className='preference__modal__suggestions'
+          ref={ref}
+          onBlur={close}
+        >
           {/* <ul className='suggestions'> */}
           <span className='' key={userInput} onClick={newRoleFunc}>
             {userInput}
@@ -1180,7 +1202,7 @@ const Location = ({
       );
     } else {
       suggestionsList = (
-        <div className='preference__modal__suggestions'>
+        <div className='preference__modal__suggestions' ref={ref1}>
           <span className='' key={userInput} onClick={newRoleFunc}>
             {userInput}
           </span>
