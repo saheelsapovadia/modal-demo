@@ -19,6 +19,7 @@ import PreferenceModal from '../PreferenceModal/PreferenceModal';
 import { SocialMediaModal } from '../SocialMedia/SocialMediaModal';
 import { Editor, EditorState, RichUtils } from 'draft-js';
 import { ExperienceId } from '../ExperienceId/ExperienceId';
+import Document from '../Document/Document';
 
 export const NewProfile = ({ user, setUserData }) => {
   const [editorState, setEditorState] = React.useState(() =>
@@ -653,6 +654,7 @@ export const NewProfile = ({ user, setUserData }) => {
                       </div>
                     )}
                   </div>
+                  <Document />
                 </section>
                 <section class='newProfile__right'>
                   <div>

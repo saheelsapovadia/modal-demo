@@ -1,0 +1,29 @@
+.file {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 5px;
+  border-bottom: 1px solid rgba(229, 231, 235);
+}
+.file > div:nth-child(4) {
+  display: flex;
+
+  background-color: rgba(219, 234, 254);
+  color: rgb(0, 106, 255);
+  padding: 0.5rem 10px;
+  margin: 0.5rem 0;
+  margin-left: auto;
+  cursor: pointer;
+}
+.file > div:nth-child(4) > p {
+  margin: 0;
+  margin-left: 3px;
+}
+.file > input {
+  width: 1rem;
+}
+.file > p:nth-child(2) {
+  width: 60%;
+  margin: 0;
+  padding: 1rem 2px;
+  text-align: center;
+}

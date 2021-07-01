@@ -88,6 +88,7 @@ const Roles = ({
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [userInput, setUserInput] = useState('');
   const [nRole, setNRole] = useState('');
+
   const OnChange = (e) => {
     const suggestions = [...roles];
     const usrInput = e.target.value;
@@ -98,6 +99,7 @@ const Roles = ({
 
     setFilteredSuggestions(newFilteredSuggestions);
     setShowSuggestions(true);
+    console.log('opening...');
     setUserInput(e.target.value);
   };
 
@@ -288,7 +290,15 @@ const Roles = ({
         <div className='prefSearch'>
           <input
             type='text'
-            onChange={OnChange}
+            onChange={(e) => {
+              OnChange(e);
+              setShowSuggestions(true);
+            }}
+            onClick={() => {
+              setShowSuggestions(true);
+              console.log('opening...');
+              // handleClick();
+            }}
             placeholder='Example: Sales, Marketing...'
             // onBlur={close}
             value={userInput}
