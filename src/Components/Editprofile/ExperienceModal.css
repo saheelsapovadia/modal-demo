@@ -19,7 +19,8 @@
 
 .experience__modal__header,
 .elsewhere__modal__header,
-.profile__modal__header {
+.profile__modal__header,
+.document__modal__header {
   display: flex;
   justify-content: space-between;
   position: sticky !important;
@@ -40,7 +41,8 @@
 
 .experience__modal__header > h3,
 .elsewhere__modal__header > h3,
-.profile__modal__header > h3 {
+.profile__modal__header > h3,
+.document__modal__header > h3 {
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: 600;
@@ -71,7 +73,8 @@
 /* FORM */
 .experience__modal__form,
 .elsewhere__modal__form,
-.profile__modal__form {
+.profile__modal__form,
+.document__modal__form {
   padding: 1.5rem 1.5rem;
   padding-top: 2rem;
   overflow-y: scroll;
@@ -79,13 +82,15 @@
 
 .experience__modal__form > form,
 .elsewhere__modal__form > form,
-.profile__modal__form > form {
+.profile__modal__form > form,
+.document__modal__form > form {
   width: 100%;
 }
 
 .experience__modal__form > form > label,
 .elsewhere__modal__form > form > label,
-.profile__modal__form > form > label {
+.profile__modal__form > form > label,
+.document__modal__form > form > div > label {
   font-weight: 600;
   color: #201e27;
   display: block;
@@ -102,7 +107,8 @@
 
 .experience__modal__form > form > input,
 .elsewhere__modal__form > form > input,
-.profile__modal__form > form > input {
+.profile__modal__form > form > input,
+.document__modal__form > form > div > input {
   font-size: 0.875rem;
   margin: 0;
   margin-bottom: 13px;
@@ -127,7 +133,8 @@
 
 .experience__modal__form > form > input:focus,
 .elsewhere__modal__form > form > input:focus,
-.profile__modal__form > form > input:focus {
+.profile__modal__form > form > input:focus,
+.document__modal__form > form > div > input:focus {
   border: 1px solid #000;
 }
 

@@ -27,3 +27,68 @@
   padding: 1rem 2px;
   text-align: center;
 }
+
+.document__modal {
+  height: 400px;
+}
+.document__modal__content {
+  display: flex;
+  flex-direction: row;
+  margin: 20px;
+}
+.document__modal__form {
+  overflow-y: unset;
+  padding-top: 1rem;
+}
+.document__modal__form > form {
+  display: flex;
+  flex-direction: row;
+}
+.document__modal__form > form > div:first-child {
+  width: 70%;
+}
+.document__modal__form > form > div:first-child > input {
+  width: 90%;
+}
+.document__modal__form > form > div:nth-child(2) {
+  width: 30%;
+}
+.document__modal__form > form > div:nth-child(2) > select {
+  outline: none;
+  /* background: rgba(255, 255, 255, 0.4); */
+  border: 1px solid #d6e0e1;
+  border-radius: 0.3125rem;
+  margin-bottom: 0.625rem;
+  position: relative;
+  width: 100%;
+  font-size: 0.875rem;
+  padding: 10px;
+  /* color: #788699; */
+  transition: all 0.2s ease-in;
+}
+.drop-file {
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: #e8ebec;
+
+  align-items: center;
+  justify-content: center;
+}
+.drop-file > p {
+  font-size: 14px;
+}
+.drop-file > p:nth-child(2) {
+  padding: 7px 7px;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+}
+.doc-btn {
+  margin: 0;
+  margin-top: 20px;
+}
+.doc-btn > button:last-child {
+  margin-bottom: 10px;
+}

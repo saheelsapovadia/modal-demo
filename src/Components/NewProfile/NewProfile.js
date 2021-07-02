@@ -19,6 +19,7 @@ import PreferenceModal from '../PreferenceModal/PreferenceModal';
 import { SocialMediaModal } from '../SocialMedia/SocialMediaModal';
 import { Editor, EditorState, RichUtils } from 'draft-js';
 import { ExperienceId } from '../ExperienceId/ExperienceId';
+import DocumentModal from '../Document/DocumentModal';
 import Document from '../Document/Document';
 
 export const NewProfile = ({ user, setUserData }) => {
@@ -31,6 +32,7 @@ export const NewProfile = ({ user, setUserData }) => {
   const [showPreferenceModal, setShowPreferenceModal] = useState(false);
   const [showSocialModal, setShowSocialModal] = useState(false);
   const [showExpiIdModal, setShowExpiIdModal] = useState(false);
+  const [showDocumentModal, setShowDocumentModal] = useState(false);
   const [query, setQuery] = useState(null);
   const [left, setLeft] = useState();
   const [top, setTop] = useState();
@@ -190,6 +192,10 @@ export const NewProfile = ({ user, setUserData }) => {
   };
   const openSocialModal = () => {
     setShowSocialModal((prev) => !prev);
+    scrollRecord();
+  };
+  const openDocumentModal = () => {
+    setShowDocumentModal((prev) => !prev);
     scrollRecord();
   };
   const openExpiIdModal = () => {
@@ -481,6 +487,11 @@ export const NewProfile = ({ user, setUserData }) => {
         save={saveSocials}
         scrollRemove={scrollRemove}
       />
+      <DocumentModal
+        showModal={showDocumentModal}
+        setShowModal={setShowDocumentModal}
+        scrollRemove={scrollRemove}
+      />
       <div
         className='main'
         // style={
@@ -654,7 +665,7 @@ export const NewProfile = ({ user, setUserData }) => {
                       </div>
                     )}
                   </div>
-                  <Document />
+                  <Document openModal={openDocumentModal} />
                 </section>
                 <section class='newProfile__right'>
                   <div>
