@@ -70,6 +70,10 @@ export const NewProfile = ({ user, setUserData }) => {
     personal: '',
     projects: '',
   });
+  const [resume, setResume] = useState([]);
+  const [transcripts, setTranscripts] = useState([]);
+  const [workCerti, setWorkCerti] = useState([]);
+  const [otherCerti, setOtherCerti] = useState([]);
   const [edit, setEdit] = useState(false);
   const [suggestions, setSuggestions] = useState([
     { img: 'https://i.ibb.co/T1W3Ctq/amwalcom.png', name: 'Amwalcom' },
@@ -241,6 +245,32 @@ export const NewProfile = ({ user, setUserData }) => {
   };
   const saveSocials = (result) => {
     setSocials(result);
+  };
+  const [fileState, setFileState] = useState({});
+  const saveDocuments = (file) => {
+    console.log(fileState);
+
+    if (fileState.type == 'resume') {
+      let r = [...resume];
+      r.push(file);
+      setResume(r);
+    }
+    if (fileState.type == 'transcripts') {
+      let r = [...transcripts];
+      r.push(file);
+      setTranscripts(r);
+    }
+    if (fileState.type == 'workcerti') {
+      let r = [...workCerti];
+      r.push(file);
+      setWorkCerti(r);
+    }
+    if (fileState.type == 'othercerti') {
+      let r = [...otherCerti];
+      r.push(file);
+      setOtherCerti(r);
+    }
+    console.log('resume', resume);
   };
   //console.log(socials);
   const rolesUI = rolesArr.map((role) => {
@@ -491,6 +521,9 @@ export const NewProfile = ({ user, setUserData }) => {
         showModal={showDocumentModal}
         setShowModal={setShowDocumentModal}
         scrollRemove={scrollRemove}
+        save={saveDocuments}
+        fileState={fileState}
+        setFileState={setFileState}
       />
       <div
         className='main'
@@ -665,7 +698,13 @@ export const NewProfile = ({ user, setUserData }) => {
                       </div>
                     )}
                   </div>
-                  <Document openModal={openDocumentModal} />
+                  <Document
+                    openModal={openDocumentModal}
+                    resume={resume}
+                    transcripts={transcripts}
+                    workCerti={workCerti}
+                    otherCerti={otherCerti}
+                  />
                 </section>
                 <section class='newProfile__right'>
                   <div>

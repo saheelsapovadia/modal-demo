@@ -4,9 +4,15 @@
   margin-bottom: 5px;
   border-bottom: 1px solid rgba(229, 231, 235);
 }
+.file > p {
+  font-size: 0.875rem;
+  margin: 0;
+  padding: 1rem 2px;
+  /* opacity: 0.95; */
+}
 .file > div:nth-child(4) {
   display: flex;
-
+  height: max-content;
   background-color: rgba(219, 234, 254);
   color: rgb(0, 106, 255);
   padding: 0.5rem 10px;
@@ -91,4 +97,45 @@
 }
 .doc-btn > button:last-child {
   margin-bottom: 10px;
+}
+@media (max-width: 415px) {
+  .file > input {
+    width: 2rem;
+    margin: 1rem 2px;
+  }
+  .file > div:nth-child(4) > p {
+    margin: 0;
+    margin-left: 3px;
+  }
+  .document__modal__form > form {
+    display: flex;
+    flex-direction: column;
+  }
+  .document__modal__form > form > div:first-child,
+  .document__modal__form > form > div:nth-child(2) {
+    width: 100%;
+  }
+  .document__modal__form > form > div:first-child > input {
+    width: 100%;
+  }
+  .document__modal__form > form > div:nth-child(2) > select {
+    background-color: white;
+  }
+  .drop-file {
+    height: 200px;
+    margin-top: 30px;
+    padding: 20px;
+  }
+  .drop-file > p {
+    text-align: center;
+  }
+
+  .doc-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    margin-top: 100px;
+  }
 }
