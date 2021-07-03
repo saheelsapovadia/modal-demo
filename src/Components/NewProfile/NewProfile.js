@@ -6,6 +6,7 @@ import './toggle.css';
 import './sidedrawer.css';
 import './StudentSidebar.css';
 import './importantStyle.css';
+import '../Editprofile/ProfileImageModal.css';
 import avatar from './avatar-edit.png';
 import personal from './personal-website.0111f690.svg';
 import linkedin from './linkedin.2932a798.svg';
@@ -21,6 +22,7 @@ import { Editor, EditorState, RichUtils } from 'draft-js';
 import { ExperienceId } from '../ExperienceId/ExperienceId';
 import DocumentModal from '../Document/DocumentModal';
 import Document from '../Document/Document';
+import ProfileImageModal from '../Editprofile/ProfileImageModal';
 
 export const NewProfile = ({ user, setUserData }) => {
   const [editorState, setEditorState] = React.useState(() =>
@@ -32,6 +34,7 @@ export const NewProfile = ({ user, setUserData }) => {
   const [showPreferenceModal, setShowPreferenceModal] = useState(false);
   const [showSocialModal, setShowSocialModal] = useState(false);
   const [showExpiIdModal, setShowExpiIdModal] = useState(false);
+  const [showProfileImageModal, setShowProfileImageModal] = useState(false);
   const [showDocumentModal, setShowDocumentModal] = useState(false);
   const [query, setQuery] = useState(null);
   const [left, setLeft] = useState();
@@ -74,6 +77,7 @@ export const NewProfile = ({ user, setUserData }) => {
   const [transcripts, setTranscripts] = useState([]);
   const [workCerti, setWorkCerti] = useState([]);
   const [otherCerti, setOtherCerti] = useState([]);
+  const [profilePic, setProfilePic] = useState(null);
   const [edit, setEdit] = useState(false);
   const [suggestions, setSuggestions] = useState([
     { img: 'https://i.ibb.co/T1W3Ctq/amwalcom.png', name: 'Amwalcom' },
@@ -206,6 +210,10 @@ export const NewProfile = ({ user, setUserData }) => {
     setShowExpiIdModal((prev) => !prev);
     scrollRecord();
   };
+  const openProfileImageModal = () => {
+    setShowProfileImageModal((prev) => !prev);
+    scrollRecord();
+  };
   const save = (result, all) => {
     setRolesArr(result);
     setAllRoles(all);
@@ -227,6 +235,9 @@ export const NewProfile = ({ user, setUserData }) => {
     //console.log(result);
     setEditorState(result.editorState);
     setExperiences([...experiences, result]);
+  };
+  const saveProfilePic = (image) => {
+    setProfilePic(image);
   };
   const editCurrExp = (result, index) => {
     let currExp = [...experiences];
@@ -525,6 +536,12 @@ export const NewProfile = ({ user, setUserData }) => {
         fileState={fileState}
         setFileState={setFileState}
       />
+      <ProfileImageModal
+        showModal={showProfileImageModal}
+        setShowModal={setShowProfileImageModal}
+        scrollRemove={scrollRemove}
+        save={saveProfilePic}
+      />
       <div
         className='main'
         // style={
@@ -563,12 +580,17 @@ export const NewProfile = ({ user, setUserData }) => {
                           style={{ display: 'none' }}
                         ></input>
                         <div class='MuiAvatar-root MuiAvatar-circle MuiAvatar-colorDefault'>
-                          A
+                          {profilePic ? (
+                            <img className='profile-pic' src={profilePic}></img>
+                          ) : (
+                            <>A</>
+                          )}
                         </div>
                         <span class='MuiBadge-badge MuiBadge-anchorOriginTopRightCircle'>
                           <img
                             src={avatar}
                             alt='avatar-edit'
+                            onClick={openProfileImageModal}
                             style={{
                               display: 'block',
                               width: '20px',
