@@ -1,3 +1,21 @@
+.document__title {
+  margin: 0;
+  font-size: 25px;
+  font-weight: 500;
+}
+.doc__back {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+}
+.doc__back > p {
+  margin: 0;
+  margin-left: 4px;
+}
 .file {
   display: flex;
   flex-direction: row;
@@ -30,8 +48,8 @@
 .file > p:nth-child(2) {
   width: 60%;
   margin: 0;
-  padding: 1rem 2px;
-  text-align: center;
+  padding: 1rem 40px;
+  text-align: left;
 }
 
 .document__modal {
@@ -97,6 +115,24 @@
 }
 .doc-btn > button:last-child {
   margin-bottom: 10px;
+}
+.verfication-pending {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgb(221, 49, 49);
+  padding: 5px 10px;
+  border-radius: 50px;
+  margin-left: 3px;
+  background-color: rgba(241, 166, 166, 0.753);
+}
+.verfication-done {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgb(15, 194, 15);
+  padding: 5px 10px;
+  border-radius: 50px;
+  margin-left: 3px;
+  background-color: rgba(166, 241, 179, 0.753);
 }
 @media (max-width: 415px) {
   .file > input {

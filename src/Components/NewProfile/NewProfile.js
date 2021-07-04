@@ -7,6 +7,8 @@ import './sidedrawer.css';
 import './StudentSidebar.css';
 import './importantStyle.css';
 import '../Editprofile/ProfileImageModal.css';
+import { IoIosArrowBack } from 'react-icons/io';
+import { FiEdit } from 'react-icons/fi';
 import avatar from './avatar-edit.png';
 import personal from './personal-website.0111f690.svg';
 import linkedin from './linkedin.2932a798.svg';
@@ -73,12 +75,14 @@ export const NewProfile = ({ user, setUserData }) => {
     personal: '',
     projects: '',
   });
+  const [page, setPage] = useState(1);
   const [resume, setResume] = useState([]);
   const [transcripts, setTranscripts] = useState([]);
   const [workCerti, setWorkCerti] = useState([]);
   const [otherCerti, setOtherCerti] = useState([]);
   const [profilePic, setProfilePic] = useState(null);
   const [edit, setEdit] = useState(false);
+  const [editing, setEditing] = useState(false);
   const [suggestions, setSuggestions] = useState([
     { img: 'https://i.ibb.co/T1W3Ctq/amwalcom.png', name: 'Amwalcom' },
     { img: 'https://i.ibb.co/fv0XS7D/ARVORE.png', name: 'ARVORE' },
@@ -183,7 +187,9 @@ export const NewProfile = ({ user, setUserData }) => {
     'Dallas, TX',
     'Detroit MI',
   ]);
-
+  useEffect(() => {
+    if (page == 2) window.scrollTo(0, 0);
+  }, [page]);
   const openEditProfileModal = () => {
     setShowEditProfileModal((prev) => !prev);
     scrollRecord();
@@ -205,8 +211,6 @@ export const NewProfile = ({ user, setUserData }) => {
   const openDocumentModal = () => {
     setShowDocumentModal((prev) => !prev);
     scrollRecord();
-    setFileState({});
-    setFile(null);
   };
   const openExpiIdModal = () => {
     setShowExpiIdModal((prev) => !prev);
@@ -247,6 +251,7 @@ export const NewProfile = ({ user, setUserData }) => {
     setExperiences(currExp);
     setEditorState(result.editorState);
   };
+
   const deleteExpi = (index) => {
     let newState = [...experiences];
 
@@ -259,7 +264,28 @@ export const NewProfile = ({ user, setUserData }) => {
   const saveSocials = (result) => {
     setSocials(result);
   };
-  const [fileState, setFileState] = useState({});
+  const [editDoc, setEditDoc] = useState({});
+  const editDocument = (type, index) => {
+    console.log('editing...');
+    setEditing(true);
+    if (type == 'resume') {
+      let resumeFile = resume[index];
+      setEditDoc(resumeFile);
+      openDocumentModal();
+    }
+  };
+  const saveEditedDoc = (result, type, index) => {
+    if (type == 'resume') {
+      let re = [...resume];
+      re[index] = result;
+      setResume(re);
+    }
+  };
+
+  const [fileState, setFileState] = useState({ verfied: false });
+  // useEffect(() => {
+  //   console.log('useEffecting..', fileState);
+  // }, fileState);
   const [file, setFile] = useState(null);
   const saveDocuments = (File) => {
     console.log(fileState);
@@ -286,6 +312,71 @@ export const NewProfile = ({ user, setUserData }) => {
     }
     console.log('resume', resume);
   };
+
+  let resumeUI = resume.map((file, index) => {
+    return (
+      <div className='file'>
+        <input type='checkbox'></input>
+        <p>
+          {file.name}{' '}
+          {!file.verified ? (
+            <span className='verfication-pending'>Verfication pending</span>
+          ) : (
+            <span className='verfication-done'>Verified</span>
+          )}
+        </p>
+        <p>{file.file.lastModified}</p>
+        <div
+          onClick={() => {
+            editDocument('resume', index);
+          }}
+        >
+          <FiEdit className='edit' />
+          <p>Edit</p>
+        </div>
+      </div>
+    );
+  });
+  let transcriptsUI = transcripts.map((file, index) => {
+    return (
+      <div className='file'>
+        <input type='checkbox'></input>
+        <p>{file.name}</p>
+        <p>June 1, 2021</p>
+        <div>
+          <FiEdit className='edit' />
+          <p>Edit</p>
+        </div>
+      </div>
+    );
+  });
+  let workCertiUI = workCerti.map((file, index) => {
+    return (
+      <div className='file'>
+        <input type='checkbox'></input>
+        <p>{file.name}</p>
+        <p>June 1, 2021</p>
+        <div>
+          <FiEdit className='edit' />
+          <p>Edit</p>
+        </div>
+      </div>
+    );
+  });
+  let otherCertiUI = otherCerti.map((file, index) => {
+    return (
+      <div className='file'>
+        <input type='checkbox'></input>
+        <p>{file.name}</p>
+        <p>June 1, 2021</p>
+        <div>
+          <FiEdit className='edit' />
+          <p>Edit</p>
+        </div>
+      </div>
+    );
+  });
+
   //console.log(socials);
   const rolesUI = rolesArr.map((role) => {
     return <p>{role}</p>;
@@ -308,7 +399,7 @@ export const NewProfile = ({ user, setUserData }) => {
   };
   const expandText = (exp, index) => {};
   //console.log(rolesArr);
-  console.log(experiences);
+  // console.log(experiences);
   // let box = document.querySelector('#expi0');
   // let width = box.offsetWidth;
   // let height = box.offsetHeight;
@@ -540,6 +631,9 @@ export const NewProfile = ({ user, setUserData }) => {
         setFileState={setFileState}
         file={file}
         setFile={setFile}
+        editing={editing}
+        editDoc={editDoc}
+        saveEditedDoc={saveEditedDoc}
       />
       <ProfileImageModal
         showModal={showProfileImageModal}
@@ -572,109 +666,147 @@ export const NewProfile = ({ user, setUserData }) => {
             </div>
           </div>
           <div className='dash_component' style={{ display: 'block' }}>
-            <div className='newProfile'>
-              <div className='newProfile__container'>
-                <section class='newProfile__left'>
-                  <div class='newProfile__userBio'>
-                    <div class='newProfile__userBio__image__bg'></div>
-                    <div>
-                      <span class='MuiBadge-root'>
-                        <input
-                          type='file'
-                          id='avatar-file'
-                          style={{ display: 'none' }}
-                        ></input>
-                        <div class='MuiAvatar-root MuiAvatar-circle MuiAvatar-colorDefault'>
-                          {profilePic ? (
-                            <img className='profile-pic' src={profilePic}></img>
-                          ) : (
-                            <>A</>
-                          )}
-                        </div>
-                        <span class='MuiBadge-badge MuiBadge-anchorOriginTopRightCircle'>
-                          <img
-                            src={avatar}
-                            alt='avatar-edit'
-                            onClick={openProfileImageModal}
-                            style={{
-                              display: 'block',
-                              width: '20px',
-                              marginLeft: '-35px',
-                              cursor: 'pointer',
-                            }}
-                          />
+            {page == 1 ? (
+              <div className='newProfile'>
+                <div className='newProfile__header'></div>
+                <div className='newProfile__container'>
+                  <section class='newProfile__left'>
+                    <div class='newProfile__userBio'>
+                      <div class='newProfile__userBio__image__bg'></div>
+                      <div>
+                        <span class='MuiBadge-root'>
+                          <input
+                            type='file'
+                            id='avatar-file'
+                            style={{ display: 'none' }}
+                          ></input>
+                          <div class='MuiAvatar-root MuiAvatar-circle MuiAvatar-colorDefault'>
+                            {profilePic ? (
+                              <img
+                                className='profile-pic'
+                                src={profilePic}
+                              ></img>
+                            ) : (
+                              <>A</>
+                            )}
+                          </div>
+                          <span class='MuiBadge-badge MuiBadge-anchorOriginTopRightCircle'>
+                            <img
+                              src={avatar}
+                              alt='avatar-edit'
+                              onClick={openProfileImageModal}
+                              style={{
+                                display: 'block',
+                                width: '20px',
+                                marginLeft: '-35px',
+                                cursor: 'pointer',
+                              }}
+                            />
+                          </span>
                         </span>
-                      </span>
-                      <div class='newProfile__userBio__info'>
-                        <h4>{user.fullName}</h4>
-                        <h5>
-                          {user.college}, {user.gradYear}
-                        </h5>
-                        <p>
-                          {user.major}, {user.degree}
-                        </p>
-                        <button
-                          class='btn'
-                          onClick={openEditProfileModal}
-                          style={{ marginTop: '7px' }}
-                        >
-                          Edit Profile
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-
-                  {experiences.length > 0 ? (
-                    <div
-                      class='newProfile__experience'
-                      style={{ background: '#fff' }}
-                    >
-                      <h1>EXPERIENCE</h1>
-                      {expUI}
-                      <div></div>
-                    </div>
-                  ) : (
-                    <div class='newProfile__experience'>
-                      <h1>EXPERIENCE</h1>
-                      <div class='newProfile__experience__bg'>
-                        <h3 style={{ padding: '0px' }}>Add your experience</h3>
-                        <p>
-                          Stand out to recruiters by adding your past and
-                          upcoming experiences
-                        </p>
-                        <button class='btn' onClick={openAddExpiModal}>
-                          Add Experience
-                        </button>
-                      </div>
-                      <div></div>
-                    </div>
-                  )}
-
-                  <div
-                    className={
-                      file
-                        ? 'newProfile__resume newProfile__resume_noback'
-                        : 'newProfile__resume'
-                    }
-                  >
-                    <h1>RESUME</h1>
-                    {file ? (
-                      <div class='newProfile__resume__selected'>
-                        <img src={uploadResume} alt='resume' />
-                        <div>
-                          <h3>{file.name}</h3>
-                          <p>{resumeDate}</p>
-                        </div>
-                        <div class='newProfile__resume__selected__icons'>
-                          <svg
-                            class='MuiSvgIcon-root'
-                            focusable='false'
-                            viewBox='0 0 24 24'
-                            aria-hidden='true'
-                            onClick={deleteFile}
+                        <div class='newProfile__userBio__info'>
+                          <h4>{user.fullName}</h4>
+                          <h5>
+                            {user.college}, {user.gradYear}
+                          </h5>
+                          <p>
+                            {user.major}, {user.degree}
+                          </p>
+                          <button
+                            class='btn'
+                            onClick={openEditProfileModal}
+                            style={{ marginTop: '7px' }}
                           >
-                            <path d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z'></path>
-                          </svg>
+                            Edit Profile
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    {experiences.length > 0 ? (
+                      <div
+                        class='newProfile__experience'
+                        style={{ background: '#fff' }}
+                      >
+                        <h1>EXPERIENCE</h1>
+                        {expUI}
+                        <div></div>
+                      </div>
+                    ) : (
+                      <div class='newProfile__experience'>
+                        <h1>EXPERIENCE</h1>
+                        <div class='newProfile__experience__bg'>
+                          <h3 style={{ padding: '0px' }}>
+                            Add your experience
+                          </h3>
+                          <p>
+                            Stand out to recruiters by adding your past and
+                            upcoming experiences
+                          </p>
+                          <button class='btn' onClick={openAddExpiModal}>
+                            Add Experience
+                          </button>
+                        </div>
+                        <div></div>
+                      </div>
+                    )}
+
+                    <div
+                      className={
+                        file
+                          ? 'newProfile__resume newProfile__resume_noback'
+                          : 'newProfile__resume'
+                      }
+                    >
+                      <h1>RESUME</h1>
+                      {/* {file ? (
+                        <div class='newProfile__resume__selected'>
+                          <img src={uploadResume} alt='resume' />
+                          <div>
+                            <h3>{file.name}</h3>
+                            <p>{resumeDate}</p>
+                          </div>
+                          <div class='newProfile__resume__selected__icons'>
+                            <svg
+                              class='MuiSvgIcon-root'
+                              focusable='false'
+                              viewBox='0 0 24 24'
+                              aria-hidden='true'
+                              onClick={deleteFile}
+                            >
+                              <path d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z'></path>
+                            </svg>
+                            <input
+                              type='file'
+                              id='file'
+                              name='file'
+                              ref={fileInput}
+                              onChange={onFileChange}
+                            />
+                            <svg
+                              class='MuiSvgIcon-root'
+                              focusable='false'
+                              viewBox='0 0 24 24'
+                              aria-hidden='true'
+                              id='file-selected'
+                              onClick={(e) => {
+                                fileInput.current && fileInput.current.click();
+                                onFileUpload();
+                              }}
+                            >
+                              <path d='M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM5.92 19H5v-.92l9.06-9.06.92.92L5.92 19zM20.71 5.63l-2.34-2.34c-.2-.2-.45-.29-.71-.29s-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41z'></path>
+                            </svg>
+                            <input type='file' id='file' name='file' />
+                          </div>
+                        </div>
+                      ) : (
+                        <div>
+                          <h3>Add your resume</h3>
+                          <p>
+                            Your resume is essential for recruiters to learn
+                            more about you! Upload one as soon as possible to
+                            boost your chances of being discovered
+                          </p>
                           <input
                             type='file'
                             id='file'
@@ -682,23 +814,18 @@ export const NewProfile = ({ user, setUserData }) => {
                             ref={fileInput}
                             onChange={onFileChange}
                           />
-                          <svg
-                            class='MuiSvgIcon-root'
-                            focusable='false'
-                            viewBox='0 0 24 24'
-                            aria-hidden='true'
-                            id='file-selected'
+                          <button
+                            class='btn'
                             onClick={(e) => {
-                              fileInput.current && fileInput.current.click();
-                              onFileUpload();
+                              // fileInput.current && fileInput.current.click();
+                              // onFileUpload();
+                              setPage(2);
                             }}
                           >
-                            <path d='M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM5.92 19H5v-.92l9.06-9.06.92.92L5.92 19zM20.71 5.63l-2.34-2.34c-.2-.2-.45-.29-.71-.29s-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41z'></path>
-                          </svg>
-                          <input type='file' id='file' name='file' />
+                            Add Resume
+                          </button>
                         </div>
-                      </div>
-                    ) : (
+                      )} */}
                       <div>
                         <h3>Add your resume</h3>
                         <p>
@@ -716,168 +843,278 @@ export const NewProfile = ({ user, setUserData }) => {
                         <button
                           class='btn'
                           onClick={(e) => {
-                            fileInput.current && fileInput.current.click();
-                            onFileUpload();
+                            // fileInput.current && fileInput.current.click();
+                            // onFileUpload();
+                            setPage(2);
                           }}
                         >
-                          Add Resume
+                          Add Documents
                         </button>
                       </div>
-                    )}
+                    </div>
+                  </section>
+                  <section class='newProfile__right'>
+                    <div>
+                      <div class='newProfile__preference'>
+                        <div class='newProfile__role'>
+                          <h2>
+                            Preferred roles
+                            <svg
+                              class='MuiSvgIcon-root hide'
+                              focusable='false'
+                              viewBox='0 0 24 24'
+                              aria-hidden='true'
+                              onClick={() => openPreferenceModal('roles')}
+                            >
+                              <path d='M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM5.92 19H5v-.92l9.06-9.06.92.92L5.92 19zM20.71 5.63l-2.34-2.34c-.2-.2-.45-.29-.71-.29s-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41z'></path>
+                            </svg>
+                          </h2>
+                          <div></div>
+                          {rolesArr.length > 0 ? (
+                            <div>{rolesUI}</div>
+                          ) : (
+                            <p>What are your roles</p>
+                          )}
+                        </div>
+                        <div class='newProfile__exp'>
+                          <h2>
+                            Experience
+                            <svg
+                              class='MuiSvgIcon-root hide'
+                              focusable='false'
+                              viewBox='0 0 24 24'
+                              aria-hidden='true'
+                              onClick={() => openPreferenceModal('experience')}
+                            >
+                              <path d='M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM5.92 19H5v-.92l9.06-9.06.92.92L5.92 19zM20.71 5.63l-2.34-2.34c-.2-.2-.45-.29-.71-.29s-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41z'></path>
+                            </svg>
+                          </h2>
+                          <div></div>
+                          {expisArr.length > 0 ? (
+                            <div>{expiUI}</div>
+                          ) : (
+                            <p>What areas of experience do you have?</p>
+                          )}
+                        </div>
+                        <div class='newProfile__skill'>
+                          <h2>
+                            Skills
+                            <svg
+                              class='MuiSvgIcon-root hide'
+                              focusable='false'
+                              viewBox='0 0 24 24'
+                              aria-hidden='true'
+                              onClick={() => openPreferenceModal('skills')}
+                            >
+                              <path d='M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM5.92 19H5v-.92l9.06-9.06.92.92L5.92 19zM20.71 5.63l-2.34-2.34c-.2-.2-.45-.29-.71-.29s-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41z'></path>
+                            </svg>
+                          </h2>
+                          <div></div>
+                          {skillsArr.length > 0 ? (
+                            <div>{skillsUi}</div>
+                          ) : (
+                            <p>Rank your skills</p>
+                          )}
+                        </div>
+                        <div class='newProfile__loc'>
+                          <h2>
+                            Preferred locations
+                            <svg
+                              class='MuiSvgIcon-root hide'
+                              focusable='false'
+                              viewBox='0 0 24 24'
+                              aria-hidden='true'
+                              onClick={() => openPreferenceModal('location')}
+                            >
+                              <path d='M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM5.92 19H5v-.92l9.06-9.06.92.92L5.92 19zM20.71 5.63l-2.34-2.34c-.2-.2-.45-.29-.71-.29s-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41z'></path>
+                            </svg>
+                          </h2>
+                          <div></div>
+                          {locationsArr.length > 0 ? (
+                            <div>{locationUI}</div>
+                          ) : (
+                            <p>Where do you want to work?</p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    <div class='newProfile__right__elsewhere'>
+                      <h1>
+                        Social Media
+                        <svg
+                          class='MuiSvgIcon-root hide'
+                          focusable='false'
+                          viewBox='0 0 24 24'
+                          aria-hidden='true'
+                          onClick={openSocialModal}
+                        >
+                          <path d='M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM5.92 19H5v-.92l9.06-9.06.92.92L5.92 19zM20.71 5.63l-2.34-2.34c-.2-.2-.45-.29-.71-.29s-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41z'></path>
+                        </svg>
+                      </h1>
+                      <p>
+                        <img src={personal} alt='personal' />
+                        {socials.personal == '' ? (
+                          'Add Website'
+                        ) : (
+                          <a href={socials.personal}>{socials.personal}</a>
+                        )}
+                      </p>
+                      <p>
+                        <img src={linkedin} alt='linkedin' />
+                        {socials.linkedin == '' ? (
+                          'Add Linkedin'
+                        ) : (
+                          <a href={socials.linkedin}>{socials.linkedin}</a>
+                        )}
+                      </p>
+                      <p>
+                        <img src={heart} alt='heart' />
+                        {socials.projects == '' ? (
+                          'Add Passion Project'
+                        ) : (
+                          <a href={socials.projects}>{socials.projects}</a>
+                        )}
+                      </p>
+                      <p>
+                        <img src={github} alt='github' />
+                        {socials.github == '' ? (
+                          'Add Github'
+                        ) : (
+                          <a href={socials.github}>{socials.github}</a>
+                        )}
+                      </p>
+                    </div>
+                    <div class='newProfile__right__elsewhere-new'>
+                      <img src={badges} alt='badge' class='badge' />
+                      <h6 class='badge-txt'>Earn badges</h6>
+                      <p class='badge-txt-p'>
+                        Get noticed by recruitments. Add things like hackathons
+                        and classes you’ve TA’d.
+                      </p>
+                      <button class='btn btn-badge' onClick={openExpiIdModal}>
+                        Add ID Card
+                      </button>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            ) : (
+              <>
+                <div className='newProfile'>
+                  <div className='newProfile__header'>
+                    <p className='document__title'>Documents</p>
+                    <div
+                      className='doc__back'
+                      onClick={() => {
+                        setPage(1);
+                      }}
+                    >
+                      <IoIosArrowBack />
+                      <p>Back</p>
+                    </div>
                   </div>
-                  <Document
-                    openModal={openDocumentModal}
-                    resume={resume}
-                    transcripts={transcripts}
-                    workCerti={workCerti}
-                    otherCerti={otherCerti}
-                  />
-                </section>
-                <section class='newProfile__right'>
-                  <div>
-                    <div class='newProfile__preference'>
-                      <div class='newProfile__role'>
-                        <h2>
-                          Preferred roles
-                          <svg
-                            class='MuiSvgIcon-root hide'
-                            focusable='false'
-                            viewBox='0 0 24 24'
-                            aria-hidden='true'
-                            onClick={() => openPreferenceModal('roles')}
-                          >
-                            <path d='M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM5.92 19H5v-.92l9.06-9.06.92.92L5.92 19zM20.71 5.63l-2.34-2.34c-.2-.2-.45-.29-.71-.29s-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41z'></path>
-                          </svg>
-                        </h2>
-                        <div></div>
-                        {rolesArr.length > 0 ? (
-                          <div>{rolesUI}</div>
+                  <div className='newProfile__container'>
+                    {/* <Document
+                      openModal={openDocumentModal}
+                      resume={resume}
+                      transcripts={transcripts}
+                      workCerti={workCerti}
+                      otherCerti={otherCerti}
+                      editing={editing}
+                      setEditing={setEditing}
+                      editDocument={editDocument}
+                    /> */}
+                    <div className='newProfile__document'>
+                      <div>
+                        {/* <h1>DOCUMENTS</h1> */}
+
+                        <button
+                          class='btn'
+                          onClick={(e) => {
+                            openDocumentModal();
+                            setEditing(false);
+                          }}
+                        >
+                          + Add New
+                        </button>
+                      </div>
+                      <div className='newProfile__resumedoc'>
+                        <h2>Resume</h2>
+                        {resume.length == 0 ? (
+                          <div className='file'>
+                            <input type='checkbox'></input>
+                            <p>
+                              Draft Collection
+                              <span className='verfication-pending'>
+                                Verfication pending
+                              </span>
+                            </p>
+                            <p>June 1, 2021</p>
+                            <div>
+                              <FiEdit className='edit' />
+                              <p>Edit</p>
+                            </div>
+                          </div>
                         ) : (
-                          <p>What are your roles</p>
+                          <>{resumeUI}</>
                         )}
                       </div>
-                      <div class='newProfile__exp'>
-                        <h2>
-                          Experience
-                          <svg
-                            class='MuiSvgIcon-root hide'
-                            focusable='false'
-                            viewBox='0 0 24 24'
-                            aria-hidden='true'
-                            onClick={() => openPreferenceModal('experience')}
-                          >
-                            <path d='M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM5.92 19H5v-.92l9.06-9.06.92.92L5.92 19zM20.71 5.63l-2.34-2.34c-.2-.2-.45-.29-.71-.29s-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41z'></path>
-                          </svg>
-                        </h2>
-                        <div></div>
-                        {expisArr.length > 0 ? (
-                          <div>{expiUI}</div>
+                      <div className='newProfile__transcripts'>
+                        <h2>Transcripts</h2>
+                        {transcripts.length == 0 ? (
+                          <div className='file'>
+                            <input type='checkbox'></input>
+                            <p>
+                              Draft Collection
+                              <span className='verfication-done'>Verified</span>
+                            </p>
+                            <p>June 1, 2021</p>
+                            <div>
+                              <FiEdit className='edit' />
+                              <p>Edit</p>
+                            </div>
+                          </div>
                         ) : (
-                          <p>What areas of experience do you have?</p>
+                          <>{transcriptsUI}</>
                         )}
                       </div>
-                      <div class='newProfile__skill'>
-                        <h2>
-                          Skills
-                          <svg
-                            class='MuiSvgIcon-root hide'
-                            focusable='false'
-                            viewBox='0 0 24 24'
-                            aria-hidden='true'
-                            onClick={() => openPreferenceModal('skills')}
-                          >
-                            <path d='M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM5.92 19H5v-.92l9.06-9.06.92.92L5.92 19zM20.71 5.63l-2.34-2.34c-.2-.2-.45-.29-.71-.29s-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41z'></path>
-                          </svg>
-                        </h2>
-                        <div></div>
-                        {skillsArr.length > 0 ? (
-                          <div>{skillsUi}</div>
+                      <div className='newProfile__workcertificates'>
+                        <h2>Work Certificates</h2>
+                        {workCerti.length == 0 ? (
+                          <div className='file'>
+                            <input type='checkbox'></input>
+                            <p>Draft Collection</p>
+                            <p>June 1, 2021</p>
+                            <div>
+                              <FiEdit className='edit' />
+                              <p>Edit</p>
+                            </div>
+                          </div>
                         ) : (
-                          <p>Rank your skills</p>
+                          <>{workCertiUI}</>
                         )}
                       </div>
-                      <div class='newProfile__loc'>
-                        <h2>
-                          Preferred locations
-                          <svg
-                            class='MuiSvgIcon-root hide'
-                            focusable='false'
-                            viewBox='0 0 24 24'
-                            aria-hidden='true'
-                            onClick={() => openPreferenceModal('location')}
-                          >
-                            <path d='M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM5.92 19H5v-.92l9.06-9.06.92.92L5.92 19zM20.71 5.63l-2.34-2.34c-.2-.2-.45-.29-.71-.29s-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41z'></path>
-                          </svg>
-                        </h2>
-                        <div></div>
-                        {locationsArr.length > 0 ? (
-                          <div>{locationUI}</div>
+                      <div className='newProfile__othercertificates'>
+                        <h2>Other Certificates</h2>
+                        {otherCerti.length == 0 ? (
+                          <div className='file'>
+                            <input type='checkbox'></input>
+                            <p>Draft Collection</p>
+                            <p>June 1, 2021</p>
+                            <div>
+                              <FiEdit className='edit' />
+                              <p>Edit</p>
+                            </div>
+                          </div>
                         ) : (
-                          <p>Where do you want to work?</p>
+                          <>{otherCertiUI}</>
                         )}
                       </div>
                     </div>
                   </div>
-                  <div class='newProfile__right__elsewhere'>
-                    <h1>
-                      Social Media
-                      <svg
-                        class='MuiSvgIcon-root hide'
-                        focusable='false'
-                        viewBox='0 0 24 24'
-                        aria-hidden='true'
-                        onClick={openSocialModal}
-                      >
-                        <path d='M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM5.92 19H5v-.92l9.06-9.06.92.92L5.92 19zM20.71 5.63l-2.34-2.34c-.2-.2-.45-.29-.71-.29s-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41z'></path>
-                      </svg>
-                    </h1>
-                    <p>
-                      <img src={personal} alt='personal' />
-                      {socials.personal == '' ? (
-                        'Add Website'
-                      ) : (
-                        <a href={socials.personal}>{socials.personal}</a>
-                      )}
-                    </p>
-                    <p>
-                      <img src={linkedin} alt='linkedin' />
-                      {socials.linkedin == '' ? (
-                        'Add Linkedin'
-                      ) : (
-                        <a href={socials.linkedin}>{socials.linkedin}</a>
-                      )}
-                    </p>
-                    <p>
-                      <img src={heart} alt='heart' />
-                      {socials.projects == '' ? (
-                        'Add Passion Project'
-                      ) : (
-                        <a href={socials.projects}>{socials.projects}</a>
-                      )}
-                    </p>
-                    <p>
-                      <img src={github} alt='github' />
-                      {socials.github == '' ? (
-                        'Add Github'
-                      ) : (
-                        <a href={socials.github}>{socials.github}</a>
-                      )}
-                    </p>
-                  </div>
-                  <div class='newProfile__right__elsewhere-new'>
-                    <img src={badges} alt='badge' class='badge' />
-                    <h6 class='badge-txt'>Earn badges</h6>
-                    <p class='badge-txt-p'>
-                      Get noticed by recruitments. Add things like hackathons
-                      and classes you’ve TA’d.
-                    </p>
-                    <button class='btn btn-badge' onClick={openExpiIdModal}>
-                      Add ID Card
-                    </button>
-                  </div>
-                </section>
-              </div>
-            </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>

@@ -9,8 +9,13 @@ const Document = ({
   transcripts,
   workCerti,
   otherCerti,
+  editing,
+  setEditing,
+  editDocument,
+  showModal,
+  setShowModal,
 }) => {
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
   // const [resume, setResume] = useState([]);
   // const [transcripts, setTranscripts] = useState([]);
   // const [workCerti, setWorkCerti] = useState([]);
@@ -58,13 +63,25 @@ const Document = ({
   //     setOtherCerti(r);
   //   }
   // };
+
   let resumeUI = resume.map((file, index) => {
     return (
       <div className='file'>
         <input type='checkbox'></input>
-        <p>{file.name}</p>
+        <p>
+          {file.name}{' '}
+          {!file.verified ? (
+            <span className='verfication-pending'>Verfication pending</span>
+          ) : (
+            <span className='verfication-done'>Verified</span>
+          )}
+        </p>
         <p>{file.file.lastModified}</p>
-        <div>
+        <div
+          onClick={() => {
+            editDocument('resume', index);
+          }}
+        >
           <FiEdit className='edit' />
           <p>Edit</p>
         </div>
@@ -114,12 +131,13 @@ const Document = ({
     <>
       <div className='newProfile__document'>
         <div>
-          <h1>DOCUMENTS</h1>
+          {/* <h1>DOCUMENTS</h1> */}
 
           <button
             class='btn'
             onClick={(e) => {
               openModal();
+              setEditing(false);
             }}
           >
             + Add New
@@ -130,7 +148,10 @@ const Document = ({
           {resume.length == 0 ? (
             <div className='file'>
               <input type='checkbox'></input>
-              <p>Draft Collection</p>
+              <p>
+                Draft Collection
+                <span className='verfication-pending'>Verfication pending</span>
+              </p>
               <p>June 1, 2021</p>
               <div>
                 <FiEdit className='edit' />
@@ -146,7 +167,10 @@ const Document = ({
           {transcripts.length == 0 ? (
             <div className='file'>
               <input type='checkbox'></input>
-              <p>Draft Collection</p>
+              <p>
+                Draft Collection
+                <span className='verfication-done'>Verified</span>
+              </p>
               <p>June 1, 2021</p>
               <div>
                 <FiEdit className='edit' />

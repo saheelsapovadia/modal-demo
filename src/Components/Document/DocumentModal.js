@@ -14,6 +14,10 @@ const DocumentModal = ({
   setFileState,
   file,
   setFile,
+  editDoc,
+  setEditData,
+  editing,
+  saveEditedDoc,
 }) => {
   const modalRef = useRef();
 
@@ -21,6 +25,11 @@ const DocumentModal = ({
     if (modalRef.current === e.target) {
       setShowModal(false);
       scrollRemove();
+      setFileData({
+        name: '',
+        file: null,
+        verified: false,
+      });
     }
   };
   const keyPress = useCallback(
@@ -28,6 +37,11 @@ const DocumentModal = ({
       if (e.key === 'Escape' && showModal) {
         setShowModal(false);
         scrollRemove();
+        setFileData({
+          name: '',
+          file: null,
+          verified: false,
+        });
         console.log('I pressed');
       }
     },
@@ -47,10 +61,28 @@ const DocumentModal = ({
   var date = new Date();
   const onFileChange = async (e) => {
     setFile(e.target.files[0]);
+    setFileData((prev) => {
+      return { ...prev, file: e.target.files[0] };
+    });
     let date = new Date(e.target.files[0].lastModified);
     console.log(file);
     handleChange(e);
   };
+  const [fileData, setFileData] = useState({
+    name: '',
+    file: null,
+    verified: false,
+  });
+
+  // const [localFile, setLocalFile] = useState(null);
+  useEffect(() => {
+    if (editing) {
+      console.log('setting edit doc', editDoc);
+
+      setFileData(editDoc);
+      // setLocalFile(editData.file);
+    }
+  }, [showModal]);
   const handleChange = (e) => {
     const { name, value } = e.target;
     switch (name) {
@@ -59,6 +91,9 @@ const DocumentModal = ({
           let f = { ...fileState };
           f.name = value;
           setFileState(f);
+          let f1 = { ...fileData };
+          f1.name = value;
+          setFileData(f1);
         }
         break;
       case 'type':
@@ -66,23 +101,19 @@ const DocumentModal = ({
           let f = { ...fileState };
           f.type = value;
           setFileState(f);
-        }
-        break;
-      case 'type':
-        {
-          let f = { ...fileState };
-          f.file = { ...file };
-          setFileState(f);
+          let f1 = { ...fileData };
+          f1.type = value;
+          setFileData(f1);
         }
         break;
     }
   };
-  useEffect(() => {
-    let f = { ...fileState };
-    f.file = file;
-    setFileState(f);
-  }, [file]);
-  console.log('fileState', fileState);
+  // useEffect(() => {
+  //   let f = { ...fileState, file: file };
+  //   // f.file = file;
+  //   setFileState(f);
+  // }, [file]);
+  console.log('fileData', fileData);
   return (
     <>
       {showModal ? (
@@ -111,7 +142,11 @@ const DocumentModal = ({
               <form>
                 <div>
                   <label>Document Name</label>
-                  <input name='name' onChange={handleChange}></input>
+                  <input
+                    name='name'
+                    value={fileData.name}
+                    onChange={handleChange}
+                  ></input>
                 </div>
                 <div>
                   <label>Document Type</label>
@@ -119,6 +154,7 @@ const DocumentModal = ({
                     name='type'
                     onChange={handleChange}
                     onClick={handleChange}
+                    value={fileData.type}
                   >
                     <option value='select'>Select</option>
                     <option value='resume'>Resume</option>
@@ -129,9 +165,9 @@ const DocumentModal = ({
                 </div>
               </form>
               <div className='drop-file'>
-                {file ? (
+                {fileData.file ? (
                   <>
-                    <p>{file.name}</p>
+                    <p>{fileData.file.name}</p>
                     <input
                       type='file'
                       id='file'
@@ -175,7 +211,7 @@ const DocumentModal = ({
                 <button
                   className='savebtn'
                   onClick={(e) => {
-                    save(fileState);
+                    save(fileData);
                     setShowModal(false);
                     scrollRemove();
                   }}
