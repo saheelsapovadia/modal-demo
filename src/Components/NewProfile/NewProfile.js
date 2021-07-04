@@ -205,6 +205,8 @@ export const NewProfile = ({ user, setUserData }) => {
   const openDocumentModal = () => {
     setShowDocumentModal((prev) => !prev);
     scrollRecord();
+    setFileState({});
+    setFile(null);
   };
   const openExpiIdModal = () => {
     setShowExpiIdModal((prev) => !prev);
@@ -258,27 +260,28 @@ export const NewProfile = ({ user, setUserData }) => {
     setSocials(result);
   };
   const [fileState, setFileState] = useState({});
-  const saveDocuments = (file) => {
+  const [file, setFile] = useState(null);
+  const saveDocuments = (File) => {
     console.log(fileState);
 
     if (fileState.type == 'resume') {
       let r = [...resume];
-      r.push(file);
+      r.push(File);
       setResume(r);
     }
     if (fileState.type == 'transcripts') {
       let r = [...transcripts];
-      r.push(file);
+      r.push(File);
       setTranscripts(r);
     }
     if (fileState.type == 'workcerti') {
       let r = [...workCerti];
-      r.push(file);
+      r.push(File);
       setWorkCerti(r);
     }
     if (fileState.type == 'othercerti') {
       let r = [...otherCerti];
-      r.push(file);
+      r.push(File);
       setOtherCerti(r);
     }
     console.log('resume', resume);
@@ -451,7 +454,7 @@ export const NewProfile = ({ user, setUserData }) => {
 
   // File Upload
   const fileInput = useRef(null);
-  const [file, setFile] = useState(null);
+  // const [file, setFile] = useState(null);
   const [resumeDate, setResumeDate] = useState('null');
   Date.prototype.yyyymmdd = function () {
     var mm = this.getMonth() + 1; // getMonth() is zero-based
@@ -535,6 +538,8 @@ export const NewProfile = ({ user, setUserData }) => {
         save={saveDocuments}
         fileState={fileState}
         setFileState={setFileState}
+        file={file}
+        setFile={setFile}
       />
       <ProfileImageModal
         showModal={showProfileImageModal}

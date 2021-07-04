@@ -12,6 +12,8 @@ const DocumentModal = ({
   save,
   fileState,
   setFileState,
+  file,
+  setFile,
 }) => {
   const modalRef = useRef();
 
@@ -38,9 +40,10 @@ const DocumentModal = ({
   const closePreferenceModal = () => {
     setShowModal((prev) => !prev);
   };
+  const clearState = () => {};
   // const [fileState, setFileState] = useState({});
   const fileInput = useRef(null);
-  const [file, setFile] = useState(null);
+  // const [file, setFile] = useState(null);
   var date = new Date();
   const onFileChange = async (e) => {
     setFile(e.target.files[0]);
@@ -112,7 +115,12 @@ const DocumentModal = ({
                 </div>
                 <div>
                   <label>Document Type</label>
-                  <select name='type' onChange={handleChange}>
+                  <select
+                    name='type'
+                    onChange={handleChange}
+                    onClick={handleChange}
+                  >
+                    <option value='select'>Select</option>
                     <option value='resume'>Resume</option>
                     <option value='transcripts'>Transcripts</option>
                     <option value='workcerti'>Work Certificates</option>
@@ -121,22 +129,47 @@ const DocumentModal = ({
                 </div>
               </form>
               <div className='drop-file'>
-                <p>Drag and Drop a PDF or Word doc here or Select a file </p>
-                <input
-                  type='file'
-                  id='file'
-                  name='file'
-                  ref={fileInput}
-                  onChange={onFileChange}
-                />
-                <button
-                  class='btn'
-                  onClick={(e) => {
-                    fileInput.current && fileInput.current.click();
-                  }}
-                >
-                  Select a file from your computer
-                </button>
+                {file ? (
+                  <>
+                    <p>{file.name}</p>
+                    <input
+                      type='file'
+                      id='file'
+                      name='file'
+                      ref={fileInput}
+                      onChange={onFileChange}
+                    />
+                    <button
+                      class='btn'
+                      onClick={(e) => {
+                        fileInput.current && fileInput.current.click();
+                      }}
+                    >
+                      Select different file
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <p>
+                      Drag and Drop a PDF or Word doc here or Select a file{' '}
+                    </p>
+                    <input
+                      type='file'
+                      id='file'
+                      name='file'
+                      ref={fileInput}
+                      onChange={onFileChange}
+                    />
+                    <button
+                      class='btn'
+                      onClick={(e) => {
+                        fileInput.current && fileInput.current.click();
+                      }}
+                    >
+                      Select a file from your computer
+                    </button>
+                  </>
+                )}
               </div>
               <div className='experience__button doc-btn'>
                 <button

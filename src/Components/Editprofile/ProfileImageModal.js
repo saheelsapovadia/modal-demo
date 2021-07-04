@@ -33,6 +33,7 @@ class ImageUploader extends PureComponent {
   onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
+      this.props.setPage(2);
       reader.addEventListener('load', () =>
         this.setState({ src: reader.result })
       );
@@ -232,6 +233,9 @@ const ProfileImageModal = ({ showModal, setShowModal, scrollRemove, save }) => {
     if (imageFile) setPage(2);
     console.log('imageFile', imageFile);
   }, [imageFile]);
+  useEffect(() => {
+    console.log('page', page);
+  }, [page]);
   return (
     <>
       {showModal ? (
@@ -277,7 +281,7 @@ const ProfileImageModal = ({ showModal, setShowModal, scrollRemove, save }) => {
                     !imageFile
                       ? () => {
                           fileInputRef.current && fileInputRef.current.click();
-                          setPage(2);
+                          // setPage(2);
                         }
                       : null
                   }
@@ -291,7 +295,6 @@ const ProfileImageModal = ({ showModal, setShowModal, scrollRemove, save }) => {
                             onClick={() => {
                               fileInputRef.current &&
                                 fileInputRef.current.click();
-                              setPage(2);
                             }}
                           >
                             Replace
