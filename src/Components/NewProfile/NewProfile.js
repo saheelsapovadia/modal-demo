@@ -440,8 +440,21 @@ export const NewProfile = ({ user, setUserData }) => {
     return (
       <div className='file'>
         <input type='checkbox'></input>
-        <p>{file.name}</p>
-        <p>{file.fileDate}</p>
+        <p>
+          {file.name}{' '}
+          {!file.verified ? (
+            <span className='verfication-pending'>Verfication pending</span>
+          ) : (
+            <span className='verfication-done'>Verified</span>
+          )}
+        </p>
+        <p>
+          <span>{monthNames[file.fileDate.getMonth()]} </span>
+
+          <span>{file.fileDate.getDate()}, </span>
+
+          <span> {file.fileDate.getFullYear()}</span>
+        </p>
         <div
           onClick={() => {
             editDocument('transcripts', index);
@@ -457,8 +470,21 @@ export const NewProfile = ({ user, setUserData }) => {
     return (
       <div className='file'>
         <input type='checkbox'></input>
-        <p>{file.name}</p>
-        <p>{file.fileDate}</p>
+        <p>
+          {file.name}{' '}
+          {!file.verified ? (
+            <span className='verfication-pending'>Verfication pending</span>
+          ) : (
+            <span className='verfication-done'>Verified</span>
+          )}
+        </p>
+        <p>
+          <span>{monthNames[file.fileDate.getMonth()]} </span>
+
+          <span>{file.fileDate.getDate()}, </span>
+
+          <span> {file.fileDate.getFullYear()}</span>
+        </p>
         <div
           onClick={() => {
             editDocument('workcerti', index);
@@ -474,8 +500,21 @@ export const NewProfile = ({ user, setUserData }) => {
     return (
       <div className='file'>
         <input type='checkbox'></input>
-        <p>{file.name}</p>
-        <p>{file.fileDate}</p>
+        <p>
+          {file.name}{' '}
+          {!file.verified ? (
+            <span className='verfication-pending'>Verfication pending</span>
+          ) : (
+            <span className='verfication-done'>Verified</span>
+          )}
+        </p>
+        <p>
+          <span>{monthNames[file.fileDate.getMonth()]} </span>
+
+          <span>{file.fileDate.getDate()}, </span>
+
+          <span> {file.fileDate.getFullYear()}</span>
+        </p>
         <div
           onClick={() => {
             editDocument('othercerti', index);
