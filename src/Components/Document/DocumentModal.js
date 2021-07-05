@@ -17,6 +17,7 @@ const DocumentModal = ({
   editDoc,
   setEditData,
   editing,
+  docIndex,
   saveEditedDoc,
 }) => {
   const modalRef = useRef();
@@ -58,11 +59,20 @@ const DocumentModal = ({
   // const [fileState, setFileState] = useState({});
   const fileInput = useRef(null);
   // const [file, setFile] = useState(null);
-  var date = new Date();
+
   const onFileChange = async (e) => {
     setFile(e.target.files[0]);
+    var x = new Date(e.target.files[0].lastModified);
+    console.log(
+      'modified date',
+      x.getMonth(),
+      ' ',
+      x.getDate(),
+      ', ',
+      x.getFullYear()
+    );
     setFileData((prev) => {
-      return { ...prev, file: e.target.files[0] };
+      return { ...prev, file: e.target.files[0], fileDate: x };
     });
     let date = new Date(e.target.files[0].lastModified);
     console.log(file);
@@ -211,7 +221,11 @@ const DocumentModal = ({
                 <button
                   className='savebtn'
                   onClick={(e) => {
-                    save(fileData);
+                    {
+                      editing
+                        ? saveEditedDoc(fileData, editDoc.type, docIndex)
+                        : save(fileData);
+                    }
                     setShowModal(false);
                     scrollRemove();
                   }}

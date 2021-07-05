@@ -265,20 +265,100 @@ export const NewProfile = ({ user, setUserData }) => {
     setSocials(result);
   };
   const [editDoc, setEditDoc] = useState({});
+  const [docIndex, setDocIndex] = useState(0);
+  // const [docType, setDocType] = useState('');
   const editDocument = (type, index) => {
     console.log('editing...');
     setEditing(true);
     if (type == 'resume') {
       let resumeFile = resume[index];
+      setDocIndex(index);
       setEditDoc(resumeFile);
+      openDocumentModal();
+    }
+    if (type == 'transcripts') {
+      let tFile = transcripts[index];
+      setDocIndex(index);
+      setEditDoc(tFile);
+      openDocumentModal();
+    }
+    if (type == 'workcerti') {
+      let wFile = workCerti[index];
+      setDocIndex(index);
+      setEditDoc(wFile);
+      openDocumentModal();
+    }
+    if (type == 'othercerti') {
+      let oFile = otherCerti[index];
+      setDocIndex(index);
+      setEditDoc(oFile);
       openDocumentModal();
     }
   };
   const saveEditedDoc = (result, type, index) => {
-    if (type == 'resume') {
-      let re = [...resume];
-      re[index] = result;
-      setResume(re);
+    console.log('saving edited doc..');
+    if (type == result.type) {
+      if (result.type == 'resume') {
+        let re = [...resume];
+        re[index] = result;
+        setResume(re);
+      }
+      if (result.type == 'transcripts') {
+        let re = [...transcripts];
+        re[index] = result;
+        setTranscripts(re);
+      }
+      if (result.type == 'workcerti') {
+        let re = [...workCerti];
+        re[index] = result;
+        setWorkCerti(re);
+      }
+      if (result.type == 'othercerti') {
+        let re = [...otherCerti];
+        re[index] = result;
+        setOtherCerti(re);
+      }
+    } else {
+      if (result.type == 'resume') {
+        let tr = [...resume];
+        tr.push(result);
+        setResume(tr);
+      }
+      if (result.type == 'transcripts') {
+        let tr = [...transcripts];
+        tr.push(result);
+        setTranscripts(tr);
+      }
+      if (result.type == 'workcerti') {
+        let tr = [...workCerti];
+        tr.push(result);
+        setWorkCerti(tr);
+      }
+      if (result.type == 'othercerti') {
+        let tr = [...otherCerti];
+        tr.push(result);
+        setOtherCerti(tr);
+      }
+      if (type == 'resume') {
+        let re = [...resume];
+        re.splice(index, 1);
+        setResume(re);
+      }
+      if (type == 'transcripts') {
+        let re = [...transcripts];
+        re.splice(index, 1);
+        setTranscripts(re);
+      }
+      if (type == 'workcerti') {
+        let re = [...workCerti];
+        re.splice(index, 1);
+        setWorkCerti(re);
+      }
+      if (type == 'othercerti') {
+        let re = [...otherCerti];
+        re.splice(index, 1);
+        setOtherCerti(re);
+      }
     }
   };
 
@@ -312,7 +392,20 @@ export const NewProfile = ({ user, setUserData }) => {
     }
     console.log('resume', resume);
   };
-
+  const monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
   let resumeUI = resume.map((file, index) => {
     return (
       <div className='file'>
@@ -325,7 +418,13 @@ export const NewProfile = ({ user, setUserData }) => {
             <span className='verfication-done'>Verified</span>
           )}
         </p>
-        <p>{file.file.lastModified}</p>
+        <p>
+          <span>{monthNames[file.fileDate.getMonth()]} </span>
+
+          <span>{file.fileDate.getDate()}, </span>
+
+          <span> {file.fileDate.getFullYear()}</span>
+        </p>
         <div
           onClick={() => {
             editDocument('resume', index);
@@ -342,8 +441,12 @@ export const NewProfile = ({ user, setUserData }) => {
       <div className='file'>
         <input type='checkbox'></input>
         <p>{file.name}</p>
-        <p>June 1, 2021</p>
-        <div>
+        <p>{file.fileDate}</p>
+        <div
+          onClick={() => {
+            editDocument('transcripts', index);
+          }}
+        >
           <FiEdit className='edit' />
           <p>Edit</p>
         </div>
@@ -355,8 +458,12 @@ export const NewProfile = ({ user, setUserData }) => {
       <div className='file'>
         <input type='checkbox'></input>
         <p>{file.name}</p>
-        <p>June 1, 2021</p>
-        <div>
+        <p>{file.fileDate}</p>
+        <div
+          onClick={() => {
+            editDocument('workcerti', index);
+          }}
+        >
           <FiEdit className='edit' />
           <p>Edit</p>
         </div>
@@ -368,8 +475,12 @@ export const NewProfile = ({ user, setUserData }) => {
       <div className='file'>
         <input type='checkbox'></input>
         <p>{file.name}</p>
-        <p>June 1, 2021</p>
-        <div>
+        <p>{file.fileDate}</p>
+        <div
+          onClick={() => {
+            editDocument('othercerti', index);
+          }}
+        >
           <FiEdit className='edit' />
           <p>Edit</p>
         </div>
@@ -633,6 +744,7 @@ export const NewProfile = ({ user, setUserData }) => {
         setFile={setFile}
         editing={editing}
         editDoc={editDoc}
+        docIndex={docIndex}
         saveEditedDoc={saveEditedDoc}
       />
       <ProfileImageModal
